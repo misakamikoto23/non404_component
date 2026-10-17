@@ -20,7 +20,8 @@ GT = ROOT / "data/official_contest6/train200"
 SPLIT = ROOT / "configs/contest6_group_split_v1.json"
 OUT = ROOT / "outputs/unattended_20261018_e0_interpret"
 
-UNRESOLVED = "__unresolved_detection_"
+UNRESOLVED = "__unresolved"
+SKIP_DIRS = {"local", "inputs", "qwen_inputs", "qwen_responses", "qwen_audits", "qwen_attempts"}
 
 
 def dev_stems():
@@ -34,9 +35,16 @@ def collect():
         match = re.search(r"(\d{4})", str(path.relative_to(EXP)))
         if not match:
             continue
-        case = match.group(1)
-        arm = path.parent.name
-        found[case][arm] = path
+        found[match.group(1)][path.parent.name] = path
+    for path in EXP.glob("*/*.json"):
+        if path.parent.name in SKIP_DIRS or not re.fullmatch(r"\d{4}\.json", path.name):
+            continue
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            continue
+        if isinstance(payload, dict) and isinstance(payload.get("components"), dict):
+            found[path.stem][path.parent.name] = path
     return found
 
 

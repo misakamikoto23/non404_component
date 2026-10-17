@@ -177,7 +177,9 @@ def run():
                 else:
                     data = response.json()
                     result['usage'] = data.get('usage', {})
-                    result['accounted_tokens'] = accounted_usage(result['usage'], reserve)
+                    _total, _basis, _fields = accounted_usage({'usage': result['usage']}, reserve)
+                    result['accounted_tokens'] = _total
+                    result['accounted_basis'] = _basis
                     result['content'] = data['choices'][0]['message'].get('content') or ''
                     result['returned_model'] = data.get('model')
                     result['finish_reason'] = data['choices'][0].get('finish_reason')
