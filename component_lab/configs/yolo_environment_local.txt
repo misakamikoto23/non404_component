@@ -1,0 +1,8 @@
+nvidia-ml-py==13.615.71
+polars==1.31.0
+polars-runtime-32==2.0.0
+# Editable install with no version control (schematic-component-lab==0.1.0)
+-e d:\大四上\eda\eit&btd\component_lab
+ultralytics==8.4.177
+ultralytics-platform==0.1.86
+ultralytics-thop==2.2.2

@@ -1,0 +1,2032 @@
+{
+ "name": "contest6_group_split_v1",
+ "description": "Duplicate-group split of the official 200_train_cases for a CLEAN RETRAIN. test is sealed (score once per frozen system); dev is for model selection; train is everything else. Every image in a test/dev group, from any source, must be removed from training (see forbidden manifest). Models trained on the current detector datasets are contaminated on this split; flags per case say how.",
+ "seed": 20261017,
+ "targets": {
+  "test": 40,
+  "dev": 20
+ },
+ "rules": {
+  "exact_pixels": "identical decoded RGB (sha256 over WxH:RGB: + pixels)",
+  "perceptual": "pHash <= T AND dHash <= T (64-bit, grayscale cropped to ink bbox); T = 12, or 8 when either image is an HF open_schematics sheet",
+  "label_jaccard": "official cases only: multiset Jaccard of non-∅ (key, value) >= 0.55, both with >= 25 non-∅ components",
+  "lab_variant_name": "component_lab files <base>_v<k> in the same folder"
+ },
+ "gt10_policy": "every group containing a 10_GTcase image is train (GT10 duplicates train200; format smoke test only)",
+ "test_priority": "within each tag, groups never in any detector train/val folder first, then val-only, then train",
+ "forbidden_manifest": "outputs/eval_split_audit_20261017/forbidden_for_clean_retrain.json",
+ "groups_file": "outputs/eval_split_audit_20261017/groups.json",
+ "sizes": {
+  "test": 40,
+  "dev": 20,
+  "train": 140
+ },
+ "partitions": {
+  "test": [
+   {
+    "case": "0003",
+    "stem": "0003-Altium Designer",
+    "tag": "altium designer",
+    "group": "G0945",
+    "pixel_sha256": "bff947a9c49330e7bdcb017d25f00c4fdf86e73f37243fb70e09f39f57a645ee",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0004",
+    "stem": "0004-other",
+    "tag": "other",
+    "group": "G0973",
+    "pixel_sha256": "095cc793f3324f302d62b3e063809dd91587f350c3f48c1b727b325a910debbd",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0006",
+    "stem": "0006-jlc",
+    "tag": "jlc",
+    "group": "G0975",
+    "pixel_sha256": "0d8ef756b7fa3e75e216981a45c31652f5ca5a7cdd1e541f2ac8c720e82014bf",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0013",
+    "stem": "0013-KiCad",
+    "tag": "kicad",
+    "group": "G0982",
+    "pixel_sha256": "03e92bbe1ed67f848fd5beec8cc846aa19c11df0847171ec0e61a891fa4cf2f6",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0014",
+    "stem": "0014-Altium Designer",
+    "tag": "altium designer",
+    "group": "G0983",
+    "pixel_sha256": "b14b870bb8e3d0c5efb413a7d81cae16e60c1b3940b646dd2e62e8803f63a03c",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0016",
+    "stem": "0016-Datasheet",
+    "tag": "datasheet",
+    "group": "G0985",
+    "pixel_sha256": "af3090f6ae4623606828403203598466c5ce153851eaded27ec71eca4448349d",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0031",
+    "stem": "0031-Datasheet",
+    "tag": "datasheet",
+    "group": "G0999",
+    "pixel_sha256": "cdcf6b672f8fc9bca495df9c122b0340fd804a3e3fa3c986209d2ed75306e64a",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0033",
+    "stem": "0033-Datasheet",
+    "tag": "datasheet",
+    "group": "G1001",
+    "pixel_sha256": "5e904f793880a6455a26e6a7c559b4a74c7befc437a37f56ba49b84fbdece6d0",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0043",
+    "stem": "0043-Altium Designer",
+    "tag": "altium designer",
+    "group": "G1010",
+    "pixel_sha256": "481922ee745199f06ec71df69500e433b5c6d61ba52abdc76926e574d6dff41e",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0045",
+    "stem": "0045-Altium Designer",
+    "tag": "altium designer",
+    "group": "G1012",
+    "pixel_sha256": "afa36b459cd2bd22b1516785c22b5a70ba532afedfd29b34a37f9fbd3b57c0ca",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0046",
+    "stem": "0046-Datasheet",
+    "tag": "datasheet",
+    "group": "G1013",
+    "pixel_sha256": "818e55e6e4bd60444818466a4ff9a4da12d3dc6ef20808e98f31ea6131b6c5af",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0053",
+    "stem": "0053-Datasheet",
+    "tag": "datasheet",
+    "group": "G1020",
+    "pixel_sha256": "882c3776a0dcf61ecc4adf1b3f5e5ac9102aeee7da04f417a253df4ef2d7b5bc",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0054",
+    "stem": "0054-Datasheet",
+    "tag": "datasheet",
+    "group": "G1021",
+    "pixel_sha256": "3810ec658721cf1b678c6e6d443132524f45ee149e673efae3b3d81ac9313395",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0060",
+    "stem": "0060-jlc",
+    "tag": "jlc",
+    "group": "G1027",
+    "pixel_sha256": "e6eb1e432fa7e9905c87510f94a153ac2bca8cf0a4a8ea64769856811c985326",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0061",
+    "stem": "0061-Datasheet",
+    "tag": "datasheet",
+    "group": "G1028",
+    "pixel_sha256": "b69d8bbe690649a3e3d47a4eae8064a68adcdc59c0450bb86ec9487841308b16",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0067",
+    "stem": "0067-Datasheet",
+    "tag": "datasheet",
+    "group": "G1034",
+    "pixel_sha256": "5d233d04be7aca07a57985ec846d843f7aaba915b6bc5fc5f196f318296c30a9",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0079",
+    "stem": "0079-Datasheet",
+    "tag": "datasheet",
+    "group": "G1046",
+    "pixel_sha256": "c43c334549dde7b5cf0c94b9fda6d1c53cdca06375329c30736b2b7962268c73",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0080",
+    "stem": "0080-Datasheet",
+    "tag": "datasheet",
+    "group": "G1047",
+    "pixel_sha256": "d25aaf79164151383c852ae6690c0f428a54c8c6da5a3363ff04551ee0d76708",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0081",
+    "stem": "0081-Datasheet",
+    "tag": "datasheet",
+    "group": "G1048",
+    "pixel_sha256": "17f7ed53223d1cc30e5e406ca35decb1e75f4ed7e91516b4fe4d4244b1c9cb86",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0085",
+    "stem": "0085-Datasheet",
+    "tag": "datasheet",
+    "group": "G1052",
+    "pixel_sha256": "bcc6f28399b51834b5b641766a7919ea5b221c6d14444d1cb924c2013389623f",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0111",
+    "stem": "0111-jlc",
+    "tag": "jlc",
+    "group": "G1077",
+    "pixel_sha256": "6349d4811d8ed8960a16f75fb1ab35e684879c4b326231a4ea23322f365afdba",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0121",
+    "stem": "0121-jlc",
+    "tag": "jlc",
+    "group": "G1087",
+    "pixel_sha256": "797365afb941eca3f8f667ecddfe37d3127204361bc6c82d54a3d5e504cf67f4",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0123",
+    "stem": "0123-other",
+    "tag": "other",
+    "group": "G1089",
+    "pixel_sha256": "b5a99b4a7eb308c89074286fb44b3da480d620296ec799bcb9efd91e806dfc7d",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0127",
+    "stem": "0127-jlc",
+    "tag": "jlc",
+    "group": "G1093",
+    "pixel_sha256": "8572665a5dc9326cdc3ed3d8d5415eeb19c5da5eadc3c9819cf5dd526c9498db",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0128",
+    "stem": "0128-jlc",
+    "tag": "jlc",
+    "group": "G1094",
+    "pixel_sha256": "46c71d16d66c812ff3d758bbc7543d79ea807929b06f9c674f4b8bca373eb27d",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0129",
+    "stem": "0129-jlc",
+    "tag": "jlc",
+    "group": "G1095",
+    "pixel_sha256": "aaf8c00c736e7f300952d2203836e106546a7fa762926c66d972c6bdc2a45ce2",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0135",
+    "stem": "0135-jlc",
+    "tag": "jlc",
+    "group": "G0951",
+    "pixel_sha256": "a71232c7a7cdfe55a3c78f40a49ff7146312061fd54dbdfb5327ee9aef7d88f3",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0136",
+    "stem": "0136-jlc",
+    "tag": "jlc",
+    "group": "G1101",
+    "pixel_sha256": "83c2e4ffbf3347b63e47ec4338558b64cdf37e87f779693768711ba997d21a32",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0145",
+    "stem": "0145-jlc",
+    "tag": "jlc",
+    "group": "G1109",
+    "pixel_sha256": "b8d0a64421bbe846ecf18fa4bd7a7b5b73f3315d6665995c92bb4e1ca865c089",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0155",
+    "stem": "0155-jlc",
+    "tag": "jlc",
+    "group": "G1119",
+    "pixel_sha256": "0c5aba4f6b749e078965e023cdad197f0b25e2895f388c1dcc1efceffc3116c0",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0158",
+    "stem": "0158-jlc",
+    "tag": "jlc",
+    "group": "G0955",
+    "pixel_sha256": "e9ebe5d9f04b401f0fdbb1e961e6b65a95a6931e421892263c9f8a604229aa80",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0161",
+    "stem": "0161-jlc",
+    "tag": "jlc",
+    "group": "G1124",
+    "pixel_sha256": "0a570304382a313afd4029bc26e2b6a9eae34ac686442519e821fd5c1faa1b48",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0162",
+    "stem": "0162-jlc",
+    "tag": "jlc",
+    "group": "G1125",
+    "pixel_sha256": "2295c16249b1bd68aa00c939c3904a315bd6431f3858e2958893b357072fa849",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0167",
+    "stem": "0167-jlc",
+    "tag": "jlc",
+    "group": "G1130",
+    "pixel_sha256": "a3eef008e0af6d0e2311e36ee7ee1c07360dd86b62e5393a528b07727cc7114c",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0171",
+    "stem": "0171-jlc",
+    "tag": "jlc",
+    "group": "G1133",
+    "pixel_sha256": "71f28514e71f7a91b83189df4c266ce6cfd9e0eb40f9059f824447e2bbacec71",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0176",
+    "stem": "0176-jlc",
+    "tag": "jlc",
+    "group": "G1138",
+    "pixel_sha256": "1ded8cc3e91c2d15db443d36712f09f1f377bb77382a5812b3aec709d0ac9632",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0186",
+    "stem": "0186-jlc",
+    "tag": "jlc",
+    "group": "G1148",
+    "pixel_sha256": "bcf1d2bbffe14cd361286b47f608429c136edabd5e9765c1321225b6bf6504cb",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0187",
+    "stem": "0187-jlc",
+    "tag": "jlc",
+    "group": "G1149",
+    "pixel_sha256": "2f02ab0479c4a5b0a2938b6096067f4639ab0d923f42c7c86e4b9ab3ef4e21de",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0195",
+    "stem": "0195-jlc",
+    "tag": "jlc",
+    "group": "G1155",
+    "pixel_sha256": "fee181566db2fc238bc9f0077f393fd2fbbf8bd36c6255f4a7945335e02da16e",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0199",
+    "stem": "0199-jlc",
+    "tag": "jlc",
+    "group": "G1159",
+    "pixel_sha256": "cd49ec88215df47bf1b27ada423e7f4be990009c1cc56f92725c068190ad63a0",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   }
+  ],
+  "dev": [
+   {
+    "case": "0001",
+    "stem": "0001-KiCad",
+    "tag": "kicad",
+    "group": "G0971",
+    "pixel_sha256": "c6408a3c2b26663727c3dfb5a20985dfc5eb1e5b6697b7e085da7a1f0867eeb6",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0011",
+    "stem": "0011-Altium Designer",
+    "tag": "altium designer",
+    "group": "G0980",
+    "pixel_sha256": "516a3ceb619e288422abfe3ac67f6065b45e98f4a8372bb64a9e0c9db96b44cb",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0024",
+    "stem": "0024-other",
+    "tag": "other",
+    "group": "G0992",
+    "pixel_sha256": "a3736acff4fb80197f74555ada41e6ba6a9aa2e2748f16afc01041bc4fdde1fe",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0034",
+    "stem": "0034-Datasheet",
+    "tag": "datasheet",
+    "group": "G1002",
+    "pixel_sha256": "b7c087f63841049328c25d17691c849d3e5dfb90fc36e7369a43d5a1bb7912ee",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0038",
+    "stem": "0038-Altium Designer",
+    "tag": "altium designer",
+    "group": "G1005",
+    "pixel_sha256": "d30a9bf89a3ddd3d0131c067d64c1df9a052713aa800907d7eac0d64f99950f2",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0055",
+    "stem": "0055-Datasheet",
+    "tag": "datasheet",
+    "group": "G1022",
+    "pixel_sha256": "f6d3f3dbb5f60b3f00775a4bc31aa8093a07d3a2515e0914d32b8789c9561c27",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0058",
+    "stem": "0058-Datasheet",
+    "tag": "datasheet",
+    "group": "G1025",
+    "pixel_sha256": "17072f44c51f93dfc68b5c218724830fb33e17b7465d60957babb5c60a27e43c",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0066",
+    "stem": "0066-Datasheet",
+    "tag": "datasheet",
+    "group": "G1033",
+    "pixel_sha256": "ab7bbdda3fa82f1276298c8d15e05716ecc975a96911d7f6cda8a4e199b15ace",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0083",
+    "stem": "0083-Datasheet",
+    "tag": "datasheet",
+    "group": "G1050",
+    "pixel_sha256": "2e884256dfed5cde73a154858dff5faefa59fee620a47f5bb85ff6a7531ced47",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0088",
+    "stem": "0088-Datasheet",
+    "tag": "datasheet",
+    "group": "G1054",
+    "pixel_sha256": "2b67b5ddd0433b94542f9ccd9d3aaadb4e8ff0307a0a0c4b940ff56c5e2c7d2f",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0107",
+    "stem": "0107-jlc",
+    "tag": "jlc",
+    "group": "G1073",
+    "pixel_sha256": "00575095aab9f5bdd871592f9cec75f007f39c682a07bde3d3d77410b327e171",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0108",
+    "stem": "0108-jlc",
+    "tag": "jlc",
+    "group": "G1074",
+    "pixel_sha256": "7a013d15a0ff0953b33ef85abad74b240aadb6f81e3ff3388a0c6b76e948674f",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0120",
+    "stem": "0120-jlc",
+    "tag": "jlc",
+    "group": "G1086",
+    "pixel_sha256": "365af4cd2cb74475e74f66a25c13f0ff3fe7eb2b2809385fb53a1804bd762228",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0130",
+    "stem": "0130-jlc",
+    "tag": "jlc",
+    "group": "G1096",
+    "pixel_sha256": "b1fbc3558644afd8e9f3440bad58bf48abda4a4839fa5a821b2e77b06ebb8dd7",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0131",
+    "stem": "0131-jlc",
+    "tag": "jlc",
+    "group": "G1097",
+    "pixel_sha256": "1022158705dc547ae12a11f450ae21056c403fe2b76efad52ac41d54b8ac9494",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0132",
+    "stem": "0132-jlc",
+    "tag": "jlc",
+    "group": "G1098",
+    "pixel_sha256": "d012796175af8d2a0dc49138441853fcdb054f5e233f3f0ed259ae609ba33002",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0144",
+    "stem": "0144-jlc",
+    "tag": "jlc",
+    "group": "G1108",
+    "pixel_sha256": "f4408e65d146267b0cda11ff593397919a49a7c09c10733629876bcb850983de",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0168",
+    "stem": "0168-jlc",
+    "tag": "jlc",
+    "group": "G1131",
+    "pixel_sha256": "3f95f77564c93b0862e3b4074f9b8b981e42ec59e83a7a789d1607ad9a84b511",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0182",
+    "stem": "0182-jlc",
+    "tag": "jlc",
+    "group": "G1144",
+    "pixel_sha256": "fdf8adf8a1d6262969a3f911fde2cd51a826541c88ce5f9bb3c1d103634b871f",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0200",
+    "stem": "0200-jlc",
+    "tag": "jlc",
+    "group": "G1160",
+    "pixel_sha256": "ba5736e3f95b0c56b104833ede9c884ad08a499b6ac12c236e6a4949c2adfccf",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   }
+  ],
+  "train": [
+   {
+    "case": "0002",
+    "stem": "0002-Datasheet",
+    "tag": "datasheet",
+    "group": "G0972",
+    "pixel_sha256": "f8ed3622936947c467a231b15e0072959b8967443bd5f78c9b6193f0f86911f8",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0005",
+    "stem": "0005-kicad",
+    "tag": "kicad",
+    "group": "G0974",
+    "pixel_sha256": "00b6aeca028c5164eb956ae2d6f9bed563d74c6c674a28604375efbffe3b2ff1",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0007",
+    "stem": "0007-Datasheet",
+    "tag": "datasheet",
+    "group": "G0976",
+    "pixel_sha256": "adf40b1ee2fc5e8d17d20d8c5892243554b7d7a839cd9d248e96910c50da8644",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0008",
+    "stem": "0008-Altium Designer",
+    "tag": "altium designer",
+    "group": "G0977",
+    "pixel_sha256": "332171107f42c72b281c6c6fe915faeb793d5f4067f777eabce9d6c51218b6d0",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0009",
+    "stem": "0009-Datasheet",
+    "tag": "datasheet",
+    "group": "G0978",
+    "pixel_sha256": "124b2186be2fb56f6e18e96a99d49123fd1d9a187afb2a4afe60bad8380fa87c",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0010",
+    "stem": "0010-Altium Designer",
+    "tag": "altium designer",
+    "group": "G0979",
+    "pixel_sha256": "53ea0e22c701d9e5bf16471b78a954750f6bb9231092c23bf5ded3f9cb787762",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0012",
+    "stem": "0012-Altium Designer",
+    "tag": "altium designer",
+    "group": "G0981",
+    "pixel_sha256": "89fbc00789eaaf3129835a1a845981747e7c5419410c43d8d9a48ad69d595980",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0015",
+    "stem": "0015-Datasheet",
+    "tag": "datasheet",
+    "group": "G0984",
+    "pixel_sha256": "1f3859904300f24e5088adddf0b7185400cf15185a0913b0590eafd22dea74eb",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0017",
+    "stem": "0017-Datasheet",
+    "tag": "datasheet",
+    "group": "G0986",
+    "pixel_sha256": "d3a41e4035fea57facd44e97a9cad2ffda4c286ee924e93d9d8aa5a9a479e888",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0018",
+    "stem": "0018-Altium Designer",
+    "tag": "altium designer",
+    "group": "G0986",
+    "pixel_sha256": "0979d16a3b7ab7f67bcdb4050e8039079dfb643eaa7ef545f9cd7ffdcb13a46c",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0019",
+    "stem": "0019-Altium Designer",
+    "tag": "altium designer",
+    "group": "G0987",
+    "pixel_sha256": "afa387867296b02ed6ecb6fc1ede16501a88c8ae14e6712d6aad0dbd28faf08c",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0020",
+    "stem": "0020-Altium Designer",
+    "tag": "altium designer",
+    "group": "G0988",
+    "pixel_sha256": "2d74fa1245bae1936b21f4ee4babca13cbaf468ec755ec99069f37ea3a335d85",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0021",
+    "stem": "0021-other",
+    "tag": "other",
+    "group": "G0989",
+    "pixel_sha256": "8004fb6212772d8bcc6de6b80c06594b2d03f4e39a4a460ceb36d0f80b8d3c88",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0022",
+    "stem": "0022-other",
+    "tag": "other",
+    "group": "G0990",
+    "pixel_sha256": "ccd5315d34cb31993d24a4351e7a82997b7b8345ab96533c85cab59ae5902652",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0023",
+    "stem": "0023-other",
+    "tag": "other",
+    "group": "G0991",
+    "pixel_sha256": "eb45d73bf7be0f6ff7eed3c99228e4d2d37c2baf3c7e60f712e520799a5aa5d7",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0025",
+    "stem": "0025-Altium Designer",
+    "tag": "altium designer",
+    "group": "G0993",
+    "pixel_sha256": "db7284e26d099c5958d69ca80aac22b35c9bd9085774818ac681e3fad8bd0f30",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0026",
+    "stem": "0026-Datasheet",
+    "tag": "datasheet",
+    "group": "G0994",
+    "pixel_sha256": "9be2c7357f2b2571bd6a59c446507a35d55044668b29477d0a4659307b818a6b",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0027",
+    "stem": "0027-Datasheet",
+    "tag": "datasheet",
+    "group": "G0995",
+    "pixel_sha256": "1c85c237f4ed1ff77878d0f0501b148755cefc85f5dca1b1c3c86714475519df",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0028",
+    "stem": "0028-Datasheet",
+    "tag": "datasheet",
+    "group": "G0996",
+    "pixel_sha256": "07ad693bba0d5a0e8b96e7be08d15586764d8c75e40cc4a99b2237a30249ae66",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0029",
+    "stem": "0029-Datasheet",
+    "tag": "datasheet",
+    "group": "G0997",
+    "pixel_sha256": "0c0c7f1e1fb7244e53b7bed7b6cf429f9f9d40757f67b4740074896b2f57a83a",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0030",
+    "stem": "0030-Datasheet",
+    "tag": "datasheet",
+    "group": "G0998",
+    "pixel_sha256": "fd7bf8713f2ffd8c8cd99c7f07ce45a5e9efb843ce8ee59d4d8576a5e7ccb87a",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0032",
+    "stem": "0032-Datasheet",
+    "tag": "datasheet",
+    "group": "G1000",
+    "pixel_sha256": "744084f0d1142f072760570eac3eae25097ce10373d86e5447102d757f229bbb",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0035",
+    "stem": "0035-Datasheet",
+    "tag": "datasheet",
+    "group": "G1003",
+    "pixel_sha256": "436c3128bb62674ed819b5a06104b794e522f1558b8cd5e125350fe0447fade9",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0036",
+    "stem": "0036-Datasheet",
+    "tag": "datasheet",
+    "group": "G1004",
+    "pixel_sha256": "9cbed8c5e3ba0e895ba0eec8a7c5c71008128d95d35da14e463367fcf9364c5b",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0037",
+    "stem": "0037-Datasheet",
+    "tag": "datasheet",
+    "group": "G0948",
+    "pixel_sha256": "146e7f5c4d33d1f7c809a5ca5448173192541f88f362ce0d78b8258800969f58",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0039",
+    "stem": "0039-other",
+    "tag": "other",
+    "group": "G1006",
+    "pixel_sha256": "535e502a019f2465e49a79fe465f4e585b53d98bea41570129492568d7c0f72f",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0040",
+    "stem": "0040-Altium Designer",
+    "tag": "altium designer",
+    "group": "G1007",
+    "pixel_sha256": "5bcff629f8d8e2a031ce80fbc5d283d60c8b20cb4af5772ff6ef39c4d5933ee9",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0041",
+    "stem": "0041-Datasheet",
+    "tag": "datasheet",
+    "group": "G1008",
+    "pixel_sha256": "0e13ad23d6d335d5526b4d6541b1ad4138365429c5ca8f19d6910c12ad75924d",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0042",
+    "stem": "0042-Altium Designer",
+    "tag": "altium designer",
+    "group": "G1009",
+    "pixel_sha256": "60f78c246a88e590d173daf7d478c47f45994d9ff50fc8271154b85e2f6cd02e",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0044",
+    "stem": "0044-Datasheet",
+    "tag": "datasheet",
+    "group": "G1011",
+    "pixel_sha256": "c84b9234798551235fa65f7c809493e72fc462f0ec99546af4de175ab85d4ef3",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0047",
+    "stem": "0047-Datasheet",
+    "tag": "datasheet",
+    "group": "G1014",
+    "pixel_sha256": "3e3e0d5d933986f0c7178543877d0be91c8fbd0b0baca2715d12ee4253d66f05",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0048",
+    "stem": "0048-Datasheet",
+    "tag": "datasheet",
+    "group": "G1015",
+    "pixel_sha256": "888ee7fcac160fa4678242ae96b42e3f4f89150a1e9db500cf599929ac5cce0f",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0049",
+    "stem": "0049-Datasheet",
+    "tag": "datasheet",
+    "group": "G1016",
+    "pixel_sha256": "603e903f27d55b0e09f6ee4d3e259650a7771be8243467f7a7300770f56b06a1",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0050",
+    "stem": "0050-Altium Designer",
+    "tag": "altium designer",
+    "group": "G1017",
+    "pixel_sha256": "a2500716316229db75afde473c90680e73a0e1cac9bf7505cd67ee5e1e7b815b",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0051",
+    "stem": "0051-Datasheet",
+    "tag": "datasheet",
+    "group": "G1018",
+    "pixel_sha256": "6455a76722d93908ccfca0ef13a62a4e80b47c78d7ccb305e498bd3d4118ca71",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0052",
+    "stem": "0052-Datasheet",
+    "tag": "datasheet",
+    "group": "G1019",
+    "pixel_sha256": "e7273ef152ea4aba641ac59a1b7c06356149e6595b6d970e5c70b60aecd1b7b0",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0056",
+    "stem": "0056-Altium Designer",
+    "tag": "altium designer",
+    "group": "G1023",
+    "pixel_sha256": "f7a1a7734d5deca60468cf485af6957265e0c39d263c4ed358cd6129c598390b",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0057",
+    "stem": "0057-Datasheet",
+    "tag": "datasheet",
+    "group": "G1024",
+    "pixel_sha256": "1e9c6c57a87362012b2c38c3b9277e333c47912d9b0c1321db4e7dc2bbb1cf32",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0059",
+    "stem": "0059-Datasheet",
+    "tag": "datasheet",
+    "group": "G1026",
+    "pixel_sha256": "dfee279e11bb80800f95426d655740f8acfd7302c374906c801374116c7437b4",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0062",
+    "stem": "0062-Datasheet",
+    "tag": "datasheet",
+    "group": "G1029",
+    "pixel_sha256": "4dd36fdaea2b45ff1f1677a8b0f8779468e74788426563a6ee2a7e8a55ad8707",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0063",
+    "stem": "0063-other",
+    "tag": "other",
+    "group": "G1030",
+    "pixel_sha256": "5dc6a80e13674491ec649c5e057bf0f169b9ba168a273f779deee389e503820e",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0064",
+    "stem": "0064-other",
+    "tag": "other",
+    "group": "G1031",
+    "pixel_sha256": "8d88f89defefeb6619f4dc62f33c11abfc59bc63672905a704ff72653129b954",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0065",
+    "stem": "0065-Datasheet",
+    "tag": "datasheet",
+    "group": "G1032",
+    "pixel_sha256": "d580edfde7b6316eb92ac3e0f4398d2879b2ab87e560e2c1ac65a150527922c7",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0068",
+    "stem": "0068-Datasheet",
+    "tag": "datasheet",
+    "group": "G1035",
+    "pixel_sha256": "25748b6a03ca6cba8c23a27882d07b407aa339fc144fa745969dcc92cd2a69b4",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0069",
+    "stem": "0069-Datasheet",
+    "tag": "datasheet",
+    "group": "G1036",
+    "pixel_sha256": "6c49d611ec7423499a0e329cca90b99566dc96ef8c705c646dd9b13e3b9a0de7",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0070",
+    "stem": "0070-Datasheet",
+    "tag": "datasheet",
+    "group": "G1037",
+    "pixel_sha256": "18dbfe37132faf6bfd23e2e87f77f9e688e4ac3298041715c7e8c4e92c288807",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0071",
+    "stem": "0071-Altium Designer",
+    "tag": "altium designer",
+    "group": "G1038",
+    "pixel_sha256": "9d8c6dec4011060b763893e3b40a8467ab6e649dc81186825a25d5f3e6bdaa95",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0072",
+    "stem": "0072-Datasheet",
+    "tag": "datasheet",
+    "group": "G1039",
+    "pixel_sha256": "b4a6ff5f5e7da2fa606c940232b0f90100264807d13ea966e052578e9195f2bc",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0073",
+    "stem": "0073-Datasheet",
+    "tag": "datasheet",
+    "group": "G1040",
+    "pixel_sha256": "9bc28f19897b97c73d620234002b72bf14403f8a6307aa1cb163f553988d3aa7",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0074",
+    "stem": "0074-Altium Designer",
+    "tag": "altium designer",
+    "group": "G1041",
+    "pixel_sha256": "a8376166ddf986f150ed62456b1271b83cf701199e40137a2abe96fdc4737c32",
+    "round004_trained_on_it": false,
+    "any_detector_trained_on_it": false,
+    "any_detector_validated_on_it": true
+   },
+   {
+    "case": "0075",
+    "stem": "0075-Datasheet",
+    "tag": "datasheet",
+    "group": "G1042",
+    "pixel_sha256": "02aee7a67e58fb9f9f3326fa5a7aaf8109797188f1d8353955e65e622990d682",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0076",
+    "stem": "0076-Datasheet",
+    "tag": "datasheet",
+    "group": "G1043",
+    "pixel_sha256": "60c70cb4b65562a0be31a85d7aeec258b49a2c657903e2e9c321d80ca2d215e5",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0077",
+    "stem": "0077-Datasheet",
+    "tag": "datasheet",
+    "group": "G1044",
+    "pixel_sha256": "990d3ee26125a7a36e1129866221f72323cf2502ddb392945ca151b69cf2cd04",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0078",
+    "stem": "0078-Datasheet",
+    "tag": "datasheet",
+    "group": "G1045",
+    "pixel_sha256": "a13f6d6475a9bc1ab92a2e2de522cc7823cf532926d0f1ab760c932c33586bf8",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0082",
+    "stem": "0082-jlc",
+    "tag": "jlc",
+    "group": "G1049",
+    "pixel_sha256": "0d74ade7811f49f95e62e5251ebbb8be1ac1bc0a50729838f9e6bf84f6d82b7a",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0084",
+    "stem": "0084-Datasheet",
+    "tag": "datasheet",
+    "group": "G1051",
+    "pixel_sha256": "00785f57e24d230843fd2f583a9891be1dcdbd86a8eea4016081730225f25a11",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0086",
+    "stem": "0086-Datasheet",
+    "tag": "datasheet",
+    "group": "G0996",
+    "pixel_sha256": "eea6c39349034d58271a0026379dead034ae122854ac019196bb6af918e358e6",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0087",
+    "stem": "0087-KiCad",
+    "tag": "kicad",
+    "group": "G1053",
+    "pixel_sha256": "dfe633a01063954d909b4501bcb39bdae1cdfe7c7f8ef75098df6a0818ceda26",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0089",
+    "stem": "0089-Datasheet",
+    "tag": "datasheet",
+    "group": "G1055",
+    "pixel_sha256": "f167d494bb316aab1be0851150650df156e89497f730976021ff23d0465bcd06",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0090",
+    "stem": "0090-Datasheet",
+    "tag": "datasheet",
+    "group": "G1056",
+    "pixel_sha256": "ef53d8efbf0f19ed9fc1484405c202042258fd5b2f486228cddb267888adb199",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0091",
+    "stem": "0091-KiCad",
+    "tag": "kicad",
+    "group": "G1057",
+    "pixel_sha256": "e39915bce692aaded90f5f25fbe6f02c9adf04e30ff1c500b681fe69d061b484",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0092",
+    "stem": "0092-Datasheet",
+    "tag": "datasheet",
+    "group": "G1058",
+    "pixel_sha256": "b1e83867841135a97a890056b2dc4357341f71f23f10d92eba81f5f87a577d89",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0093",
+    "stem": "0093-kicad",
+    "tag": "kicad",
+    "group": "G1059",
+    "pixel_sha256": "6214139ec13547db8ef513d368a99e9e18b6aeaca7e65cd35807ce5e4dc1102d",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0094",
+    "stem": "0094-Altium Designer",
+    "tag": "altium designer",
+    "group": "G1060",
+    "pixel_sha256": "cbfd58e21ad4efbc95edec52efed6c31c8b31c6965a33252da3459e1df4cdaf0",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0095",
+    "stem": "0095-Altium Designer",
+    "tag": "altium designer",
+    "group": "G1061",
+    "pixel_sha256": "b7e95356054fc581841e93415dd9258cae23e4610736e38257e323c6361b99cd",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0096",
+    "stem": "0096-Datasheet",
+    "tag": "datasheet",
+    "group": "G1062",
+    "pixel_sha256": "0e7a797be9d5927b5898e07dcf40846772f565baa40ed62cac48b7f14cf3d19b",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0097",
+    "stem": "0097-other",
+    "tag": "other",
+    "group": "G1063",
+    "pixel_sha256": "338d661bf6e0567666102ce2ecc27a5b69fd6ddf27efc6ffb53084eeb5bd6f21",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0098",
+    "stem": "0098-Datasheet",
+    "tag": "datasheet",
+    "group": "G1064",
+    "pixel_sha256": "2ded750816ae61d4455389338993f409ff9b21bb98e7b92563d7a02fce522dcc",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0099",
+    "stem": "0099-other",
+    "tag": "other",
+    "group": "G1065",
+    "pixel_sha256": "4f82bc2d1c702f86c9fcafd1595096378cce28a11ddc47f85d4899ca44ef52bf",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0100",
+    "stem": "0100-Datasheet",
+    "tag": "datasheet",
+    "group": "G1066",
+    "pixel_sha256": "3d432bd23dabaee9d6a04b60b95bb051475fbcb0ea2c0ad6d0cb871dcc2dd9e2",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0101",
+    "stem": "0101-jlc",
+    "tag": "jlc",
+    "group": "G1067",
+    "pixel_sha256": "bb840c40bb66d2ea736c8f094c9703f0d1e8b3be44f385f20d58fae07e7c77e8",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0102",
+    "stem": "0102-jlc",
+    "tag": "jlc",
+    "group": "G1068",
+    "pixel_sha256": "7f266cf3e59047d3e118977711d597c4007f874eb52ea2b7e1a430b22efcdd07",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0103",
+    "stem": "0103-jlc",
+    "tag": "jlc",
+    "group": "G1069",
+    "pixel_sha256": "873dc42ae8f130e20146e3a13949f112d92a8003fa2989a2bb049cc803873e10",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0104",
+    "stem": "0104-jlc",
+    "tag": "jlc",
+    "group": "G1070",
+    "pixel_sha256": "d67691a3b7285f5be24680cf7795274a5e6b8776b1e6aa43a3fffc364512212b",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0105",
+    "stem": "0105-jlc",
+    "tag": "jlc",
+    "group": "G1071",
+    "pixel_sha256": "a5f8d69f73fb8d23d224ab69af78cabe62ba3cc0e5ef6cba3ef98231a8434014",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0106",
+    "stem": "0106-jlc",
+    "tag": "jlc",
+    "group": "G1072",
+    "pixel_sha256": "2a72ad18d038185c7b32e8e13348239fb03594fbef59a4f50a4a98771f954541",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0109",
+    "stem": "0109-jlc",
+    "tag": "jlc",
+    "group": "G1075",
+    "pixel_sha256": "d05ca43e5911f3ac38bf127c316501e3159b70d3ed74318b5ef10d105d9b4715",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0110",
+    "stem": "0110-jlc",
+    "tag": "jlc",
+    "group": "G1076",
+    "pixel_sha256": "2c49b44d36fdd61fa33c033ecc5356dc106c99101f7315606ef85dbbadd0a90d",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0112",
+    "stem": "0112-jlc",
+    "tag": "jlc",
+    "group": "G1078",
+    "pixel_sha256": "5a8849405508ef76d8e5cc238a9aa0c630fa062c8fb9368e31f5a1f4ca2d1764",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0113",
+    "stem": "0113-jlc",
+    "tag": "jlc",
+    "group": "G1079",
+    "pixel_sha256": "dbb9ee2e2a3b369ee7bcd693276da026a7e1a7c5dd541e3ed33ae65fbeae34e9",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0114",
+    "stem": "0114-jlc",
+    "tag": "jlc",
+    "group": "G1080",
+    "pixel_sha256": "3ce53cce56520734ad55a9f497a7e4c48da10490f1fae2b24aee7404d9798c91",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0115",
+    "stem": "0115-jlc",
+    "tag": "jlc",
+    "group": "G1081",
+    "pixel_sha256": "43347adb4a4a672f6df7e9832c7f3919ed39c4dd855f9c38695d93ef675442eb",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0116",
+    "stem": "0116-jlc",
+    "tag": "jlc",
+    "group": "G1082",
+    "pixel_sha256": "3e2f06be3be5105073e8bcb48e597640a836625ac95536d6193ecee7d29e1e21",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0117",
+    "stem": "0117-jlc",
+    "tag": "jlc",
+    "group": "G1083",
+    "pixel_sha256": "409df68dfefe04d6576a98cc7fb0516c4a3d5ec38bd84b50f4440bc81235870d",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0118",
+    "stem": "0118-jlc",
+    "tag": "jlc",
+    "group": "G1084",
+    "pixel_sha256": "e907d7cb858edfff703e191e55a006f52872373edcc3f2d39bbaf75a405b524b",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0119",
+    "stem": "0119-Datasheet",
+    "tag": "datasheet",
+    "group": "G1085",
+    "pixel_sha256": "d04c78ef5e413da0ab55fdff2ba187a8d08afb6d79fed08ded953adbd5d6b640",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0122",
+    "stem": "0122-jlc",
+    "tag": "jlc",
+    "group": "G1088",
+    "pixel_sha256": "35fb406513b31ca4bca677fe946752503d4a8734eef2e8dd7013b2e526e1b10f",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0124",
+    "stem": "0124-jlc",
+    "tag": "jlc",
+    "group": "G1090",
+    "pixel_sha256": "d274cc933a910c4184724d12380d338a623c7f23c0b97559e7012a657e91bfa3",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0125",
+    "stem": "0125-jlc",
+    "tag": "jlc",
+    "group": "G1091",
+    "pixel_sha256": "9807bac5c7e53d7883f70624843605969340851f595ebbe457c4920e0274234b",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0126",
+    "stem": "0126-jlc",
+    "tag": "jlc",
+    "group": "G1092",
+    "pixel_sha256": "c58a1156d3bcfce1ebaa02a0135d54ce92cdb064b756c365e2e939f800a4105c",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0133",
+    "stem": "0133-jlc",
+    "tag": "jlc",
+    "group": "G1099",
+    "pixel_sha256": "9f60fec4a8bc5afcc4e4ecbac730ef3dc64ada6add13f134ce26fce8ca3b4201",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0134",
+    "stem": "0134-jlc",
+    "tag": "jlc",
+    "group": "G1100",
+    "pixel_sha256": "10fef48e89249c0a6b4c5e7546ab7faec356681de86a3b50f3994b2789552e78",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0137",
+    "stem": "0137-jlc",
+    "tag": "jlc",
+    "group": "G1102",
+    "pixel_sha256": "5a55e5a224c9868a50d996d5aefca7a2ddd1c7b1a7a22aa945056f62d8b86e71",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0138",
+    "stem": "0138-jlc",
+    "tag": "jlc",
+    "group": "G1103",
+    "pixel_sha256": "36a3ad064289f456280af731917001a3607628cadb0c0811106f03cc0886b5a6",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0139",
+    "stem": "0139-jlc",
+    "tag": "jlc",
+    "group": "G1104",
+    "pixel_sha256": "cbaedc9a596110cb510b156762dabf094853968581e8c44392c9dad8efe2b4e7",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0140",
+    "stem": "0140-jlc",
+    "tag": "jlc",
+    "group": "G1105",
+    "pixel_sha256": "a5865d1d83917dbf45545dd3b78c0bbd64bdcee8bf4b96b608c149e8f960a1b2",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0141",
+    "stem": "0141-jlc",
+    "tag": "jlc",
+    "group": "G1106",
+    "pixel_sha256": "145d6b4b8bf7f2676620e69c2659a0c59d8e5a1f0899b5e0fc64c245b54686a9",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0142",
+    "stem": "0142-jlc",
+    "tag": "jlc",
+    "group": "G1084",
+    "pixel_sha256": "e907d7cb858edfff703e191e55a006f52872373edcc3f2d39bbaf75a405b524b",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0143",
+    "stem": "0143-jlc",
+    "tag": "jlc",
+    "group": "G1107",
+    "pixel_sha256": "e02f5342a2cee9da422f8c3937a5e28918281ec7480b845be4839902d91aa28b",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0146",
+    "stem": "0146-jlc",
+    "tag": "jlc",
+    "group": "G1110",
+    "pixel_sha256": "27725bf204d08dbbba22b377165ccb176cdf1cedf0f114aeb0af7c6effcfdc95",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0147",
+    "stem": "0147-jlc",
+    "tag": "jlc",
+    "group": "G1111",
+    "pixel_sha256": "c5a263237612adb2254f474817101cbacab055293abdef56648301e822a92825",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0148",
+    "stem": "0148-jlc",
+    "tag": "jlc",
+    "group": "G1112",
+    "pixel_sha256": "1657de11c76414c26cd49cd8c0105181da7bf21e750715dd55d51e2466aed4f3",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0149",
+    "stem": "0149-jlc",
+    "tag": "jlc",
+    "group": "G1113",
+    "pixel_sha256": "997342d0af994ce66a8933051a7e820fa09ba5a21838d0a25b2f63960b4eb335",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0150",
+    "stem": "0150-jlc",
+    "tag": "jlc",
+    "group": "G1114",
+    "pixel_sha256": "7a0383150bf2566501488856c9c71b7c2298391ca0c99b9d581de0e39812f8f8",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0151",
+    "stem": "0151-jlc",
+    "tag": "jlc",
+    "group": "G1115",
+    "pixel_sha256": "5242bfd593ec0a9666596715fa13bc3c423017bce48814691a1bc3591acce603",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0152",
+    "stem": "0152-jlc",
+    "tag": "jlc",
+    "group": "G1116",
+    "pixel_sha256": "69939952b7eba82a7bd1d3cd42cde025729a69a4b480a5b7378d57e20a44aca6",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0153",
+    "stem": "0153-jlc",
+    "tag": "jlc",
+    "group": "G1117",
+    "pixel_sha256": "0864c6875e0a36cf05aeea914f02da3d94084bc86390634c072eb6687c4a4860",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0154",
+    "stem": "0154-jlc",
+    "tag": "jlc",
+    "group": "G1118",
+    "pixel_sha256": "9831076c76ebf5fe9ca58bc971b1e339135d2a0cf344e777d985c07c0a218f27",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0156",
+    "stem": "0156-jlc",
+    "tag": "jlc",
+    "group": "G1120",
+    "pixel_sha256": "cd686cf490a974ddc23235b13b9051a206c5ad02ece0cc6bb669d3a7a36a8d82",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0157",
+    "stem": "0157-jlc",
+    "tag": "jlc",
+    "group": "G1121",
+    "pixel_sha256": "9706ead5773f93d9bd43f7a2cb71bc9e2e1b0bba43406c228c77bba7c78becb0",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0159",
+    "stem": "0159-jlc",
+    "tag": "jlc",
+    "group": "G1122",
+    "pixel_sha256": "a71da0e3e159c8289b3f24f61f628c4c32f036b8eba40bb4798472051f94812e",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0160",
+    "stem": "0160-jlc",
+    "tag": "jlc",
+    "group": "G1123",
+    "pixel_sha256": "31f9e60094a5d09700e5548267b4f19ea7b99a47c884fd44fee7e3c75f5e227f",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0163",
+    "stem": "0163-jlc",
+    "tag": "jlc",
+    "group": "G1126",
+    "pixel_sha256": "9653bba5700da1f0a104f578a77d239ef81bd97117a40d671ee0b9477f63fa5c",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0164",
+    "stem": "0164-Datasheet",
+    "tag": "datasheet",
+    "group": "G1127",
+    "pixel_sha256": "b4f4852141b69b9e50bbe42ea95e8527d758105b74bcf6fe00a3b409f668268e",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0165",
+    "stem": "0165-jlc",
+    "tag": "jlc",
+    "group": "G1128",
+    "pixel_sha256": "6e97479e04f596f67b0f28b957c79f8c4834e246e33f69b8d566a6837a88ee61",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0166",
+    "stem": "0166-jlc",
+    "tag": "jlc",
+    "group": "G1129",
+    "pixel_sha256": "54c9cc51d5430a25292bdd90e8017e79281faa1bc96e0ebe79eed7e68af2b61a",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0169",
+    "stem": "0169-jlc",
+    "tag": "jlc",
+    "group": "G1132",
+    "pixel_sha256": "6f5e55a84aaa83e7d2affb842e80405f0a3d85f16e7c8bebade3e596a8eef36d",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0170",
+    "stem": "0170-jlc",
+    "tag": "jlc",
+    "group": "G1129",
+    "pixel_sha256": "14e5e024f15c59f0b0fc43fea98c858d9dcc7d95859b1cd9eb2a35ee86e823f3",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0172",
+    "stem": "0172-jlc",
+    "tag": "jlc",
+    "group": "G1134",
+    "pixel_sha256": "905d889448b0567d3b1087045779dcdabf33e9568ee1010c4aeacff3ce5ce9b9",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0173",
+    "stem": "0173-jlc",
+    "tag": "jlc",
+    "group": "G1135",
+    "pixel_sha256": "f3dcb776bbcdfb0188d9c6d762d7d141d4da8d621474417e5cced00b15e36916",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0174",
+    "stem": "0174-jlc",
+    "tag": "jlc",
+    "group": "G1136",
+    "pixel_sha256": "40b928a902eb491326841d001b5c3abdd53e294058cfdd02c91259f878c19eb2",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0175",
+    "stem": "0175-jlc",
+    "tag": "jlc",
+    "group": "G1137",
+    "pixel_sha256": "0b3421982346c6ee47df2b9c01544f32f5b7bd9200b917e1c3c9bc14f0961d52",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0177",
+    "stem": "0177-jlc",
+    "tag": "jlc",
+    "group": "G1139",
+    "pixel_sha256": "cfb466597ff495a870ad90e97b21ad298f927066b1ec3d98eeb5821ad38ce224",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0178",
+    "stem": "0178-jlc",
+    "tag": "jlc",
+    "group": "G1140",
+    "pixel_sha256": "7f207809e0ba3713a0e71a318e23098605630c6c0db2458c8db49d92f822c828",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0179",
+    "stem": "0179-jlc",
+    "tag": "jlc",
+    "group": "G1141",
+    "pixel_sha256": "a4de42300e814f3809368734b8ba327838cb979b7d431cd12cb6152221a688a0",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0180",
+    "stem": "0180-jlc",
+    "tag": "jlc",
+    "group": "G1142",
+    "pixel_sha256": "5d1fbf4ce3f24b270148a3bfb2291201c66254057d07bc0c8c7dde429d4ec5fc",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0181",
+    "stem": "0181-jlc",
+    "tag": "jlc",
+    "group": "G1143",
+    "pixel_sha256": "32216bffddc0ecc721135e78b45f46c9baaaaed303087e0e50a6d547a439ea01",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0183",
+    "stem": "0183-jlc",
+    "tag": "jlc",
+    "group": "G1145",
+    "pixel_sha256": "dac6f7de2bffd4b83429a771781a837adb1107e116cca8a5856275f0a490ad2c",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0184",
+    "stem": "0184-other",
+    "tag": "other",
+    "group": "G1146",
+    "pixel_sha256": "884044aa0cfac8163b596d6bf853d14c90251e720aae029b24601856ff3207f3",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0185",
+    "stem": "0185-jlc",
+    "tag": "jlc",
+    "group": "G1147",
+    "pixel_sha256": "197885218409d183113ed32387e6a8f8cecd84de25bb93d5b884f817a0069056",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0188",
+    "stem": "0188-jlc",
+    "tag": "jlc",
+    "group": "G1150",
+    "pixel_sha256": "aee26348e30c25adbf43c1c449e5ec3ab8f0d23a33de03a1db82a3f1383e17a1",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0189",
+    "stem": "0189-jlc",
+    "tag": "jlc",
+    "group": "G1151",
+    "pixel_sha256": "fce7fc9973f1caec21a297e46f064390333811bef14b14dc9b54c1efdb0fc5ac",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0190",
+    "stem": "0190-jlc",
+    "tag": "jlc",
+    "group": "G1152",
+    "pixel_sha256": "72522fd2855172ef74fad9a37e9bbec66040f4f960e2dba3307bddd5a57ef84c",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0191",
+    "stem": "0191-jlc",
+    "tag": "jlc",
+    "group": "G1129",
+    "pixel_sha256": "41dd43871260a340af2385120845c3d72381b034ec61670ec9f8a6c3d45719ba",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0192",
+    "stem": "0192-jlc",
+    "tag": "jlc",
+    "group": "G1153",
+    "pixel_sha256": "8de8db9527b6d699d04d9abca370d7fd64369cdf506c5296533284282593303b",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0193",
+    "stem": "0193-jlc",
+    "tag": "jlc",
+    "group": "G1154",
+    "pixel_sha256": "140dfbefd8fb4bd363019f6e6912529831ab1830bc512102c862187d780e0e32",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0194",
+    "stem": "0194-jlc",
+    "tag": "jlc",
+    "group": "G1104",
+    "pixel_sha256": "cbaedc9a596110cb510b156762dabf094853968581e8c44392c9dad8efe2b4e7",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0196",
+    "stem": "0196-jlc",
+    "tag": "jlc",
+    "group": "G1156",
+    "pixel_sha256": "0b3b4054ccfdfec2481be11a3ede461aaca546b4fa1b0fca65b4627ee0da13a6",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0197",
+    "stem": "0197-jlc",
+    "tag": "jlc",
+    "group": "G1157",
+    "pixel_sha256": "cb507eb76b782b76728888db279abe0ea2f73f4b2451de7d7b7f4533057570a5",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   },
+   {
+    "case": "0198",
+    "stem": "0198-jlc",
+    "tag": "jlc",
+    "group": "G1158",
+    "pixel_sha256": "3353d178dc9becc9dbc39bffe799fc8e5dd3a0e8d3f7e8f34fd5b9934d0b7ae6",
+    "round004_trained_on_it": true,
+    "any_detector_trained_on_it": true,
+    "any_detector_validated_on_it": false
+   }
+  ]
+ }
+}

@@ -1,0 +1,8 @@
+{
+  "yolo": {"model": "yolo26n.pt", "imgsz": 1280, "confidence": 0.25, "epochs": 50, "batch": 8, "device": "0"},
+  "resnet": {"architecture": "resnet18", "input_size": 224, "threshold": 0.8, "epochs": 50, "batch": 8, "lr": 0.0001, "device": "cuda:0", "balance_policy": "equal_class_quota_train_only_augmentation", "per_class_training_files": 256},
+  "qwen": {"model": "qwen3.8-flash", "context_margin": 48, "max_calls": 10, "timeout": 60, "max_tokens": 800, "temperature": 0},
+  "local_v6": {"enabled": true, "mode": "empty-fields", "max_rois": 2, "area_fraction": 0.2, "timeout": 120},
+  "device": "0",
+  "local_gpu_preference": "PyTorch cuda:0 = RTX 4060 Ti; cuda:1 = RTX 3050 Ti. Prefer 4060 Ti for training and inference."
+}

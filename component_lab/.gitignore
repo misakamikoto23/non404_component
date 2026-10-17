@@ -1,0 +1,9 @@
+.venv/
+.venv-yolo/
+__pycache__/
+*.egg-info/
+data/
+weights/
+runs/
+outputs/
+.env

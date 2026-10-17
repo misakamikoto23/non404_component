@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "experiment": "automation_round_001",
+  "objective": "Automate component detection improvement and shadow verification without new human labeling; evaluate precision and recall separately.",
+  "source_data": "data/reviewed_versions/manual_round_003/yolo",
+  "initial_weights": "weights/pcbnet_component_yolo26n_review_round_003.pt",
+  "immutable_inputs": [
+    "data/review_snapshots",
+    "data/review_batches",
+    "data/yolo/pcbnet_component_v1"
+  ],
+  "training": {
+    "paired_control": true,
+    "source_images": 233,
+    "views_per_source": 2,
+    "samples_per_epoch_each_arm": 466,
+    "epochs_each_arm": 6,
+    "imgsz": 1280,
+    "batch": 2,
+    "nbs": 16,
+    "lr0": 0.0001,
+    "truncated_ground_truth_allowed": false,
+    "test_evaluation": false
+  },
+  "candidates": {
+    "confidence_floor": 0.03,
+    "tile_size_original_pixels": 1024,
+    "overlap": 0.25,
+    "max_det_per_call": 1000,
+    "retain_raw_internal_edge_candidates": true,
+    "preserve_baseline_output": true,
+    "ground_truth_used_for_candidate_selection": false
+  },
+  "qwen": {
+    "mode": "shadow",
+    "model": "qwen3.8-flash",
+    "endpoint": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+    "pilot_candidates": 32,
+    "batch_size": 2,
+    "max_requests": 16,
+    "token_budget": 60000,
+    "max_tokens_per_request": 1200,
+    "views": [
+      "native_symbol",
+      "marked_native_context"
+    ],
+    "reference_labels_sent": false,
+    "automatic_paid_retries": 0,
+    "uncertain_default": "retain_and_flag",
+    "overwrite_human_labels": false,
+    "allow_qwen_outputs_as_human_ground_truth": false,
+    "initial_protocol": {
+      "batch_size": 2,
+      "preprocess": "native",
+      "requests_attempted": 9
+    },
+    "recommended_batch_size": 1,
+    "recommended_preprocess": "padded_v2",
+    "executed_v2": {
+      "batch_size": 1,
+      "preprocess": "padded_v2",
+      "new_candidates": 7,
+      "requests_attempted": 7
+    },
+    "execution_results": "outputs/automation_round_001/qwen_pilot/report/report.json"
+  },
+  "evaluation": {
+    "matching_iou": 0.5,
+    "precision_target": 0.95,
+    "recall_target": 0.95,
+    "also_report": [
+      "AP50",
+      "AP50_95",
+      "true_candidate_rejection",
+      "false_candidate_retention",
+      "uncertain_rate",
+      "token_usage"
+    ],
+    "diagnostic_pilot_can_prove_dual95": false,
+    "unresolved_items_remain_in_denominator": true
+  },
+  "promotion": {
+    "automatic_on_self_reported_confidence": false,
+    "requires_locked_independent_evaluation": true,
+    "requires_both_precision_and_recall_targets": true,
+    "replace_existing_model_on_regression": false
+  },
+  "native_data_next": {
+    "source": "Data/open_schematics",
+    "renderer": "kicad-cli",
+    "renderer_detected_in_current_environment": false,
+    "labels": "Derive projected symbol geometry with provenance; SVG export alone is not a YOLO label export.",
+    "split_before_cropping": "source_repository/project"
+  }
+}

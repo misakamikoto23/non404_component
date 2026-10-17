@@ -1,0 +1,734 @@
+--- PAGE 1 ---
+1
+"Bank of Changsha Cup" China Postgraduate IC Innovation Competition
+EDA Elite Challenge Contest Competition Problem Guidelines
+I. Contest Problem Name
+AI-driven automatic PCB schematic parsing
+II. Proposing Organization
+Engineering Research Center of Chiplet Design and Manufacturing of Zhejiang
+Province，BiAngXin Technology Co., Ltd.
+III. Problem Background
+Traditional PCB schematic design relies heavily on manual drawing and organizing,
+resulting in cumbersome processes, long iteration cycles, and high rates of human
+error. Currently, a large amount of hardware open-source materials, device drawings,
+and chip reference designs are stored in static image formats such as PDF and PNG,
+which cannot be directly edited, reused, or imported into projects, greatly limiting the
+implementation of digitalization and automation of circuit design.
+In recent years, intelligent schematic parsing empowered by artificial intelligence has
+become an important research direction in the field of PCB- design EDA. The overall
+solutions mainly fall into three technical categories:
+First, conventional computer- vision- based solutions. Leveraging algorithms such as
+edge detection, Hough transform, skeleton extraction, morphological processing and
+connected- component analysis, these approaches perform basic segmentation and
+extraction of wires, component contours and nodes. Template matching is further
+adopted to recognize common standard components.
+Second, deep- learning- based detection and segmentation solutions. Adopting
+mainstream computer vision models including YOLO, Faster R- CNN, Mask R- CNN
+and U- Net, these methods accomplish component object detection, pin- point
+
+--- PAGE 2 ---
+2
+segmentation and semantic segmentation for wire regions. Combined with text
+recognition algorithms such as CRNN and EasyOCR, the scheme extracts reference
+designators, parameters and pin texts. Distance matching, IoU matching and spatial
+orientation constraints are utilized to associate and bind components with texts, which
+effectively improves the recognition robustness for complex schematic drawings.
+Third, multimodal large language model fusion solutions. Relying on the general
+perception capability of vision large models and image- text understanding models,
+and combined with EDA domain- specific prior knowledge, this enables intelligent
+understanding of non- standard components, blurry drawings, complex topologies and
+ambiguous annotations. It mitigates the disadvantage of poor generalization and rigid
+rules in traditional CV algorithms, and improves circuit parsing accuracy under
+complex real- world scenarios.
+Substantial efforts have been made and breakthroughs have been achieved in both
+industry and academia for basic circuit parsing. Nevertheless, significant limitations
+and numerous challenges still remain in the recognition and parsing of complex PCB
+schematic diagrams. The technical difficulties are summarized as follows.
+First, insufficient recognition accuracy for densely- packed components. Existing
+models suffer large recognition errors under scenarios of high- density layout,
+component overlap, partial occlusion and tiny surface- mount devices. They are prone
+to missed detection, false detection and category confusion, and can hardly meet the
+accuracy requirements for engineering- grade applications.
+Second, low accuracy in pin localization and association. Conventional solutions can
+only recognize the overall bounding boxes of components, and fail to precisely
+distinguish pin coordinates and the correspondence between pin numbers for
+multi- pin components. Common issues include pin misalignment, missed pin
+recognition, and incorrect binding between pins and their corresponding components.
+Third, poor fault tolerance for text- component association. Conventional IoU- based
+
+--- PAGE 3 ---
+3
+matching and nearest- neighbor matching algorithms are prone to mismatching under
+scenarios such as cluttered texts, tilted annotations and cross- component text
+interference. As a result, precise semantic binding cannot be achieved between
+reference designators, parameters, pin names and their corresponding components.
+Fourth, weak capability for electrical parsing of complex topologies. Existing
+algorithms struggle to accurately distinguish physical crossings and electrical
+connections of wires. They produce large errors in connectivity judgment for
+T- junctions, cross junctions, multi- branch traces and drawings with broken- wire
+distortions, which readily leads to false connections, missing connections and
+spurious nets.
+To address the aforementioned technical difficulties and challenges, this competition
+problem focuses on the recognition and automatic parsing of complex PCB schematic
+diagrams, providing an innovation platform for tackling these bottlenecks. Figure 1
+illustrates the characteristics of the problems to be solved in this competition task via
+a representative example, which mainly includes the following two aspects.
+1)The circuits to be parsed in this competition task feature large- scale size, a large
+number of components, dense multi- pin devices, intricate connection relationships,
+cluttered and interference- prone texts, as well as great difficulty in flying nets
+suppression.
+2)This competition task requires comprehensive information recognition, including
+components (component key, type, name, value, and bbox), pins of each component
+(pin number, pin name, and pin coordinates), as well as circuit connectivity (the set of
+pins connected by each net and the corresponding segment collection of the net). In
+addition, text recognition must be accomplished to fulfil the task accurately, which
+poses substantial difficulties for complex PCB scenarios.
+
+--- PAGE 4 ---
+4
+Figure 1：Example of PCB schematic to be recognized
+（Source：https://oshwhub.com/ JLCPCB Open- Source Plaza）
+IV. Problem Description
+i.Competition task
+Given an image of a PCB circuit schematic, the task of this competition requires
+participating teams to recognize structured schematic information and output the
+results in the specified JSON format.
+1.Input：Circuit schematic image. The dataset provided by the competition is in PNG
+format. Participating teams may convert it into other formats for further processing
+according to their needs, and no constraints are imposed by the competition on such
+conversions.
+The participating solutions are required to predict three categories of information：
+a)‘components’： Instances of components in Figure1，For example `U1`、`R3`、
+`C12`，including category, text information and bbox.
+b)‘pins’ ： Pins of each component, including pin number, pin name and pin
+coordinates.
+
+--- PAGE 5 ---
+5
+c)‘nets’： Circuit connectivity, including the pins connected by each net and the set
+of line segments corresponding to the net.
+2.Output: Structured schematic information file in the JSON format specified by the
+competition. Appendix 1 provides a detailed description of the output JSON format
+with the case presented in Figure 1. Meanwhile, Appendix 2 offers a complete
+minimal output example.
+3.Provided by the competition: a) Component library, for fuzzy matching and
+accurate identification of components; b) Golden data dataset. The dataset is
+categorized by difficulty levels: simple, medium, and hard. Participating teams may
+perform comparison and correction against the competition- provided golden data to
+optimize their models and algorithms.
+The official dataset for this competition is PCBnet. Dataset information and access
+URL are shown below, see Reference [1].
+Dataset Name: PCBnet (A Large- Scale Dataset for PCB Schematic Understanding
+and Netlist Construction)
+URL：https://github.com/ECNUACRush/PCBnet/
+4.Participating teams may collect additional data on the basis of the dataset provided
+by the competition for model training and algorithm optimization.
+5.The final score comprehensively considers:
+a)Correctness of component recognition.
+b)Whether the component type, text and bbox are correct. For ICs, the ‘Name’ field is
+evaluated; for resistors and capacitors, the ‘value’ field is evaluated.
+c)Whether pin number, pin name and pin position are correct.
+d)Whether the net hypergraph connectivity is correct.
+e)Whether line segments are correctly drawn within their corresponding matched net.
+
+--- PAGE 6 ---
+6
+f)Token consumption.
+There are no restrictions on implementation approaches for this competition.
+Participating teams may adopt machine- learning algorithms, computer- vision
+algorithms, multimodal large language models, and so on.
+See Appendix IV for common notes.
+ii.Submission Instructions
+Two parts are required for submission: code and technical report.
+1.Code: Submit source code or executable files.
+This competition provides a runtime environment with Python and the designated
+version of PyTorch. This combination serves as the officially- recommended optimal
+technology stack for the competition. If participants choose programming languages
+other than Python, adopt different versions of Python / PyTorch, or use other
+deep- learning frameworks (such as TensorFlow, Keras, etc.), they must provide a
+runnable Docker image on their own.
+2.Technical Report: Submit the team’s project/solution introduction in Word format,
+including technical solution, experimental results and experiment summary.
+V. Scoring Criteria
+The final competition score FinalScore consists of two components. The first
+component is FinalScore_Accuracy, determined by the accuracy of the solution,
+worth 100 points. The second component is the bonus score FinalScore_Data derived
+from data contribution, worth up to 10 points. Participating teams may collect
+additional data based on the competition- provided PCBnet dataset for model training
+and algorithm optimization. Self- collected datasets can be submitted via the link
+provided by the competition. Valid and deduplicated sample cases will be counted
+toward the bonus score. Upon verification, these data will also be incorporated into
+the open- source PCBnet dataset.
+
+--- PAGE 7 ---
+7
+FinalScore=FinalScore_Accuracy+FinalScore_Data
+i.Solution accuracy score
+General constraints
+1.The competition provides a test environment with API access to the Qwen- 3.7- Plus
+large- language model. Participating teams shall take this test environment into
+account during development to ensure their code can run properly on the
+competition- provided test platform.
+2.Evaluation time: The total evaluation time for all test cases shall be less than 2 hours.
+A 2- hour time limit will be enforced during official evaluation. Evaluation will
+terminate upon expiry of the 2- hour window. Any unfinished test cases will receive
+zero points, and the overall score will be affected accordingly. See the scoring rubric
+below for details.
+A.Scoring Overview
+1.The number of test cases for competition scoring ranges from 30 to 50. The ratio of
+public test cases (visible to participating teams) to black- box test cases is 1:2.
+2.The difficulty level distribution of competition test cases is set as follow: 40 %
+medium cases and 60 % hard cases.
+3.The final accuracy score FinalScore_Accuracy consists of two parts. The first part is
+the test- case evaluation accuracy Score_Accuracy, accounting for 95 % of the total
+score. The second part accounts for Token consumption, denoted as Score_Token,
+which contributes 5 % of the total score. Assume the total number of competition
+scoring test cases is M, and the number of test cases completed by a participating team
+is m.
+FinalScore_Accuracy=0.95×Score_Accuracy+0.05× m
+M ×Score_Token
+4.The test- case evaluation accuracy score Score_Accuracy ranges from 0 to 100. It is
+calculated by summing the accuracy scores of all test cases completed by the
+
+--- PAGE 8 ---
+8
+participating team and dividing the sum by the total number of scoring test cases. The
+calculation formula is shown below.
+Score_Accuracy= 1
+M 1
+m
+Score_Accuracy_SingleCase 
+The single- case evaluation accuracy score Score_Accuracy_SingleCase ranges from
+0 to 100. It is computed via weighted calculation of four key metrics. The calculation
+formula is shown below.
+Score_Accuracy_SingleCase=100× 0.3×ComponentF1+0.25×PinF1+0.35×NetHypergraphF1+0.1×NetLineF1
+The four key metrics are shown in the table below：
+Metric Weight Meaning
+ComponentF1 0.3 Correctness of component recognition, including key, type,
+bbox, and essential text
+PinF1 0.25 Correctness of pin number, pin name and pin position
+NetHypergraphF1 0.35 Correctness of net connectivity
+NetLineF1 0.1 Correctness of segment detection within nets
+5.The score Score_Token, derived from the total Token consumption of participating
+teams, ranges from 0 to 100 and accounts for 5 % of the total score. Score_Token is
+calculated using an assignment- based scoring method, as detailed below:
+ Assume there are N participating teams. The Token
+consumption of all participating teams is sorted in descending order. The team with
+the highest Token consumption is ranked first, and the team with the lowest Token
+consumption is ranked N- th;
+ The sorted teams are divided into K intervals (K will
+be specified later according to the actual number of participating teams). Each
+participating team is assigned to a corresponding interval n based on its rank. The
+team with the lowest Token consumption falls into the K- th interval, while the team
+with the highest Token consumption falls into the 1st interval;
+ If a team falls within the n-th interval, its assigned
+
+--- PAGE 9 ---
+9
+score is:
+Score_Token=n× 100
+K
+ The table below illustrates with an example: assume
+there are 10 participating teams (N = 10), divided into 5 scoring intervals,
+K=5.
+Token consumption Rank Scoring Interval Assigned score
+Maximum 1 1 20
+Decrease sequentially 2
+Decrease sequentially 3 2 40
+Decrease sequentially 4
+Decrease sequentially 5 3 60
+Decrease sequentially 6
+Decrease sequentially 7 4 80
+Decrease sequentially 8
+Decrease sequentially 9 5 100
+Minium 10
+B.ComponentF1
+Components are matched directly by key. For example, U3 from Ground- Truth (GT)
+is only compared against U3 from Prediction (Pred). A component is regarded as
+correct only if all of the following conditions are satisfied simultaneously：
+a)Key match；
+b)Type correct；
+c)The bbox coordinate error shall be within the threshold, with a default threshold of
+‘20 px’.
+Where text comparison is required, the text shall be an exact match.
+Text comparison rules：
+a)‘ic’：compare ‘Name’；
+
+--- PAGE 10 ---
+10
+b)‘resistor’、‘capacitor’：compare ‘value’；
+c)Other categories: No text comparison is performed.
+C. PinF1
+Pins are first matched by component key, then by pin number. A pin shall satisfy：
+a)Pin name correct；
+b)Pin number correct；
+c)The pin coordinate distance shall be within the threshold, with a default threshold of
+‘5 px’. For pin coordinates and pin connection modes, refer to the detailed description
+in Appendix III.
+D.NetHypergraphF1
+Each net is treated as a pin set. During evaluation, Hungarian matching is performed
+between Pred nets and GT nets, followed by calculating whether the component pins
+within each net appear correctly.
+E.NetLineF1
+Lines are compared only within matched net pairs. Each edge_i serves as one segment
+detection target. A Pred segment is regarded as correctly detected if both- endpoint
+distances between the Pred segment and the GT segment are sufficiently close, with a
+default threshold of ‘5 px’.
+F.Notes
+a)The component key is critical. Incorrect keys will affect the scoring of components,
+pins and nets.
+b)Strings adopt exact- match comparison. 10k, 10K and 10 k will be treated as distinct
+strings.
+c)The net key itself does not need to match the GT, but the pin- connection
+relationships inside the hyperGraph shall be correct.
+
+--- PAGE 11 ---
+11
+d)All coordinate units are image pixels.
+e)Evaluation code will be provided for participating teams to evaluate their algorithms.
+The complete formulas, edge- case handling, and descriptions of diagnostic metrics
+will be delivered together with the code.
+f)Recommended directory structure：
+submission/
+case_001/
+case_001.json
+case_002/
+case_002.json
+ii.Bonus Points FinalScore_Data
+1. Participating teams may earn additional bonus points FinalScore_Data for
+self- collected submitted datasets, with a maximum score of 10 points.
+2. Participating teams can obtain bonus points only when the volume of valid case
+data submitted meets the minimum requirement. The specific minimum- volume
+requirement and scoring calculation method will be specified in the “Data Submission
+Instructions Document ”released by the contest problem.
+3. After verification and deduplication of the data submitted by participating teams, a
+subset of cases will be selected and incorporated into the evaluation dataset, with no
+more than 10 cases per team. The contest organizers will comprehensively consider
+the diversity and correctness of the data during the selection.
+4. Upon validation, data submitted by participating teams will be contributed to the
+open- source PCBnet dataset. Data contributors will also be listed as co- authors of
+this dataset, as referenced in Reference [1].
+
+--- PAGE 12 ---
+12
+a)Dataset Name: PCBnet (A Large- Scale Dataset for PCB Schematic Understanding
+and Netlist Construction)
+b)URL：https://github.com/ECNUACRush/PCBnet/
+5. The data submission methods and correctness evaluation criteria will be published
+in the “Data Submission Instructions Document” released by the contest problem.
+This document will also provide reference sources for data collection and
+recommended method for data annotation.
+VI. References
+[1] Zhen Huang，Yuhao Gao, Yuzhi Liu, Daian Cheng, Chengyuan Shao, Yucheng
+Chen, Yongjian Jia, Futing Zhang, Yichen Shi, Wenhao Wang, Zuyan He, Yangbo
+Wei, Zhanfei Chen, Jinlong Yan, Yu Zhang, Haoying Wu, Ting-Jung Lin, Lei He，
+PCBnet: A Dataset and Automatic Constructing of SPICE Netlists from Schematic
+Images，IEEE LAD 2026， July 29-31
+[2] Yichen Shi，Zhoufu Tao，Yuhao Gao，Li Huang、Hongyang Wang，Zhiping
+Yu ， Ting-Jung Lin ， Lei He, AMSnet 2.0: A Large AMS Database with AI
+Segmentation for Net Detection, 2025 IEEE International Conference on LLM-Aided
+Design (ICLAD)
+[3] Taiting Lu, Kaiyuan Lin,Yuxin Tian, Yubo Wang, Sharique Khatri, Akshit Kartik,
+Yixi Wang, Amey Rane, Yida Wang, Yifan Yang, Yi-Chao Chen, Yicheng Jin,
+Mahanth Gowda, OmniSch: A Multimodal PCB Schematic Benchmark For Structured
+Diagram Visual Reasoning，arXiv:2604.00270
+[4] Yuqi Jiang, Yupeng Hu, Jinyuan Deng, Xiaotian Qiu, Yucheng Cui, Xuyang He,
+Ruidong Li, Qi Sun, Cheng Xhou, Circuit-Think: A Multimodal Reasoning
+Framework for Automated Circuit-to-Netlist Translation with Trajectory-Guided
+Reinforcement Learning, Vol. 40 No.7:AAAI-26 Technical Tracks 7
+
+--- PAGE 13 ---
+13
+[5] Jincheng Lou, Ruohan Xu, Jiapeng Li, Yunyin Pi, RunZhe Tao, Weijian Fan, Xiao
+Tan, Guojie Luo, Yibo Lin, DiagramNet: An End-to-End Recognition Framework and
+Dataset for Non-Standard System-Level Diagrams, arXiv:2605.01338
+VII. Appendix
+Appendix I：Detailed explanation of output JSON format
+This case illustration takes the parsing result of the schematic diagram of the
+Raspberry Pi RP2350 Pico2 development board (Figure 1) as an example to elaborate
+on the output JSON. It covers format requirements, field definitions, typical examples,
+and screenshot comparisons for the three sections: components, pins, and nets within
+the target JSON.
+1. Data Description
+The output target JSON must contain three top- level fields.
+a)component: Keyed by component designator, describing each component’s type,
+name, value, and bounding- box.
+b)pins: Keyed by component designator, with subordinate pin_* entries that describe
+pin names and connection- point coordinates.
+c)nets: Keyed by net name, describing the hyperGraph (logical connection
+relationships) and edges (physical wire segments).
+2. Coordinate system description
+The coordinate system follows the lower- left origin of the original ParsedJson: the
+x- axis increases to the right, and the y- axis increases upward. The bbox format is [x1,
+y1, x2, y2], where (x1, y1) denotes the lower- left coordinate and (x2, y2) denotes the
+
+--- PAGE 14 ---
+14
+upper- right coordinate.
+3. Full schematic preview
+The figure below shows the full schematic of this case (identical to Figure 1,
+re- referenced for ease of viewing). Subsequent subsections will illustrate the JSON
+representation for boxic/box- type components, non- boxic/box- type components, pins,
+nets without flying wires, and nets with flying wires, based on the locally annotated
+regions in the figure.
+4. JSON example for boxic / box- type components
+Within the evaluation system of this contest, the "boxic" / "box" type generally refers
+to integrated- circuit (IC) components with rectangular packages containing multiple
+internal pins. In the output JSON, these correspond to components whose type field is
+set to "ic". The main control chip U3 (RP2350A) in this case serves as a typical
+example.
+Screenshot example
+
+--- PAGE 15 ---
+15
+U3 (RP2350A), a typical boxic/box- type component, is enclosed in the black box in
+Figure 2. Represented as a large rectangular frame on the schematic, this component
+has numerous pins arranged along its perimeter.
+Figure 2：Example of boxic / box- type components
+JSON Example
+
+--- PAGE 16 ---
+16
+Field Description
+Field Type Mandatory
+or not Description
+type string Yes
+Component category. "ic" stands for
+integrated circuit, corresponding to the
+‘boxic/box’type defined in this contest.
+name string/null Yes
+Component model or name. For ic- type
+components, this field participates in the
+component text scoring
+value string/null No Component value. IC components generally
+have no value, and shall output ‘null’
+bbox [x1,y1,x2,y2] Yes
+Component bounding- box, adopting
+bottom- left coordinate system. Satisfy x1 <
+x2 and y1 < y2
+Supplementary note: Example for unified numbering of duplicate designator
+When multiple components share the same designator within one schematic, the
+converter assigns unified suffixes _1, _2, _3 … to guarantee unique keys in the output
+JSON. There are no duplicate ICs in this case, yet four identical RUN test- point /
+net- label instances exist. They are renumbered as RUN_1, RUN_2, RUN_3, RUN_4
+in the output. A screenshot example is shown in Figure 3, which is a partial view of
+RUN_1 marked by the black box. RUN_2, RUN_3 and RUN_4 are located at the
+upper- right, lower- left and lower- left regions of the drawing respectively, with no
+
+--- PAGE 17 ---
+17
+direct wired connections between them.
+Figure 3：Example of unified numbering for multiple duplicate components
+JSON Example
+Field Description
+Field Type Mandatory
+or not
+Description
+type string Yes Component category. RUN is identified as a
+net- label / test- point in the raw data, and is
+converted to type "vbus_in"
+name string/null Yes Component display name. The Name field of the
+four RUN_* entries is "RUN"
+value string/null No Test- points have no value, output shall be ‘null’
+bbox [x1,y1,x2,y2] Yes Bounding- box for each test- point. The four
+RUN_* are distributed at different positions across
+the schematic
+
+--- PAGE 18 ---
+18
+Note
+a)The unified numbering rule applies to all designator, including ic, vbus_in, vcc, gnd,
+resistor, capacitor and others. Designator that appears only once retains its original
+name.
+b)The numbering sequence follows the natural sort order of component ID.
+Accordingly, the first- occurring RUN becomes RUN_1, the second becomes RUN_2,
+and so on.
+c)Duplicate components of ic type will also be numbered following this rule. For
+example, two identical main controllers will be renamed U3_1 and U3_2.
+5. JSON example for non- boxic/box- type components
+Non- boxic/box- type components include resistors, capacitors, inductors, crystal
+oscillators, switches, connectors and so on. Such components typically have only two
+pins or a small number of pins, and their shapes are not large rectangular IC packages.
+The resistor R1 is used here as an illustrative example.
+Screenshot example
+Figure 4 shows R1 (5.1 kΩ resistor), a typical non- boxic/box- type component. It can
+be seen that it has only two pins and adopts the schematic symbol for a resistor：
+Figure 4：Example for non- boxic/box- type components
+JSON example
+
+--- PAGE 19 ---
+19
+
+
+--- PAGE 20 ---
+20
+Field Description
+Field Type Mandatory or
+not Description
+type string Yes
+Component category，for example
+`"resistor"`、`"capacitor"`、`"inductor"`、
+`"crystal"`、`"switch"`、`"connector"` and so
+on
+name string/null Yes
+Component model or package name. For
+resistors and capacitors, this field is generally
+not included in scoring but is retained in the
+output
+value string/null Conditionally
+Required
+This field participates in the component text
+scoring for resistors and capacitors
+bbox [x1,y1,x2,y2] Yes Component bounding- box
+Note
+a)The value field for resistors and capacitors is case- sensitive. For example, "10k"
+and "10K" will be treated as distinct values.
+b)The bbox is not used for component matching. It is only applied to key- matched
+components to compute coordinate error.
+c)Strict matching for component text: compare the Name field for ICs; compare the
+value field for resistors and capacitors; text comparison is not performed for other
+component categories.
+6. JSON example for pins
+The pins section describes pin information for each component. The first- level keys
+must correspond to the designator in components. Second- level keys are
+recommended to adopt the pin_* format, derived from the pinNumber field in the
+original data. If pinNumber is empty, contains the ∅ placeholder, or consists of OCR
+noise, pins will be auto- numbered as pin_1, pin_2, and so on.
+Screenshot example
+Figure 5 marks pin_1 (IOVDD, left side) and pin_2 (GPIO0, right side) of U3 with
+
+--- PAGE 21 ---
+21
+black circles：
+Figure 5：Pin example
+JSON Example
+Take pin_1 (IOVDD) and pin_2 (GPIO0) of U3 as an example below：
+Field description
+Field Type Mandatory
+or not
+Description
+pinname string Yes Pin Name: used for strict string- based scoring
+point.x number Yes Pin endpoint x- coordinate
+point.y number Yes Pin endpoint y- coordinate
+Note
+a)Pin matching is not nearest- point matching. For scoring, component key matching
+is required first, followed by pin- number- based matching.
+b)The pin number of pin_2 is "2", and the pin number of pin_A5 is "A5".
+c)For pins with empty or noisy pinNumber, the converter assigns automatic
+
+--- PAGE 22 ---
+22
+numbering. For instance, the only pin of RUN_1 will be output as pin_1.
+d)If one pin corresponds to multiple pin numbers (e.g., "5,6,7,8,9"), the converter
+splits it into separate entries such as pin_5, pin_6, and so forth.
+7. JSON format example for HyperGraph (without flying nets)
+Nets without flying nets: all pins within the HyperGraph are directly connected by
+physical wires on the schematic. The edges section of a net describes the geometric
+line segments of these physical wires.
+This example selects net $1N695, which connects U1.A5 (the CC1 pin of USB
+Type- C) and R1.1.
+Screenshot example
+Figure 6 highlights U1.A5 and R1.1 with black circles. The two points are directly
+connected by a green wire. Within the edges of this net, there is only one entry edge_1,
+running from (100.0, 760.0) to (170.0, 760.0), which exactly corresponds to the wire
+shown in the figure.
+Figure 6：Example of net without flying nets
+JSON Example
+Field description
+
+--- PAGE 23 ---
+23
+Field Type Mandatory
+or not
+Description
+hyperGraph string Yes Pins logically connected by the current net, formatted as:
+(component_id.pin_number,component_id.pin_number,...)
+edges object Yes Collection of physical wire segments for the current net;
+each edge_i represents a two- point line segment.
+hyperGraph rules:
+(component_id.pin_number,component_id.pin_number,...)
+For example, (U1.A5,R1.1) will be parsed as: U1.pin_A5, R1.pin_1.
+edges rules:
+edges is an object, and its keys are recommended to be edge_1, edge_2, ….
+The value of each edge_i must be a point list of length 2: [start_point, end_point].
+The two points can be identical, representing a zero- length segment or a point- like
+segment.
+If a wire contains multiple turning points, split it into multiple two- point edge_i
+segments. Do not write it as [p1, p2, p3]. Scoring references the number of edges; the
+count must match exactly. Extra or missing entries will result in point deductions.
+Notes
+a)The net key itself is not required to exactly match the GT. During scoring, nets are
+matched against ground- truth via the Hungarian algorithm based on HyperGraph
+content.
+b)Each edge_i must contain exactly two points. More or fewer than two points will
+trigger a format error.
+8. JSON format example for HyperGraph (with flying nets)
+What are flying nets?
+
+--- PAGE 24 ---
+24
+Flying nets refer to multiple non- VCC/GND test points or net- label components with
+identical names scattered at different physical locations on the schematic. They are
+logically connected together by sharing the same net name. Other component pins
+directly connected to these identically- named components belong to the same net
+even if no physical wires are drawn between them.
+In this case, RUN_1, RUN_2, RUN_3, and RUN_4 are four test- point / net- label
+components with the same name, located at different positions on the schematic.
+Together they form the RUN net:
+ RUN_1 is directly connected to U3.26;
+ RUN_2 is directly connected to U5.17;
+ RUN_3 is directly connected to R8.1;
+ RUN_4 is directly connected to SW2.1;
+Although no wires are drawn between U3, U5, R8 and SW2 on the schematic, they
+are logically part of the same net because all of them connect to the identically- named
+RUN net. This is the flying- net relationship.
+Screenshot example
+Figure 7 shows the full schematic. Black boxes mark components including U3, U5,
+R8 and SW2, as well as each pin involved in the RUN net. These points are
+distributed across different regions of the drawing and are logically connected via the
+RUN net, forming a net with flying nets.
+
+--- PAGE 25 ---
+25
+Figure 7：Example of net with flying nets
+JSON Example
+Field description
+Field Type Mandatory
+or not Description
+hyperGraph string Yes Pins logically connected by the current net, including
+all pins associated via flying nets.
+edges object Yes Collection of physical wire segments for the current
+
+--- PAGE 26 ---
+26
+net. For nets with flying nets, edges are typically
+zero- length segments at each connection point.
+Flying- net parsing
+hyperGraph String
+(U3.26,RUN_1.1,U5.17,RUN_2.1,R8.1,RUN_3.1,SW2.1,RUN_4.1) It will be parsed
+into the following eight pins：
+U3.pin_26
+RUN_1.pin_1
+U5.pin_17
+RUN_2.pin_1
+R8.pin_1
+RUN_3.pin_1
+SW2.pin_1
+RUN_4.pin_1
+Summary of flying- net characteristics
+a)Dispersed components with identical names: The core of a net with flying nets
+consists of multiple identically- named net- labels or test points, such as RUN_1,
+RUN_2, RUN_3, RUN_4.
+b)Logical- only connection instead of physical connection: These identically- named
+components have no connecting wires on the schematic but share the same net name.
+c)Point- like segments for edges: Since flying nets have no physical wires, each
+connection point is represented as a zero- length segment (with identical start and end
+points) within edges.
+d)HyperGraph covers all relevant pins: it includes not only the identically- named
+test- points themselves, but also all component pins directly connected to them.
+
+--- PAGE 27 ---
+27
+Notes
+a)Power/Ground nets such as VCC/GND also have multiple identically- named
+components, yet they are generally treated as ordinary power nets and not processed
+as flying nets. Flying nets specifically refer to identically- named net- labels or test
+points other than VCC/GND.
+b)If there is only one identically- named test point, the net is a regular net and no
+flying net is formed.
+c)The HyperGraph of a net with flying nets must include all logically- connected pins.
+Omitting any pin will result in incorrect connection relationships.
+Appendix II: Complete minimal output example
+Refer to the descriptions in Appendix I, the following is a simplified complete output
+example for this case:
+
+--- PAGE 28 ---
+28
+Appendix III: Description of pin coordinates and pin connection modes
+
+--- PAGE 29 ---
+29
+This description takes the schematic in Figure I as an example to illustrate the
+judgment and representation methods for two common pin connection modes in the
+target JSON.
+a)Red pin connected by green wire: The wire endpoint coincides with the component
+pin position, and the intersection point between the green wire and the red pin serves
+as the pin coordinate.
+b)Red- to- red pin connection: The pin endpoints of two components overlap and are
+electrically connected directly at the same coordinate.
+c)Coordinate system follows the lower- left origin of the original ParsedJson: the
+x- axis increases to the right, and the y- axis increases upward. The format of a point is
+{ "x": x, "y": y }.
+1. Example description
+Figure 8 schematically illustrates the core elements of the two connection modes.
+Each component contains an outer bounding box (outer bbox) and an inner bounding
+box (body bbox): the pin tip point lies on the edge of the outer bbox, while the base
+point connects to the inner bbox.
+Figure 8(a) shows the case of “red pin connected by green wire”, where the green wire
+connects the tip points on the outer bboxes of two components. Figure 8(b) shows the
+case of “direct connection between red pins”. The outer bboxes of the two
+components touch each other, and the tip points of the two pins coincide, without any
+green wire in- between.
+
+--- PAGE 30 ---
+30
+Figure 8：Schematic diagram of pin connection modes
+2. Red pin connected by green wire
+Scenario description
+When a physically drawn wire exists in the schematic, the wire is typically rendered
+as a green line segment. The intersection between the wire and the component pin (red
+endpoint) defines the connection- point coordinate of the pin. In the output JSON, the
+point of this pin shall record this intersection.
+Screenshot example
+Figure 9 shows the USB region on the left side of U3 (RP2350A). The red circle
+marks pin- 51 USB_DM of U3 (namely P_47), and the red arrow points to this pin. A
+horizontal green wire extends leftward from this pin and connects at its other end to
+pin P_100 (i.e., USB_D- _3.1) of the net- label USB_D- _3.
+
+--- PAGE 31 ---
+31
+Figure 9：Illustration of pin connections
+
+--- PAGE 32 ---
+32
+JSON Example
+3. Direct connection between red pins
+Scenario description
+When the pin endpoints of two components directly coincide, no separate green wire
+is drawn on the schematic. Instead, the two red pin endpoints are electrically
+connected at the identical position. In this case, the connection point shall be marked
+with a circle and clearly indicated by an arrow; meanwhile, both components shall be
+included in the figure to clarify which two pins are connected.
+
+--- PAGE 33 ---
+33
+Screenshot example
+Figure 10 shows the partial region of R5 (5.1 kΩ resistor) and GND_4 (GND
+net- label / ground symbol). The red circle marks the direct- connection point of the
+two red pins, with the red arrow pointing to this point. This connection point
+corresponds to the coordinate location of pin 2 P_89 of R5 and pin 1 P_91 of GND_4.
+Figure 10：Illustration of pin connections
+
+--- PAGE 34 ---
+34
+JSON Example
+Appendix IV: Common Notes
+1. The component key is critical. Writing U3 as U8 will cause the component, its pins,
+and associated nets to receive no score.
+2. The pin key shall consistently adopt the format pin_<pin_number>, since pin
+matching directly utilizes the pin number.
+3. Pin entries in hyperGraph shall be consistent with the pin key. For example, U1.2
+corresponds to pins.U1.pin_2.
+4. The net key itself does not need to be consistent with the GT, but the pin set of the
+net in hyperGraph shall be correct.
+
+--- PAGE 35 ---
+35
+5. Line geometry must be placed under the edges of the correct net. Entries assigned
+to a wrong net will not receive points merely due to geometric proximity.
+6. Strings adopt strict exact- match comparison. 10k, 10K and 10 k are treated as
+distinct strings.
+7. Coordinates are in image pixels. The default threshold for both pins and lines
+is 5 px.
+* For issues not covered in this problem statement guideline, please refer to the
+contest Q&A document.

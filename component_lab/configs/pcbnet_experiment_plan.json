@@ -1,0 +1,36 @@
+{
+  "source_policy": "Only original Dataset300 images and *_CVJsonStd.json; exclude user manual JSON and AI candidate annotations",
+  "dataset": "data/yolo/pcbnet34_v1/dataset.yaml",
+  "baseline": {
+    "run": "pcbnet34_yolo26n_v1",
+    "epochs": 20,
+    "nbs": 64,
+    "imgsz": 1280,
+    "batch": 2
+  },
+  "nano_v2": {
+    "run": "pcbnet34_yolo26n_v2",
+    "epochs": 80,
+    "nbs": 16,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 2
+  },
+  "evaluation_policy": "Model and inference choices use validation only. Test is evaluated after choices, not for threshold tuning.",
+  "small_comparison": {
+    "initial_model": "weights/yolo26s.pt",
+    "policy": "Probe memory first; compare validation under matching training settings, disclose batch differences if memory requires batch 1.",
+    "epochs": 20,
+    "nbs": 16,
+    "imgsz": 1280,
+    "lrf": 0.775,
+    "reference_checkpoint": "runs/pcbnet34_yolo26n_v2/weights/epoch20_comparison.pt",
+    "interpretation": "Matched first-20-epoch capacity screen; learning-rate schedule matches first20 of Nano80; not a comparison of final convergence limits."
+  },
+  "ai_annotation": {
+    "agent_model": "gpt-5.6-sol",
+    "directory": "data/ai_annotations_v1",
+    "training_use": false,
+    "policy": "Original labels are seeds; distinguish conversion from actual visual review and keep change history."
+  }
+}

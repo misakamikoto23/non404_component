@@ -1,0 +1,2410 @@
+{
+  "types": {
+    "r": 1588,
+    "switch": 159,
+    "gnd": 2170,
+    "v": 1103,
+    "other": 69,
+    "battary": 24,
+    "bjt_npn": 2,
+    "box": 975,
+    "c": 1595,
+    "l": 109,
+    "crystal_2pin": 44,
+    "led": 181,
+    "net_input": 339,
+    "pin": 175,
+    "net_output": 76,
+    "mosfet_npn": 6,
+    "bjt_pnp": 2,
+    "d": 198,
+    "amp": 10,
+    "circle_header": 4,
+    "crystal_3pin": 6,
+    "mosfet": 66,
+    "crystal_4pin": 8,
+    "fuse": 20,
+    "buzzer": 21,
+    "bjt": 51,
+    "motor": 8,
+    "transfomer": 5,
+    "jumper": 9,
+    "testpoint": 43,
+    "block": 13,
+    "net_bidirection": 13,
+    "seg": 1,
+    "amp_5pin": 11,
+    "amp_3pin": 10,
+    "ant": 4,
+    "esd": 6,
+    "m3螺丝": 58,
+    "net_short": 163,
+    "crystal": 1,
+    "mosfet_pnp": 1,
+    "opt": 2,
+    "dc": 6
+  },
+  "duplicates": [
+    [
+      "赛题六公开数据集/10_GTcase/0025-Altium Designer/0025-Altium Designer_target.json",
+      "赛题六公开数据集/200_train_cases/0025/0025-Altium Designer_target_named.json"
+    ],
+    [
+      "赛题六公开数据集/10_GTcase/0030-Datasheet/0030-Datasheet_target.json",
+      "赛题六公开数据集/200_train_cases/0030/0030-Datasheet_target_named.json"
+    ],
+    [
+      "赛题六公开数据集/10_GTcase/0036-Datasheet/0036-Datasheet_target.json",
+      "赛题六公开数据集/200_train_cases/0036/0036-Datasheet_target_named.json"
+    ],
+    [
+      "赛题六公开数据集/10_GTcase/0037-Datasheet/0037-Datasheet_target.json",
+      "赛题六公开数据集/200_train_cases/0037/0037-Datasheet_target_named.json"
+    ],
+    [
+      "赛题六公开数据集/10_GTcase/0042-Altium Designer/0042-Altium Designer_target.json",
+      "赛题六公开数据集/200_train_cases/0042/0042-Altium Designer_target_named.json"
+    ],
+    [
+      "赛题六公开数据集/10_GTcase/0059-Datasheet/0059-Datasheet_target.json",
+      "赛题六公开数据集/200_train_cases/0059/0059-Datasheet_target_named.json"
+    ],
+    [
+      "赛题六公开数据集/10_GTcase/0065-Datasheet/0065-Datasheet_target.json",
+      "赛题六公开数据集/200_train_cases/0065/0065-Datasheet_target_named.json"
+    ],
+    [
+      "赛题六公开数据集/10_GTcase/0070-Datasheet/0070-Datasheet_target.json",
+      "赛题六公开数据集/200_train_cases/0070/0070-Datasheet_target_named.json"
+    ],
+    [
+      "赛题六公开数据集/10_GTcase/0099-other/0099-other_target.json",
+      "赛题六公开数据集/200_train_cases/0099/0099-other_target_named.json"
+    ],
+    [
+      "赛题六公开数据集/10_GTcase/0100-Datasheet/0100-Datasheet_target.json",
+      "赛题六公开数据集/200_train_cases/0100/0100-Datasheet_target_named.json"
+    ],
+    [
+      "赛题六公开数据集/200_train_cases/0118/0118-jlc_target_named.json",
+      "赛题六公开数据集/200_train_cases/0142/0142-jlc_target_named.json"
+    ],
+    [
+      "赛题六公开数据集/200_train_cases/0139/0139-jlc_target_named.json",
+      "赛题六公开数据集/200_train_cases/0194/0194-jlc_target_named.json"
+    ]
+  ],
+  "image_errors": [],
+  "cases": [
+    {
+      "file": "赛题六公开数据集/10_GTcase/0025-Altium Designer/0025-Altium Designer_target.json",
+      "group": "GT",
+      "components": 10,
+      "pins": 18,
+      "nets": 6,
+      "size": [
+        586,
+        435
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/10_GTcase/0030-Datasheet/0030-Datasheet_target.json",
+      "group": "GT",
+      "components": 13,
+      "pins": 28,
+      "nets": 7,
+      "size": [
+        577,
+        450
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/10_GTcase/0036-Datasheet/0036-Datasheet_target.json",
+      "group": "GT",
+      "components": 21,
+      "pins": 37,
+      "nets": 18,
+      "size": [
+        832,
+        376
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/10_GTcase/0037-Datasheet/0037-Datasheet_target.json",
+      "group": "GT",
+      "components": 13,
+      "pins": 24,
+      "nets": 9,
+      "size": [
+        701,
+        675
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/10_GTcase/0042-Altium Designer/0042-Altium Designer_target.json",
+      "group": "GT",
+      "components": 16,
+      "pins": 41,
+      "nets": 13,
+      "size": [
+        546,
+        294
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/10_GTcase/0059-Datasheet/0059-Datasheet_target.json",
+      "group": "GT",
+      "components": 13,
+      "pins": 29,
+      "nets": 10,
+      "size": [
+        938,
+        509
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/10_GTcase/0065-Datasheet/0065-Datasheet_target.json",
+      "group": "GT",
+      "components": 17,
+      "pins": 36,
+      "nets": 12,
+      "size": [
+        578,
+        297
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/10_GTcase/0070-Datasheet/0070-Datasheet_target.json",
+      "group": "GT",
+      "components": 14,
+      "pins": 29,
+      "nets": 15,
+      "size": [
+        1169,
+        608
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/10_GTcase/0099-other/0099-other_target.json",
+      "group": "GT",
+      "components": 28,
+      "pins": 57,
+      "nets": 19,
+      "size": [
+        907,
+        731
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/10_GTcase/0100-Datasheet/0100-Datasheet_target.json",
+      "group": "GT",
+      "components": 39,
+      "pins": 79,
+      "nets": 36,
+      "size": [
+        933,
+        625
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0001/0001-KiCad_target_named.json",
+      "group": "train",
+      "components": 91,
+      "pins": 224,
+      "nets": 125,
+      "size": [
+        1442,
+        1090
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0002/0002-Datasheet_target_named.json",
+      "group": "train",
+      "components": 12,
+      "pins": 28,
+      "nets": 8,
+      "size": [
+        1127,
+        509
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0003/0003-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 36,
+      "pins": 143,
+      "nets": 67,
+      "size": [
+        4491,
+        3173
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0004/0004-other_target_named.json",
+      "group": "train",
+      "components": 59,
+      "pins": 136,
+      "nets": 68,
+      "size": [
+        868,
+        680
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0005/0005-kicad_target_named.json",
+      "group": "train",
+      "components": 18,
+      "pins": 56,
+      "nets": 19,
+      "size": [
+        561,
+        348
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0006/0006-jlc_target_named.json",
+      "group": "train",
+      "components": 86,
+      "pins": 146,
+      "nets": 75,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0007/0007-Datasheet_target_named.json",
+      "group": "train",
+      "components": 21,
+      "pins": 51,
+      "nets": 31,
+      "size": [
+        1052,
+        642
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0008/0008-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 36,
+      "pins": 72,
+      "nets": 33,
+      "size": [
+        524,
+        510
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0009/0009-Datasheet_target_named.json",
+      "group": "train",
+      "components": 16,
+      "pins": 44,
+      "nets": 25,
+      "size": [
+        871,
+        431
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0010/0010-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 22,
+      "pins": 77,
+      "nets": 42,
+      "size": [
+        808,
+        562
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0011/0011-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 61,
+      "pins": 164,
+      "nets": 85,
+      "size": [
+        3450,
+        2280
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0012/0012-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 44,
+      "pins": 100,
+      "nets": 33,
+      "size": [
+        1405,
+        910
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0013/0013-KiCad_target_named.json",
+      "group": "train",
+      "components": 30,
+      "pins": 71,
+      "nets": 56,
+      "size": [
+        1170,
+        827
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0014/0014-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 33,
+      "pins": 87,
+      "nets": 43,
+      "size": [
+        3450,
+        2280
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0015/0015-Datasheet_target_named.json",
+      "group": "train",
+      "components": 36,
+      "pins": 80,
+      "nets": 45,
+      "size": [
+        1024,
+        521
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0016/0016-Datasheet_target_named.json",
+      "group": "train",
+      "components": 55,
+      "pins": 208,
+      "nets": 83,
+      "size": [
+        1618,
+        1079
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0017/0017-Datasheet_target_named.json",
+      "group": "train",
+      "components": 43,
+      "pins": 163,
+      "nets": 70,
+      "size": [
+        1591,
+        709
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0018/0018-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 41,
+      "pins": 132,
+      "nets": 69,
+      "size": [
+        1604,
+        664
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0019/0019-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 34,
+      "pins": 164,
+      "nets": 102,
+      "size": [
+        562,
+        457
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0020/0020-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 68,
+      "pins": 195,
+      "nets": 90,
+      "size": [
+        1217,
+        791
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0021/0021-other_target_named.json",
+      "group": "train",
+      "components": 16,
+      "pins": 27,
+      "nets": 11,
+      "size": [
+        982,
+        731
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0022/0022-other_target_named.json",
+      "group": "train",
+      "components": 17,
+      "pins": 35,
+      "nets": 10,
+      "size": [
+        992,
+        443
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0023/0023-other_target_named.json",
+      "group": "train",
+      "components": 12,
+      "pins": 20,
+      "nets": 7,
+      "size": [
+        761,
+        664
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0024/0024-other_target_named.json",
+      "group": "train",
+      "components": 27,
+      "pins": 67,
+      "nets": 38,
+      "size": [
+        916,
+        515
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0025/0025-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 10,
+      "pins": 18,
+      "nets": 9,
+      "size": [
+        586,
+        435
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0026/0026-Datasheet_target_named.json",
+      "group": "train",
+      "components": 29,
+      "pins": 67,
+      "nets": 33,
+      "size": [
+        711,
+        628
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0027/0027-Datasheet_target_named.json",
+      "group": "train",
+      "components": 45,
+      "pins": 89,
+      "nets": 39,
+      "size": [
+        1039,
+        539
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0028/0028-Datasheet_target_named.json",
+      "group": "train",
+      "components": 67,
+      "pins": 149,
+      "nets": 50,
+      "size": [
+        1411,
+        805
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0029/0029-Datasheet_target_named.json",
+      "group": "train",
+      "components": 36,
+      "pins": 88,
+      "nets": 38,
+      "size": [
+        1094,
+        792
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0030/0030-Datasheet_target_named.json",
+      "group": "train",
+      "components": 13,
+      "pins": 29,
+      "nets": 7,
+      "size": [
+        577,
+        450
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0031/0031-Datasheet_target_named.json",
+      "group": "train",
+      "components": 21,
+      "pins": 51,
+      "nets": 22,
+      "size": [
+        1691,
+        776
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0032/0032-Datasheet_target_named.json",
+      "group": "train",
+      "components": 20,
+      "pins": 43,
+      "nets": 16,
+      "size": [
+        525,
+        711
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0033/0033-Datasheet_target_named.json",
+      "group": "train",
+      "components": 23,
+      "pins": 44,
+      "nets": 18,
+      "size": [
+        659,
+        442
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0034/0034-Datasheet_target_named.json",
+      "group": "train",
+      "components": 30,
+      "pins": 55,
+      "nets": 24,
+      "size": [
+        5100,
+        3296
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0035/0035-Datasheet_target_named.json",
+      "group": "train",
+      "components": 24,
+      "pins": 45,
+      "nets": 18,
+      "size": [
+        998,
+        578
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0036/0036-Datasheet_target_named.json",
+      "group": "train",
+      "components": 21,
+      "pins": 37,
+      "nets": 18,
+      "size": [
+        832,
+        376
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0037/0037-Datasheet_target_named.json",
+      "group": "train",
+      "components": 13,
+      "pins": 24,
+      "nets": 9,
+      "size": [
+        701,
+        675
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0038/0038-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 15,
+      "pins": 28,
+      "nets": 12,
+      "size": [
+        1119,
+        346
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0039/0039-other_target_named.json",
+      "group": "train",
+      "components": 16,
+      "pins": 35,
+      "nets": 10,
+      "size": [
+        1081,
+        604
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0040/0040-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 15,
+      "pins": 62,
+      "nets": 47,
+      "size": [
+        821,
+        476
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0041/0041-Datasheet_target_named.json",
+      "group": "train",
+      "components": 75,
+      "pins": 234,
+      "nets": 111,
+      "size": [
+        5100,
+        3296
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0042/0042-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 16,
+      "pins": 41,
+      "nets": 13,
+      "size": [
+        546,
+        294
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0043/0043-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 50,
+      "pins": 169,
+      "nets": 92,
+      "size": [
+        4491,
+        3173
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0044/0044-Datasheet_target_named.json",
+      "group": "train",
+      "components": 12,
+      "pins": 28,
+      "nets": 16,
+      "size": [
+        567,
+        240
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0045/0045-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 46,
+      "pins": 121,
+      "nets": 70,
+      "size": [
+        481,
+        448
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0046/0046-Datasheet_target_named.json",
+      "group": "train",
+      "components": 111,
+      "pins": 185,
+      "nets": 73,
+      "size": [
+        5100,
+        3296
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0047/0047-Datasheet_target_named.json",
+      "group": "train",
+      "components": 31,
+      "pins": 71,
+      "nets": 32,
+      "size": [
+        533,
+        362
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0048/0048-Datasheet_target_named.json",
+      "group": "train",
+      "components": 38,
+      "pins": 78,
+      "nets": 30,
+      "size": [
+        1340,
+        672
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0049/0049-Datasheet_target_named.json",
+      "group": "train",
+      "components": 37,
+      "pins": 76,
+      "nets": 29,
+      "size": [
+        1144,
+        821
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0050/0050-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 102,
+      "pins": 228,
+      "nets": 84,
+      "size": [
+        4500,
+        2850
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0051/0051-Datasheet_target_named.json",
+      "group": "train",
+      "components": 13,
+      "pins": 24,
+      "nets": 9,
+      "size": [
+        902,
+        614
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0052/0052-Datasheet_target_named.json",
+      "group": "train",
+      "components": 16,
+      "pins": 32,
+      "nets": 11,
+      "size": [
+        640,
+        612
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0053/0053-Datasheet_target_named.json",
+      "group": "train",
+      "components": 19,
+      "pins": 38,
+      "nets": 11,
+      "size": [
+        1028,
+        716
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0054/0054-Datasheet_target_named.json",
+      "group": "train",
+      "components": 10,
+      "pins": 19,
+      "nets": 6,
+      "size": [
+        733,
+        541
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0055/0055-Datasheet_target_named.json",
+      "group": "train",
+      "components": 10,
+      "pins": 18,
+      "nets": 6,
+      "size": [
+        775,
+        425
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0056/0056-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 47,
+      "pins": 103,
+      "nets": 34,
+      "size": [
+        5100,
+        3296
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0057/0057-Datasheet_target_named.json",
+      "group": "train",
+      "components": 32,
+      "pins": 93,
+      "nets": 23,
+      "size": [
+        1420,
+        723
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0058/0058-Datasheet_target_named.json",
+      "group": "train",
+      "components": 35,
+      "pins": 70,
+      "nets": 29,
+      "size": [
+        1242,
+        2006
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0059/0059-Datasheet_target_named.json",
+      "group": "train",
+      "components": 13,
+      "pins": 26,
+      "nets": 8,
+      "size": [
+        938,
+        509
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0060/0060-jlc_target_named.json",
+      "group": "train",
+      "components": 42,
+      "pins": 122,
+      "nets": 54,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0061/0061-Datasheet_target_named.json",
+      "group": "train",
+      "components": 26,
+      "pins": 70,
+      "nets": 23,
+      "size": [
+        1414,
+        844
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0062/0062-Datasheet_target_named.json",
+      "group": "train",
+      "components": 14,
+      "pins": 25,
+      "nets": 10,
+      "size": [
+        947,
+        771
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0063/0063-other_target_named.json",
+      "group": "train",
+      "components": 15,
+      "pins": 29,
+      "nets": 12,
+      "size": [
+        1359,
+        556
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0064/0064-other_target_named.json",
+      "group": "train",
+      "components": 16,
+      "pins": 40,
+      "nets": 18,
+      "size": [
+        892,
+        715
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0065/0065-Datasheet_target_named.json",
+      "group": "train",
+      "components": 17,
+      "pins": 36,
+      "nets": 12,
+      "size": [
+        578,
+        297
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0066/0066-Datasheet_target_named.json",
+      "group": "train",
+      "components": 11,
+      "pins": 22,
+      "nets": 7,
+      "size": [
+        775,
+        697
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0067/0067-Datasheet_target_named.json",
+      "group": "train",
+      "components": 15,
+      "pins": 25,
+      "nets": 11,
+      "size": [
+        847,
+        458
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0068/0068-Datasheet_target_named.json",
+      "group": "train",
+      "components": 12,
+      "pins": 28,
+      "nets": 12,
+      "size": [
+        894,
+        554
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0069/0069-Datasheet_target_named.json",
+      "group": "train",
+      "components": 15,
+      "pins": 25,
+      "nets": 10,
+      "size": [
+        789,
+        489
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0070/0070-Datasheet_target_named.json",
+      "group": "train",
+      "components": 14,
+      "pins": 27,
+      "nets": 13,
+      "size": [
+        1169,
+        608
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0071/0071-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 12,
+      "pins": 37,
+      "nets": 14,
+      "size": [
+        834,
+        402
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0072/0072-Datasheet_target_named.json",
+      "group": "train",
+      "components": 19,
+      "pins": 38,
+      "nets": 17,
+      "size": [
+        1086,
+        528
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0073/0073-Datasheet_target_named.json",
+      "group": "train",
+      "components": 12,
+      "pins": 30,
+      "nets": 14,
+      "size": [
+        897,
+        388
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0074/0074-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 34,
+      "pins": 94,
+      "nets": 48,
+      "size": [
+        1533,
+        1238
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0075/0075-Datasheet_target_named.json",
+      "group": "train",
+      "components": 71,
+      "pins": 152,
+      "nets": 56,
+      "size": [
+        820,
+        1014
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0076/0076-Datasheet_target_named.json",
+      "group": "train",
+      "components": 116,
+      "pins": 197,
+      "nets": 70,
+      "size": [
+        3300,
+        2550
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0077/0077-Datasheet_target_named.json",
+      "group": "train",
+      "components": 57,
+      "pins": 103,
+      "nets": 38,
+      "size": [
+        4959,
+        3509
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0078/0078-Datasheet_target_named.json",
+      "group": "train",
+      "components": 21,
+      "pins": 48,
+      "nets": 23,
+      "size": [
+        803,
+        1041
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0079/0079-Datasheet_target_named.json",
+      "group": "train",
+      "components": 22,
+      "pins": 43,
+      "nets": 18,
+      "size": [
+        680,
+        464
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0080/0080-Datasheet_target_named.json",
+      "group": "train",
+      "components": 128,
+      "pins": 263,
+      "nets": 105,
+      "size": [
+        3300,
+        2550
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0081/0081-Datasheet_target_named.json",
+      "group": "train",
+      "components": 14,
+      "pins": 31,
+      "nets": 11,
+      "size": [
+        633,
+        487
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0082/0082-jlc_target_named.json",
+      "group": "train",
+      "components": 46,
+      "pins": 181,
+      "nets": 111,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0083/0083-Datasheet_target_named.json",
+      "group": "train",
+      "components": 14,
+      "pins": 37,
+      "nets": 17,
+      "size": [
+        734,
+        539
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0084/0084-Datasheet_target_named.json",
+      "group": "train",
+      "components": 15,
+      "pins": 40,
+      "nets": 16,
+      "size": [
+        1411,
+        578
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0085/0085-Datasheet_target_named.json",
+      "group": "train",
+      "components": 31,
+      "pins": 87,
+      "nets": 38,
+      "size": [
+        800,
+        1041
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0086/0086-Datasheet_target_named.json",
+      "group": "train",
+      "components": 66,
+      "pins": 153,
+      "nets": 52,
+      "size": [
+        1417,
+        813
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0087/0087-KiCad_target_named.json",
+      "group": "train",
+      "components": 112,
+      "pins": 377,
+      "nets": 196,
+      "size": [
+        1654,
+        1170
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0088/0088-Datasheet_target_named.json",
+      "group": "train",
+      "components": 18,
+      "pins": 30,
+      "nets": 14,
+      "size": [
+        722,
+        339
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0089/0089-Datasheet_target_named.json",
+      "group": "train",
+      "components": 26,
+      "pins": 57,
+      "nets": 24,
+      "size": [
+        1080,
+        711
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0090/0090-Datasheet_target_named.json",
+      "group": "train",
+      "components": 19,
+      "pins": 36,
+      "nets": 14,
+      "size": [
+        482,
+        755
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0091/0091-KiCad_target_named.json",
+      "group": "train",
+      "components": 32,
+      "pins": 105,
+      "nets": 90,
+      "size": [
+        1170,
+        827
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0092/0092-Datasheet_target_named.json",
+      "group": "train",
+      "components": 50,
+      "pins": 143,
+      "nets": 51,
+      "size": [
+        1256,
+        748
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0093/0093-kicad_target_named.json",
+      "group": "train",
+      "components": 12,
+      "pins": 82,
+      "nets": 71,
+      "size": [
+        954,
+        610
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0094/0094-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 16,
+      "pins": 45,
+      "nets": 25,
+      "size": [
+        800,
+        484
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0095/0095-Altium Designer_target_named.json",
+      "group": "train",
+      "components": 38,
+      "pins": 167,
+      "nets": 90,
+      "size": [
+        1080,
+        672
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0096/0096-Datasheet_target_named.json",
+      "group": "train",
+      "components": 28,
+      "pins": 58,
+      "nets": 27,
+      "size": [
+        1420,
+        961
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0097/0097-other_target_named.json",
+      "group": "train",
+      "components": 38,
+      "pins": 72,
+      "nets": 30,
+      "size": [
+        1097,
+        459
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0098/0098-Datasheet_target_named.json",
+      "group": "train",
+      "components": 9,
+      "pins": 44,
+      "nets": 15,
+      "size": [
+        658,
+        586
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0099/0099-other_target_named.json",
+      "group": "train",
+      "components": 28,
+      "pins": 56,
+      "nets": 20,
+      "size": [
+        907,
+        731
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0100/0100-Datasheet_target_named.json",
+      "group": "train",
+      "components": 39,
+      "pins": 79,
+      "nets": 37,
+      "size": [
+        933,
+        625
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0101/0101-jlc_target_named.json",
+      "group": "train",
+      "components": 67,
+      "pins": 173,
+      "nets": 106,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0102/0102-jlc_target_named.json",
+      "group": "train",
+      "components": 54,
+      "pins": 138,
+      "nets": 110,
+      "size": [
+        2362,
+        1672
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0103/0103-jlc_target_named.json",
+      "group": "train",
+      "components": 54,
+      "pins": 99,
+      "nets": 77,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0104/0104-jlc_target_named.json",
+      "group": "train",
+      "components": 66,
+      "pins": 157,
+      "nets": 83,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0105/0105-jlc_target_named.json",
+      "group": "train",
+      "components": 57,
+      "pins": 99,
+      "nets": 37,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0106/0106-jlc_target_named.json",
+      "group": "train",
+      "components": 101,
+      "pins": 255,
+      "nets": 133,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0107/0107-jlc_target_named.json",
+      "group": "train",
+      "components": 120,
+      "pins": 328,
+      "nets": 190,
+      "size": [
+        1675,
+        1190
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0108/0108-jlc_target_named.json",
+      "group": "train",
+      "components": 53,
+      "pins": 129,
+      "nets": 46,
+      "size": [
+        925,
+        700
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0109/0109-jlc_target_named.json",
+      "group": "train",
+      "components": 37,
+      "pins": 156,
+      "nets": 80,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0110/0110-jlc_target_named.json",
+      "group": "train",
+      "components": 49,
+      "pins": 96,
+      "nets": 49,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0111/0111-jlc_target_named.json",
+      "group": "train",
+      "components": 162,
+      "pins": 338,
+      "nets": 206,
+      "size": [
+        1155,
+        1402
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0112/0112-jlc_target_named.json",
+      "group": "train",
+      "components": 91,
+      "pins": 196,
+      "nets": 93,
+      "size": [
+        1470,
+        1020
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0113/0113-jlc_target_named.json",
+      "group": "train",
+      "components": 32,
+      "pins": 192,
+      "nets": 135,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0114/0114-jlc_target_named.json",
+      "group": "train",
+      "components": 109,
+      "pins": 236,
+      "nets": 105,
+      "size": [
+        1675,
+        1190
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0115/0115-jlc_target_named.json",
+      "group": "train",
+      "components": 34,
+      "pins": 63,
+      "nets": 34,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0116/0116-jlc_target_named.json",
+      "group": "train",
+      "components": 119,
+      "pins": 285,
+      "nets": 178,
+      "size": [
+        1920,
+        1360
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0117/0117-jlc_target_named.json",
+      "group": "train",
+      "components": 89,
+      "pins": 199,
+      "nets": 92,
+      "size": [
+        1140,
+        840
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0118/0118-jlc_target_named.json",
+      "group": "train",
+      "components": 41,
+      "pins": 121,
+      "nets": 63,
+      "size": [
+        846,
+        602
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0119/0119-Datasheet_target_named.json",
+      "group": "train",
+      "components": 5,
+      "pins": 18,
+      "nets": 12,
+      "size": [
+        522,
+        401
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0120/0120-jlc_target_named.json",
+      "group": "train",
+      "components": 30,
+      "pins": 54,
+      "nets": 10,
+      "size": [
+        1675,
+        1190
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0121/0121-jlc_target_named.json",
+      "group": "train",
+      "components": 45,
+      "pins": 95,
+      "nets": 65,
+      "size": [
+        846,
+        602
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0122/0122-jlc_target_named.json",
+      "group": "train",
+      "components": 34,
+      "pins": 70,
+      "nets": 34,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0123/0123-other_target_named.json",
+      "group": "train",
+      "components": 39,
+      "pins": 117,
+      "nets": 70,
+      "size": [
+        1474,
+        757
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0124/0124-jlc_target_named.json",
+      "group": "train",
+      "components": 61,
+      "pins": 157,
+      "nets": 74,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0125/0125-jlc_target_named.json",
+      "group": "train",
+      "components": 22,
+      "pins": 49,
+      "nets": 25,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0126/0126-jlc_target_named.json",
+      "group": "train",
+      "components": 42,
+      "pins": 87,
+      "nets": 36,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0127/0127-jlc_target_named.json",
+      "group": "train",
+      "components": 38,
+      "pins": 104,
+      "nets": 57,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0128/0128-jlc_target_named.json",
+      "group": "train",
+      "components": 26,
+      "pins": 59,
+      "nets": 16,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0129/0129-jlc_target_named.json",
+      "group": "train",
+      "components": 17,
+      "pins": 32,
+      "nets": 22,
+      "size": [
+        1674,
+        1221
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0130/0130-jlc_target_named.json",
+      "group": "train",
+      "components": 56,
+      "pins": 207,
+      "nets": 103,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0131/0131-jlc_target_named.json",
+      "group": "train",
+      "components": 17,
+      "pins": 31,
+      "nets": 9,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0132/0132-jlc_target_named.json",
+      "group": "train",
+      "components": 31,
+      "pins": 57,
+      "nets": 28,
+      "size": [
+        1169,
+        826
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0133/0133-jlc_target_named.json",
+      "group": "train",
+      "components": 34,
+      "pins": 67,
+      "nets": 22,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0134/0134-jlc_target_named.json",
+      "group": "train",
+      "components": 53,
+      "pins": 114,
+      "nets": 49,
+      "size": [
+        2390,
+        1190
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0135/0135-jlc_target_named.json",
+      "group": "train",
+      "components": 43,
+      "pins": 67,
+      "nets": 37,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0136/0136-jlc_target_named.json",
+      "group": "train",
+      "components": 43,
+      "pins": 97,
+      "nets": 64,
+      "size": [
+        1169,
+        826
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0137/0137-jlc_target_named.json",
+      "group": "train",
+      "components": 12,
+      "pins": 31,
+      "nets": 18,
+      "size": [
+        515,
+        225
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0138/0138-jlc_target_named.json",
+      "group": "train",
+      "components": 109,
+      "pins": 232,
+      "nets": 68,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0139/0139-jlc_target_named.json",
+      "group": "train",
+      "components": 39,
+      "pins": 146,
+      "nets": 86,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0140/0140-jlc_target_named.json",
+      "group": "train",
+      "components": 74,
+      "pins": 152,
+      "nets": 55,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0141/0141-jlc_target_named.json",
+      "group": "train",
+      "components": 113,
+      "pins": 224,
+      "nets": 110,
+      "size": [
+        1675,
+        1190
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0142/0142-jlc_target_named.json",
+      "group": "train",
+      "components": 41,
+      "pins": 121,
+      "nets": 63,
+      "size": [
+        846,
+        602
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0143/0143-jlc_target_named.json",
+      "group": "train",
+      "components": 24,
+      "pins": 115,
+      "nets": 60,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0144/0144-jlc_target_named.json",
+      "group": "train",
+      "components": 36,
+      "pins": 89,
+      "nets": 41,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0145/0145-jlc_target_named.json",
+      "group": "train",
+      "components": 37,
+      "pins": 104,
+      "nets": 41,
+      "size": [
+        1675,
+        1190
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0146/0146-jlc_target_named.json",
+      "group": "train",
+      "components": 24,
+      "pins": 48,
+      "nets": 21,
+      "size": [
+        1288,
+        624
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0147/0147-jlc_target_named.json",
+      "group": "train",
+      "components": 60,
+      "pins": 111,
+      "nets": 62,
+      "size": [
+        1005,
+        660
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0148/0148-jlc_target_named.json",
+      "group": "train",
+      "components": 46,
+      "pins": 101,
+      "nets": 45,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0149/0149-jlc_target_named.json",
+      "group": "train",
+      "components": 15,
+      "pins": 29,
+      "nets": 8,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0150/0150-jlc_target_named.json",
+      "group": "train",
+      "components": 114,
+      "pins": 230,
+      "nets": 133,
+      "size": [
+        1920,
+        1360
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0151/0151-jlc_target_named.json",
+      "group": "train",
+      "components": 66,
+      "pins": 140,
+      "nets": 55,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0152/0152-jlc_target_named.json",
+      "group": "train",
+      "components": 49,
+      "pins": 81,
+      "nets": 32,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0153/0153-jlc_target_named.json",
+      "group": "train",
+      "components": 42,
+      "pins": 100,
+      "nets": 45,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0154/0154-jlc_target_named.json",
+      "group": "train",
+      "components": 15,
+      "pins": 29,
+      "nets": 10,
+      "size": [
+        468,
+        230
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0155/0155-jlc_target_named.json",
+      "group": "train",
+      "components": 20,
+      "pins": 42,
+      "nets": 11,
+      "size": [
+        1169,
+        826
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0156/0156-jlc_target_named.json",
+      "group": "train",
+      "components": 18,
+      "pins": 39,
+      "nets": 17,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0157/0157-jlc_target_named.json",
+      "group": "train",
+      "components": 27,
+      "pins": 81,
+      "nets": 24,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0158/0158-jlc_target_named.json",
+      "group": "train",
+      "components": 25,
+      "pins": 58,
+      "nets": 26,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0159/0159-jlc_target_named.json",
+      "group": "train",
+      "components": 48,
+      "pins": 100,
+      "nets": 36,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0160/0160-jlc_target_named.json",
+      "group": "train",
+      "components": 56,
+      "pins": 93,
+      "nets": 33,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0161/0161-jlc_target_named.json",
+      "group": "train",
+      "components": 60,
+      "pins": 96,
+      "nets": 58,
+      "size": [
+        1366,
+        530
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0162/0162-jlc_target_named.json",
+      "group": "train",
+      "components": 44,
+      "pins": 88,
+      "nets": 27,
+      "size": [
+        1169,
+        826
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0163/0163-jlc_target_named.json",
+      "group": "train",
+      "components": 55,
+      "pins": 163,
+      "nets": 92,
+      "size": [
+        846,
+        602
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0164/0164-Datasheet_target_named.json",
+      "group": "train",
+      "components": 18,
+      "pins": 42,
+      "nets": 11,
+      "size": [
+        530,
+        266
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0165/0165-jlc_target_named.json",
+      "group": "train",
+      "components": 45,
+      "pins": 173,
+      "nets": 77,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0166/0166-jlc_target_named.json",
+      "group": "train",
+      "components": 122,
+      "pins": 249,
+      "nets": 131,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0167/0167-jlc_target_named.json",
+      "group": "train",
+      "components": 13,
+      "pins": 26,
+      "nets": 9,
+      "size": [
+        699,
+        393
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0168/0168-jlc_target_named.json",
+      "group": "train",
+      "components": 58,
+      "pins": 81,
+      "nets": 33,
+      "size": [
+        780,
+        401
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0169/0169-jlc_target_named.json",
+      "group": "train",
+      "components": 50,
+      "pins": 86,
+      "nets": 47,
+      "size": [
+        1169,
+        530
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0170/0170-jlc_target_named.json",
+      "group": "train",
+      "components": 122,
+      "pins": 251,
+      "nets": 129,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0171/0171-jlc_target_named.json",
+      "group": "train",
+      "components": 115,
+      "pins": 310,
+      "nets": 117,
+      "size": [
+        1675,
+        1190
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0172/0172-jlc_target_named.json",
+      "group": "train",
+      "components": 56,
+      "pins": 132,
+      "nets": 61,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0173/0173-jlc_target_named.json",
+      "group": "train",
+      "components": 60,
+      "pins": 172,
+      "nets": 58,
+      "size": [
+        1675,
+        1190
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0174/0174-jlc_target_named.json",
+      "group": "train",
+      "components": 127,
+      "pins": 303,
+      "nets": 128,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0175/0175-jlc_target_named.json",
+      "group": "train",
+      "components": 108,
+      "pins": 272,
+      "nets": 113,
+      "size": [
+        1675,
+        1190
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0176/0176-jlc_target_named.json",
+      "group": "train",
+      "components": 49,
+      "pins": 119,
+      "nets": 50,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0177/0177-jlc_target_named.json",
+      "group": "train",
+      "components": 62,
+      "pins": 131,
+      "nets": 44,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0178/0178-jlc_target_named.json",
+      "group": "train",
+      "components": 47,
+      "pins": 90,
+      "nets": 44,
+      "size": [
+        920,
+        655
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0179/0179-jlc_target_named.json",
+      "group": "train",
+      "components": 50,
+      "pins": 128,
+      "nets": 70,
+      "size": [
+        1675,
+        1190
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0180/0180-jlc_target_named.json",
+      "group": "train",
+      "components": 34,
+      "pins": 85,
+      "nets": 32,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0181/0181-jlc_target_named.json",
+      "group": "train",
+      "components": 62,
+      "pins": 128,
+      "nets": 66,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0182/0182-jlc_target_named.json",
+      "group": "train",
+      "components": 62,
+      "pins": 117,
+      "nets": 54,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0183/0183-jlc_target_named.json",
+      "group": "train",
+      "components": 45,
+      "pins": 151,
+      "nets": 65,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0184/0184-other_target_named.json",
+      "group": "train",
+      "components": 41,
+      "pins": 96,
+      "nets": 53,
+      "size": [
+        800,
+        495
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0185/0185-jlc_target_named.json",
+      "group": "train",
+      "components": 65,
+      "pins": 144,
+      "nets": 62,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0186/0186-jlc_target_named.json",
+      "group": "train",
+      "components": 60,
+      "pins": 156,
+      "nets": 72,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0187/0187-jlc_target_named.json",
+      "group": "train",
+      "components": 53,
+      "pins": 115,
+      "nets": 84,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0188/0188-jlc_target_named.json",
+      "group": "train",
+      "components": 26,
+      "pins": 52,
+      "nets": 27,
+      "size": [
+        539,
+        469
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0189/0189-jlc_target_named.json",
+      "group": "train",
+      "components": 111,
+      "pins": 209,
+      "nets": 99,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0190/0190-jlc_target_named.json",
+      "group": "train",
+      "components": 95,
+      "pins": 201,
+      "nets": 110,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0191/0191-jlc_target_named.json",
+      "group": "train",
+      "components": 115,
+      "pins": 229,
+      "nets": 115,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0192/0192-jlc_target_named.json",
+      "group": "train",
+      "components": 53,
+      "pins": 146,
+      "nets": 71,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0193/0193-jlc_target_named.json",
+      "group": "train",
+      "components": 185,
+      "pins": 381,
+      "nets": 177,
+      "size": [
+        1675,
+        1190
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0194/0194-jlc_target_named.json",
+      "group": "train",
+      "components": 39,
+      "pins": 146,
+      "nets": 86,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0195/0195-jlc_target_named.json",
+      "group": "train",
+      "components": 13,
+      "pins": 62,
+      "nets": 31,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0196/0196-jlc_target_named.json",
+      "group": "train",
+      "components": 18,
+      "pins": 35,
+      "nets": 17,
+      "size": [
+        846,
+        602
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0197/0197-jlc_target_named.json",
+      "group": "train",
+      "components": 117,
+      "pins": 241,
+      "nets": 110,
+      "size": [
+        1190,
+        845
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0198/0198-jlc_target_named.json",
+      "group": "train",
+      "components": 50,
+      "pins": 116,
+      "nets": 64,
+      "size": [
+        922,
+        620
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0199/0199-jlc_target_named.json",
+      "group": "train",
+      "components": 64,
+      "pins": 124,
+      "nets": 64,
+      "size": [
+        1190,
+        852
+      ]
+    },
+    {
+      "file": "赛题六公开数据集/200_train_cases/0200/0200-jlc_target_named.json",
+      "group": "train",
+      "components": 156,
+      "pins": 393,
+      "nets": 206,
+      "size": [
+        1675,
+        1190
+      ]
+    }
+  ]
+}

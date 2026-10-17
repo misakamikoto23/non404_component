@@ -1,0 +1,53 @@
+# ================= 产物 / 缓存 / 数据：不入库 =================
+component_lab/outputs/
+component_lab/runs/
+component_lab/data/
+Data/
+weights/
+component_lab/weights/
+acl-recovery-*/
+
+# 测试遗留临时目录（含被拒绝的 ACL 目录）
+component_lab/tests/tmp*/
+component_lab/tests/review-workflow-test-*/
+.pytest_cache/
+tests/tmp*/
+
+# ================= 环境 =================
+.venv/
+.venv-*/
+**/.venv*/
+__pycache__/
+*.py[cod]
+
+# ================= 大文件 =================
+*.tar
+*.zip
+*.pt
+*.pth
+*.onnx
+*.pdf
+*.docx
+*.jpg
+*.jpeg
+*.png
+*.bmp
+
+# ================= 凭据（硬约束：不得入库） =================
+qwenapi.txt
+.env
+component_lab/.env
+!component_lab/.env.example
+
+# ================= 嵌套仓库（独立 GitHub 仓库，另行管理） =================
+non404/
+
+# ================= 与赛题无关的本机脚本（AGENTS §5：不要动，也不入库） =================
+disable-windows-update*.ps1
+revert-windows-update*.ps1
+wu-*.txt
+
+# ================= 杂项 =================
+Thumbs.db
+.DS_Store
+desktop.ini

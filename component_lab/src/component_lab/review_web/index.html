@@ -1,0 +1,1032 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PCB 元件人工复核</title>
+  <style>
+    :root { color-scheme: light; --ink:#172537; --muted:#64748b; --border:#dbe3ed; --paper:#fff; --bg:#f1f5f9; --brand:#155e75; --brand-light:#e6f3f7; --pending:#a96800; --accepted:#087f62; --rejected:#c83b50; --original:#8257c6; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:14px/1.5 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; color:var(--ink); background:var(--bg); }
+    button,input,select,textarea { font:inherit; }
+    button { cursor:pointer; border:1px solid var(--border); background:#fff; color:var(--ink); border-radius:7px; padding:7px 11px; line-height:1.4; }
+    button:hover:not(:disabled) { background:#f1f7fa; border-color:#9bb9c8; }
+    button:disabled { opacity:.45; cursor:default; }
+    button.primary { color:#fff; border-color:var(--brand); background:var(--brand); }
+    button.primary:hover:not(:disabled) { background:#0c4a60; }
+    button.accept { color:var(--accepted); background:#edfaf5; border-color:#b7dfd1; }
+    button.reject { color:var(--rejected); background:#fff4f5; border-color:#edc9cf; }
+    button.active { color:var(--brand); border-color:var(--brand); background:var(--brand-light); }
+    :focus-visible { outline:3px solid #38a3c6; outline-offset:2px; }
+    input,select,textarea { width:100%; border:1px solid #cbd5e1; border-radius:6px; padding:7px 8px; background:white; color:var(--ink); }
+    input[type=checkbox] { width:16px; height:16px; accent-color:var(--brand); margin:0; flex:none; }
+    label { display:block; }
+    .check { display:flex; gap:8px; align-items:flex-start; cursor:pointer; }
+    .check input { margin-top:3px; }
+    .small { font-size:12px; color:var(--muted); }
+    .muted { color:var(--muted); }
+    .row { display:flex; align-items:center; gap:8px; }
+    .spread { justify-content:space-between; }
+    .wrap { flex-wrap:wrap; }
+    .hidden,[hidden] { display:none !important; }
+    .pill { display:inline-block; border-radius:5px; padding:2px 7px; background:#edf2f7; color:#526176; font-size:12px; overflow-wrap:anywhere; }
+    .pill.pending { color:var(--pending); background:#fff4d9; }
+    .pill.accepted { color:var(--accepted); background:#e8f7f0; }
+    .pill.rejected { color:var(--rejected); background:#fff0f2; }
+    header { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:14px 22px; background:white; border-bottom:1px solid var(--border); }
+    h1 { font-size:20px; margin:0 0 1px; letter-spacing:.02em; }
+    h2 { margin:0; font-size:14px; }
+    .brand-mark { width:34px; height:34px; display:grid; place-items:center; border:2px solid var(--brand); color:var(--brand); border-radius:8px; font-size:21px; font-weight:700; }
+    .header-tools { display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:flex-end; }
+    #progress { min-width:145px; }
+    progress { width:145px; height:5px; display:block; accent-color:var(--brand); }
+    #startup { margin:60px auto; width:min(600px,90vw); padding:28px; background:white; border:1px solid var(--border); border-radius:12px; }
+    #startup p { white-space:pre-wrap; }
+    .layout { display:grid; grid-template-columns:218px minmax(360px,1fr) 312px; gap:12px; padding:12px; height:calc(100dvh - 83px); min-height:660px; }
+    .panel { background:white; border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+    .image-sidebar { display:flex; flex-direction:column; min-height:0; }
+    .panel-title { padding:12px 13px; border-bottom:1px solid var(--border); }
+    .image-filters { padding:11px 12px; display:grid; gap:8px; border-bottom:1px solid var(--border); }
+    .image-filters label { font-size:12px; color:var(--muted); }
+    .image-filters select { margin-top:3px; font-size:12px; }
+    .image-list { padding:6px; overflow:auto; flex:1; }
+    .image-item { display:block; width:100%; text-align:left; padding:10px 9px; margin-bottom:4px; border:1px solid transparent; }
+    .image-item.active { border-color:#8ab7c9; background:#edf7fa; }
+    .image-name { white-space:nowrap; text-overflow:ellipsis; overflow:hidden; font-size:12px; font-weight:600; margin-bottom:4px; }
+    .image-summary { font-size:11px; color:var(--muted); }
+    .image-item .pill { margin-top:5px; font-size:10px; padding:1px 5px; }
+    .sidebar-footer { padding:10px 12px; border-top:1px solid var(--border); font-size:11px; color:var(--muted); }
+    .viewer { display:flex; flex-direction:column; min-height:0; }
+    .image-heading { padding:11px 14px; border-bottom:1px solid var(--border); }
+    #imageTitle { overflow-wrap:anywhere; font-weight:650; }
+    #imageMeta { margin-top:3px; }
+    #selectionReasons { display:flex; gap:5px; flex-wrap:wrap; margin-top:6px; }
+    .toolbar { display:flex; align-items:center; flex-wrap:wrap; gap:6px; padding:9px 10px; border-bottom:1px solid var(--border); }
+    .toolbar button { padding:5px 8px; font-size:12px; }
+    .divider { height:21px; width:1px; background:var(--border); margin:0 2px; }
+    #zoomLabel { width:43px; text-align:center; font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+    .overlay-options { display:flex; flex-wrap:wrap; gap:8px 16px; padding:7px 12px; background:#fafcfe; border-bottom:1px solid var(--border); font-size:12px; }
+    .stage { position:relative; flex:1; min-height:265px; overflow:hidden; background:#e3e9f0; }
+    #canvas { width:100%; height:100%; display:block; touch-action:none; }
+    #canvas.draw { cursor:crosshair; }
+    #canvas.pan { cursor:grab; }
+    #canvas.dragging { cursor:grabbing; }
+    .stage-message { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px; background:rgba(241,245,249,.95); padding:25px; text-align:center; color:var(--muted); }
+    .legend { display:flex; flex-wrap:wrap; align-items:center; gap:12px; padding:7px 12px; border-top:1px solid var(--border); font-size:11px; color:var(--muted); }
+    .legend span { display:flex; align-items:center; gap:5px; }
+    .dot { width:8px; height:8px; display:inline-block; border-radius:2px; }
+    .scan-confirm { padding:12px 14px; border-top:1px solid var(--border); background:#f9fcfd; }
+    .scan-confirm .check { font-weight:600; font-size:13px; }
+    .scan-confirm .small { padding-left:24px; margin-top:3px; }
+    .inspector { display:flex; flex-direction:column; min-height:0; }
+    .inspector-scroll { overflow:auto; flex:1; }
+    .detail-section { padding:12px 14px; border-bottom:1px solid var(--border); }
+    #selectedEmpty { padding:18px 0; text-align:center; color:var(--muted); }
+    #selectedHeader { margin-bottom:10px; }
+    .field { margin-top:10px; }
+    .field > label { font-size:12px; color:#475569; margin-bottom:4px; }
+    #categoryHint { margin-top:4px; }
+    .confirmation-help { margin:4px 0 0 24px; font-size:11px; color:var(--muted); }
+    .box-actions { display:flex; gap:7px; margin-top:12px; }
+    .box-actions button { flex:1; }
+    details { margin-top:9px; font-size:12px; color:var(--muted); }
+    summary { cursor:pointer; }
+    .coordinate-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:7px; }
+    .coordinate-grid label { font-size:11px; }
+    .coordinate-grid input { padding:4px 6px; font-size:12px; }
+    #boxList { display:grid; gap:5px; margin-top:10px; max-height:270px; overflow:auto; }
+    .box-item { display:flex; width:100%; text-align:left; align-items:center; gap:8px; padding:7px 8px; font-size:12px; }
+    .box-number { font-variant-numeric:tabular-nums; min-width:22px; font-weight:650; }
+    .box-text { min-width:0; flex:1; }
+    .box-name { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .box-sub { font-size:10px; color:var(--muted); }
+    .box-item.rejected { opacity:.65; }
+    .box-item.active { border-color:var(--brand); background:#edf7fa; opacity:1; }
+    #notes { resize:vertical; min-height:65px; font-size:12px; }
+    #diagnostics { white-space:pre-wrap; overflow-wrap:anywhere; font:11px/1.5 ui-monospace,monospace; max-height:180px; overflow:auto; }
+    .actions-footer { padding:12px 13px; border-top:1px solid var(--border); background:#fafcfe; }
+    #saveStatus { font-size:12px; min-height:19px; margin-bottom:8px; }
+    #saveStatus.dirty { color:var(--pending); }
+    #saveStatus.error { color:var(--rejected); }
+    #completeButton, #approveImageButton { width:100%; margin-top:8px; }
+    .navigation { display:flex; gap:7px; margin-top:8px; }
+    .navigation button { flex:1; }
+    #completionHint { margin-top:7px; font-size:11px; color:var(--muted); }
+    #toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#172d40; color:white; padding:11px 17px; border-radius:9px; max-width:min(680px,90vw); box-shadow:0 6px 25px #0f172a30; z-index:20; white-space:pre-wrap; }
+    dialog { border:1px solid var(--border); border-radius:12px; padding:24px; max-width:min(610px,92vw); color:var(--ink); box-shadow:0 16px 70px #0f172a33; }
+    dialog::backdrop { background:#10223866; }
+    dialog h2 { font-size:18px; margin-bottom:12px; }
+    dialog p { margin:8px 0 18px; }
+    .dialog-actions { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+    .shortcut-grid { display:grid; grid-template-columns:auto 1fr; gap:8px 20px; margin:16px 0; font-size:13px; }
+    kbd { font:12px ui-monospace,monospace; padding:2px 6px; border:1px solid #cad5e0; border-radius:4px; background:#f4f7fa; box-shadow:0 1px 0 #cbd5e1; }
+    .help-note { font-size:12px; color:var(--muted); max-width:510px; }
+    #statsContent { white-space:pre-wrap; font:12px/1.7 ui-monospace,monospace; max-height:60vh; overflow:auto; }
+    #statsDialog { max-width:min(900px,94vw); }
+    #statsTableWrap { max-height:58vh; overflow:auto; margin:14px 0; }
+    .stats-table { border-collapse:collapse; width:100%; font-size:12px; }
+    .stats-table th,.stats-table td { padding:7px 11px; border-bottom:1px solid var(--border); text-align:right; white-space:nowrap; }
+    .stats-table th { position:sticky; top:0; background:#f1f6fa; font-weight:600; }
+    .stats-table th:first-child,.stats-table td:first-child { text-align:left; }
+    .stats-table tr.rare-row { background:#fffaf0; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    @media(max-width:1200px) { .layout { grid-template-columns:170px minmax(330px,1fr) 285px; gap:8px; padding:8px; } .header-tools { gap:8px; } }
+    @media(max-width:980px) { header { padding:10px 14px; } .brand-subtitle,#batchLabel { display:none; } .layout { grid-template-columns:minmax(320px,1fr) 290px; height:auto; min-height:calc(100dvh - 75px); } .image-sidebar { grid-column:1/-1; max-height:170px; } .image-sidebar .panel-title { display:none; } .image-filters { grid-template-columns:1fr 1fr 1fr; border-bottom:0; padding:7px; } .image-list { display:flex; flex:none; gap:4px; padding:0 7px 6px; overflow-x:auto; } .image-item { width:160px; min-width:160px; margin:0; } .sidebar-footer { display:none; } .viewer { min-height:740px; } .inspector { max-height:900px; } }
+    @media(max-width:650px) { .layout { display:flex; flex-direction:column; } header h1 { font-size:16px; } .header-tools .small,#progressBar { display:none; } #progress { min-width:0; font-size:12px; } .brand-mark { display:none; } .viewer { min-height:650px; } .stage { min-height:340px; } .inspector { max-height:none; } #boxList { max-height:240px; } .image-filters { grid-template-columns:1fr 1fr; } #searchImages { grid-column:1/-1; } .inspector-scroll { overflow:visible; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="row">
+      <div class="brand-mark" aria-hidden="true">⊞</div>
+      <div><h1>PCB 元件人工复核</h1><div class="small brand-subtitle">逐框核对 · 补齐漏检 · 检查整图</div></div>
+    </div>
+    <div class="header-tools">
+      <span id="batchLabel" class="pill"></span>
+      <div id="progress"><span id="progressText">载入中</span><progress id="progressBar" max="1" value="0" aria-label="已完成图片"></progress></div>
+      <button id="statsButton" type="button">类别分布</button>
+      <button id="exportButton" type="button">导出审核数据</button>
+      <button id="helpButton" type="button" aria-label="操作说明与快捷键">帮助 ?</button>
+    </div>
+  </header>
+
+  <div id="startup" role="status"><h2 id="startupTitle">正在载入复核批次…</h2><p id="startupMessage" class="muted">请稍候。</p><button id="retryState" type="button" hidden>重新载入</button></div>
+
+  <main id="app" class="layout" hidden>
+    <aside class="image-sidebar panel" aria-label="图片导航">
+      <div class="panel-title row spread"><h2>本批图片</h2><span id="imageCount" class="small"></span></div>
+      <div class="image-filters">
+        <label>查看范围<select id="imageFilter"><option value="all">全部图片</option><option value="incomplete">尚未完成</option><option value="pending">仍有待检查框</option><option value="completed">已完成</option></select></label>
+        <label>排列方式<select id="imageSort"><option value="priority">待检查优先</option><option value="confidence">置信度从低到高</option><option value="original">批次顺序</option></select></label>
+        <input id="searchImages" type="search" placeholder="搜索图片编号" aria-label="搜索图片编号">
+      </div>
+      <nav id="imageList" class="image-list" aria-label="选择图片"></nav>
+      <div class="sidebar-footer">低置信度框优先核对。完成一张图片需逐框处理，并勾选整图检查。</div>
+    </aside>
+
+    <section class="viewer panel" aria-label="图像与标注画布">
+      <div class="image-heading"><div id="imageTitle"></div><div id="imageMeta" class="small"></div><div id="selectionReasons"></div></div>
+      <div class="toolbar" role="toolbar" aria-label="画布工具">
+        <button id="selectTool" class="active" type="button" title="V：选择、移动或拖角调整">选择 V</button>
+        <button id="drawTool" type="button" title="B：在图上拖动，补充一个框">补框 B</button>
+        <span class="divider" aria-hidden="true"></span>
+        <button id="zoomOut" type="button" aria-label="缩小">−</button><span id="zoomLabel">100%</span><button id="zoomIn" type="button" aria-label="放大">＋</button>
+        <button id="fitImage" type="button" title="双击画布也可适应整图">适应整图</button>
+        <button id="focusBox" type="button" title="F：放大到当前框">定位当前框 F</button>
+      </div>
+      <div class="overlay-options">
+        <label class="check"><input id="showOriginal" type="checkbox"><span>原标注（仅参考）</span></label>
+        <label class="check"><input id="showRejected" type="checkbox"><span>显示已删除框</span></label>
+        <span id="originalWarning" class="small" hidden>紫色虚线是原标注，不是 YOLO 自动识别结果。</span>
+      </div>
+      <div id="stage" class="stage">
+        <canvas id="canvas" tabindex="0" aria-label="元件框编辑画布。滚轮缩放，空格加拖动平移，B 补框，V 选择。" aria-describedby="canvasInstructions"></canvas>
+        <div id="stageMessage" class="stage-message"><span id="stageMessageText">正在载入图片…</span><button id="retryImage" type="button" hidden>重试图片</button></div>
+      </div>
+      <div class="legend"><span><i class="dot" style="background:var(--pending)"></i>待检查</span><span><i class="dot" style="background:var(--accepted)"></i>已保留</span><span><i class="dot" style="background:var(--rejected)"></i>已删除</span><span id="canvasInstructions">滚轮缩放 · 空格＋拖动平移 · 拖动四角调整框</span><span id="bboxPolicy"></span></div>
+      <div class="scan-confirm">
+        <label class="check"><input id="wholeImageChecked" type="checkbox"><span>我已检查整张图片，包括没有框的区域</span></label>
+        <div class="small">请确认漏检已补齐、误检已删除。没有元件的图片也需要此项人工确认。</div>
+      </div>
+    </section>
+
+    <aside class="inspector panel" aria-label="元件审核与保存">
+      <div class="panel-title row spread"><h2>当前元件</h2><span id="boxCount" class="small"></span></div>
+      <div class="inspector-scroll">
+        <section class="detail-section">
+          <div id="selectedEmpty">点击图片中的框，或拖动补框。</div>
+          <div id="selectedFields" hidden>
+            <div id="selectedHeader" class="row spread"><strong id="selectedNumber"></strong><span id="selectedStatus" class="pill"></span></div>
+            <div id="selectedSource" class="small"></div>
+            <div id="selectedReasons" class="small"></div>
+            <div class="field"><label for="category">元件分类</label><select id="category"></select><div id="categoryHint" class="small"></div></div>
+            <div class="field"><label class="check"><input id="categoryConfirmed" type="checkbox"><span>我已确认这个分类</span></label><p class="confirmation-help" id="confirmationHelp">先保留框，再选择并确认具体类别。ResNet 仅使用人工确认过分类的框。</p></div>
+            <div class="field"><label for="reference">位号 / reference（可选）</label><input id="reference" type="text" maxlength="200" placeholder="例如 R12、C8、U3" autocomplete="off"></div>
+            <details><summary>框坐标 · 原图像素</summary><div class="coordinate-grid"><label>x₁<input id="coordX1" type="number" min="0" step="0.01"></label><label>y₁<input id="coordY1" type="number" min="0" step="0.01"></label><label>x₂<input id="coordX2" type="number" min="0" step="0.01"></label><label>y₂<input id="coordY2" type="number" min="0" step="0.01"></label></div></details>
+            <div class="box-actions"><button id="acceptBox" class="accept" type="button">保留 A</button><button id="rejectBox" class="reject" type="button">删除 Del</button></div>
+          </div>
+        </section>
+        <section class="detail-section">
+          <div class="row spread"><h2>本图所有框</h2><button id="nextPending" type="button" title="J：下一处待检查；K：上一处">下一待检查 J</button></div>
+          <div id="boxSummary" class="small" style="margin-top:7px"></div><div id="boxList" aria-label="元件框列表"></div>
+        </section>
+        <section class="detail-section"><label for="notes" class="small">本图复核备注</label><textarea id="notes" placeholder="记录遮挡、无法辨认等情况"></textarea><details id="diagnosticDetails"><summary>查看抽样原因与诊断信息</summary><pre id="diagnostics"></pre></details></section>
+      </div>
+      <div class="actions-footer">
+        <div id="saveStatus" role="status" aria-live="polite">尚未修改</div>
+        <div class="row spread"><span id="reviewTime" class="small">本图用时 00:00</span><button id="saveButton" type="button" title="Ctrl / ⌘ + S">保存进度</button></div>
+        <button id="reloadConflict" class="reject" type="button" hidden style="width:100%;margin-top:8px">载入服务器上的最新版本</button>
+        <button id="completeButton" class="primary" type="button" title="Ctrl / ⌘ + Enter">完成审核并保存</button>
+        <button id="approveImageButton" class="accept" type="button" title="保留本图所有未删除的框，确认整图并立即保存；不自动确认分类">本图直接通过</button>
+        <div class="small" style="margin-top:5px">直接通过会保留全部未删除框并完成整图审核；分类确认不变。</div>
+        <div id="completionHint"></div>
+        <div class="navigation"><button id="previousImage" type="button" title="P：上一张">← 上一张</button><button id="nextImage" type="button" title="N：下一张">下一张 →</button></div>
+      </div>
+    </aside>
+  </main>
+
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+  <div id="selectionAnnouncement" class="sr-only" aria-live="polite"></div>
+
+  <dialog id="unsavedDialog" aria-labelledby="unsavedTitle"><h2 id="unsavedTitle">本图有未保存的更改</h2><p id="unsavedMessage">保存进度会保留当前逐框处理结果；图片仍需通过“完成审核并保存”标记完成。</p><p id="unsavedError" class="small" style="color:var(--rejected)" hidden></p><div class="dialog-actions"><button id="navigateCancel" type="button">继续复核</button><button id="navigateDiscard" class="reject" type="button">放弃更改并继续</button><button id="navigateSave" class="primary" type="button">保存进度并继续</button></div></dialog>
+  <dialog id="helpDialog" aria-labelledby="helpTitle"><h2 id="helpTitle">人工复核怎么做</h2><p>先核对每个自动识别框，选择“保留”或“删除”；用补框工具拖出漏检元件。再检查整张图片，勾选整图检查，最后完成审核并保存。</p><div class="shortcut-grid"><span><kbd>V</kbd> / <kbd>B</kbd></span><span>选择、移动 / 拖动补框</span><span><kbd>滚轮</kbd></span><span>以鼠标位置为中心缩放</span><span><kbd>空格</kbd> ＋ 拖动</span><span>平移图片（也可按住鼠标中键拖动）</span><span><kbd>F</kbd> / 双击画布</span><span>定位当前框 / 适应整图</span><span><kbd>A</kbd> / <kbd>Delete</kbd></span><span>保留 / 删除当前框，可重新保留已删除框</span><span><kbd>J</kbd> / <kbd>K</kbd></span><span>下一处 / 上一处待检查</span><span><kbd>N</kbd> / <kbd>P</kbd></span><span>下一张 / 上一张图片</span><span><kbd>Ctrl / ⌘ S</kbd></span><span>保存当前进度</span><span><kbd>Ctrl / ⌘ Enter</kbd></span><span>完成审核并保存</span><span><kbd>Esc</kbd></span><span>取消当前拖动，或回到选择工具</span></div><p class="help-note">保留一个框不等于确认分类。分类下拉框中的 component 表示仅定位；勾选“我已确认这个分类”后，分类才可用于 ResNet。原标注默认关闭，紫色虚线仅用于参考，不能当作自动识别结果。</p><div class="dialog-actions"><button id="closeHelp" class="primary" type="button">知道了</button></div></dialog>
+  <dialog id="statsDialog" aria-labelledby="statsTitle"><h2 id="statsTitle">类别分布</h2><p class="small">原始数据集统计，用于观察类别数量和来源图片多样性。不是本批次审核进度。</p><div id="statsSummary" class="small"></div><div id="statsTableWrap" hidden></div><pre id="statsContent">正在载入…</pre><div class="dialog-actions"><button id="refreshStats" type="button">刷新统计</button><button id="closeStats" class="primary" type="button">关闭</button></div></dialog>
+  <dialog id="exportDialog" aria-labelledby="exportTitle"><h2 id="exportTitle">导出审核数据</h2><p>仅已保存且完成审核的图片会采用新标签；未完成图片保留原标签，验证集和测试集保持不变。分类样本只采用已保留且人工确认分类的框。</p><p class="help-note">导出在本机生成数据，不会开始训练或发送到云端。至少需要完成一张图片。</p><div id="exportResult" role="status" style="white-space:pre-wrap;overflow-wrap:anywhere;margin:16px 0"></div><div class="dialog-actions"><button id="closeExport" type="button">关闭</button><button id="runExport" class="primary" type="button">生成导出数据</button></div></dialog>
+
+  <script>
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const canvas = $('canvas');
+  const ctx = canvas.getContext('2d');
+  const STATUS = {pending:'待检查', accepted:'已保留', rejected:'已删除'};
+  const COLORS = {pending:'#a96800', accepted:'#087f62', rejected:'#c83b50'};
+  const clone = value => JSON.parse(JSON.stringify(value));
+  const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
+  const round = value => Math.round(value * 100) / 100;
+  const finiteScore = box => typeof box.score === 'number' && Number.isFinite(box.score);
+  const scoreText = box => finiteScore(box) ? `${Math.round(box.score * 100)}%` : '无置信度';
+  let model = null, current = null, selectedId = null, image = null, imageReady = false;
+  let dirty = false, saving = false, exporting = false, saveError = '', lastSaved = '', tool = 'select';
+  let spaceDown = false, drag = null, imageToken = 0, toastTimer = 0, navigationAction = null;
+  let canvasWidth = 1, canvasHeight = 1;
+  let activeMilliseconds = 0, activeSince = null, baseSeconds = 0;
+  const view = {scale:1, x:0, y:0, fit:1};
+
+  function element(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+
+  function normalizeItem(item) {
+    const result = clone(item);
+    result.boxes = (result.boxes || []).map(box => ({...box, category:box.category || 'component', category_confirmed:(box.category || 'component') !== 'component' && box.review_status === 'accepted' && box.category_confirmed === true, reference:box.reference || null, review_status:box.review_status || 'pending'}));
+    result.original_boxes = result.original_boxes || [];
+    result.review = {...result.review, completed:result.review?.completed === true, whole_image_checked:result.review?.whole_image_checked === true, review_seconds:Math.max(0, Number(result.review?.review_seconds) || 0), notes:result.review?.notes || ''};
+    return result;
+  }
+
+  function allItems() { return (model?.items || []).map(item => current && item.id === current.id ? current : item); }
+  function selectedBox() { return current?.boxes.find(box => box.id === selectedId) || null; }
+  function pendingBoxes() { return sortedBoxes().filter(box => box.review_status === 'pending'); }
+  function lowScore(item) { const values = item.boxes.filter(box => box.review_status !== 'rejected' && finiteScore(box)).map(box => box.score); return values.length ? Math.min(...values) : 2; }
+  function sortedBoxes() {
+    const rank = {pending:0, accepted:1, rejected:2};
+    return [...(current?.boxes || [])].sort((a,b) => (rank[a.review_status] ?? 0) - (rank[b.review_status] ?? 0) || (finiteScore(a) ? a.score : 2) - (finiteScore(b) ? b.score : 2));
+  }
+  function visibleItems() {
+    let result = allItems();
+    const filter = $('imageFilter').value;
+    const query = $('searchImages').value.trim().toLocaleLowerCase();
+    result = result.filter(item => (!query || String(item.id).toLocaleLowerCase().includes(query)) && (filter !== 'incomplete' || !item.review.completed) && (filter !== 'completed' || item.review.completed) && (filter !== 'pending' || item.boxes.some(box => box.review_status === 'pending')));
+    const order = $('imageSort').value;
+    if (order === 'confidence') result.sort((a,b) => lowScore(a) - lowScore(b));
+    if (order === 'priority') result.sort((a,b) => Number(a.review.completed) - Number(b.review.completed) || Number(!a.boxes.some(box => box.review_status === 'pending')) - Number(!b.boxes.some(box => box.review_status === 'pending')) || lowScore(a) - lowScore(b));
+    return result;
+  }
+
+  async function request(url, options) {
+    const response = await fetch(url, {cache:'no-store', ...options});
+    let data;
+    try { data = await response.json(); } catch { throw Object.assign(new Error(`服务器返回了无法读取的响应（${response.status}）`), {status:response.status}); }
+    if (!response.ok) throw Object.assign(new Error(data.error || `请求失败（${response.status}）`), {status:response.status});
+    return data;
+  }
+
+  async function loadState() {
+    $('retryState').hidden = true;
+    $('startupTitle').textContent = '正在载入复核批次…';
+    $('startupMessage').textContent = '请稍候。';
+    try {
+      const data = await request('/api/state');
+      if (!Array.isArray(data.items)) throw new Error('批次数据缺少图片列表。');
+      model = {...data, items:data.items.map(normalizeItem)};
+      $('batchLabel').textContent = `批次 ${String(data.batch_id || '未命名')}`;
+      if (!model.items.length) {
+        $('startupTitle').textContent = '本批次没有需要复核的图片';
+        $('startupMessage').textContent = '请在服务器上准备复核批次后重新载入。';
+        $('retryState').hidden = false;
+        renderProgress();
+        return;
+      }
+      $('startup').hidden = true;
+      $('app').hidden = false;
+      const first = visibleItems()[0] || model.items[0];
+      openItem(first.id);
+      resizeCanvas();
+    } catch (error) {
+      $('startupTitle').textContent = '无法载入复核批次';
+      $('startupMessage').textContent = `${error.message}\n请确认复核服务器已启动，并通过服务器地址打开本页面。`;
+      $('retryState').hidden = false;
+    }
+  }
+
+  function resetTimer() {
+    baseSeconds = current?.review.review_seconds || 0;
+    activeMilliseconds = 0;
+    activeSince = document.visibilityState === 'visible' ? performance.now() : null;
+    renderTimer();
+  }
+  function elapsedSeconds() {
+    return Math.max(baseSeconds, Math.round(baseSeconds + (activeMilliseconds + (activeSince === null ? 0 : performance.now() - activeSince)) / 1000));
+  }
+  function renderTimer() {
+    const seconds = elapsedSeconds();
+    $('reviewTime').textContent = `本图用时 ${String(Math.floor(seconds / 60)).padStart(2,'0')}:${String(seconds % 60).padStart(2,'0')}`;
+  }
+
+  function openItem(id) {
+    const item = model.items.find(candidate => candidate.id === id);
+    if (!item) return;
+    cancelDrag();
+    current = normalizeItem(item);
+    dirty = false; saveError = ''; lastSaved = ''; saving = false;
+    $('reloadConflict').hidden = true;
+    selectedId = sortedBoxes().find(box => box.review_status === 'pending')?.id || sortedBoxes().find(box => box.review_status !== 'rejected')?.id || null;
+    tool = 'select';
+    $('showOriginal').checked = false;
+    $('showRejected').checked = false;
+    $('originalWarning').hidden = true;
+    resetTimer();
+    loadImage();
+    render();
+  }
+
+  function loadImage() {
+    const token = ++imageToken;
+    imageReady = false; image = null;
+    $('stageMessage').hidden = false;
+    $('stageMessageText').textContent = '正在载入图片…';
+    $('retryImage').hidden = true;
+    const candidate = new Image();
+    candidate.onload = () => {
+      if (token !== imageToken) return;
+      image = candidate; imageReady = true;
+      $('stageMessage').hidden = true;
+      fitImage(); render();
+    };
+    candidate.onerror = () => {
+      if (token !== imageToken) return;
+      $('stageMessageText').textContent = '图片载入失败。请重试；图片成功显示后才能完成整图检查。';
+      $('retryImage').hidden = false;
+      render();
+    };
+    candidate.src = current.image_url || `/api/image/${encodeURIComponent(current.id)}`;
+  }
+
+  function markDirty() {
+    dirty = true; saveError = ''; lastSaved = '';
+    current.review.completed = false;
+    renderSaveState(); renderProgress(); renderImageList();
+  }
+
+  function renderProgress() {
+    const items = allItems();
+    const done = items.filter(item => item.review.completed).length;
+    $('progressText').textContent = `已完成 ${done} / ${items.length}`;
+    $('progressBar').max = Math.max(1, items.length);
+    $('progressBar').value = done;
+  }
+
+  function renderImageList() {
+    const list = $('imageList');
+    const scroll = list.scrollTop;
+    list.replaceChildren();
+    const items = visibleItems();
+    $('imageCount').textContent = `${items.length} 张`;
+    for (const item of items) {
+      const button = element('button', `image-item${current?.id === item.id ? ' active' : ''}`);
+      button.type = 'button'; button.title = String(item.id);
+      if (current?.id === item.id) button.setAttribute('aria-current','true');
+      button.append(element('div','image-name',String(item.id)));
+      const pending = item.boxes.filter(box => box.review_status === 'pending').length;
+      const active = item.boxes.filter(box => box.review_status !== 'rejected').length;
+      button.append(element('div','image-summary',`${active} 个有效框 · ${pending} 待检查`));
+      button.append(element('span',`pill ${item.review.completed ? 'accepted' : pending ? 'pending' : ''}`,item.review.completed ? '已完成' : pending ? '待逐框检查' : item.review.whole_image_checked ? '可完成审核' : '待检查整图'));
+      button.addEventListener('click',() => requestOpen(item.id));
+      list.append(button);
+    }
+    if (!items.length) list.append(element('p','small','没有符合当前筛选的图片。'));
+    list.scrollTop = scroll;
+  }
+
+  function render() {
+    renderProgress(); renderImageList();
+    if (!current) return;
+    $('imageTitle').textContent = String(current.id);
+    const split = {train:'训练集', val:'验证集', validation:'验证集', test:'测试集'}[current.split] || current.split || '未指定划分';
+    $('imageMeta').textContent = `${current.width} × ${current.height} 像素 · ${split} · 版本 ${current.revision}`;
+    $('bboxPolicy').textContent = model.policy?.bbox_scope || '';
+    $('selectionReasons').replaceChildren();
+    for (const reason of current.selection_reasons || []) $('selectionReasons').append(element('span','pill',String(reason)));
+    $('wholeImageChecked').checked = current.review.whole_image_checked;
+    $('notes').value = current.review.notes;
+    $('diagnostics').textContent = JSON.stringify({selection_reasons:current.selection_reasons || [], diagnostics:current.diagnostics || {}},null,2);
+    $('selectTool').classList.toggle('active',tool === 'select');
+    $('drawTool').classList.toggle('active',tool === 'draw');
+    $('selectTool').setAttribute('aria-pressed',String(tool === 'select'));
+    $('drawTool').setAttribute('aria-pressed',String(tool === 'draw'));
+    canvas.classList.toggle('draw',tool === 'draw');
+    renderInspector(); renderBoxList(); renderSaveState(); drawCanvas();
+  }
+
+  function renderInspector() {
+    const box = selectedBox();
+    $('selectedFields').hidden = !box;
+    $('selectedEmpty').hidden = Boolean(box);
+    $('boxCount').textContent = `${current.boxes.length} 框`;
+    if (!box) return;
+    const number = current.boxes.indexOf(box) + 1;
+    $('selectedNumber').textContent = `元件 #${number}`;
+    $('selectedStatus').textContent = STATUS[box.review_status] || box.review_status;
+    $('selectedStatus').className = `pill ${box.review_status}`;
+    $('selectedSource').textContent = box.source === 'human' ? '人工补框 · 无模型置信度' : `YOLO 自动识别 · 置信度 ${scoreText(box)}`;
+    $('selectedReasons').textContent = (box.review_reasons || []).join(' · ');
+    const categories = [...new Set(['component', ...(model.categories || []), box.category])];
+    $('category').replaceChildren();
+    for (const category of categories) {
+      const option = element('option','',category === 'component' ? 'component（仅定位）' : String(category));
+      option.value = category; $('category').append(option);
+    }
+    $('category').value = box.category;
+    $('categoryHint').textContent = box.category_hint ? `原标注几何匹配提示：${box.category_hint}（不是 YOLO 分类，需人工核实）` : '请依据图像判断分类。';
+    $('confirmationHelp').textContent = box.review_status !== 'accepted' ? '先保留框，再确认具体类别。ResNet 仅使用人工确认过分类的框。' : box.category === 'component' ? 'component 仅标位置；选择具体类别后，才能确认分类。' : '请依据图像核实后勾选。ResNet 仅使用人工确认过分类的框。';
+    $('categoryConfirmed').checked = box.category_confirmed;
+    $('reference').value = box.reference || '';
+    renderCoordinates();
+    $('acceptBox').textContent = box.review_status === 'accepted' ? '已保留 A' : box.review_status === 'rejected' ? '重新保留 A' : '保留 A';
+    $('rejectBox').textContent = box.review_status === 'rejected' ? '已删除' : '删除 Del';
+    $('selectionAnnouncement').textContent = `元件 ${number}，${box.category}，${STATUS[box.review_status]}，${scoreText(box)}`;
+  }
+
+  function renderCoordinates() {
+    const box = selectedBox();
+    if (!box) return;
+    ['coordX1','coordY1','coordX2','coordY2'].forEach((id,index) => {
+      $(id).value = round(box.bbox[index]);
+      $(id).max = index % 2 ? current.height : current.width;
+    });
+  }
+
+  function renderBoxList() {
+    const list = $('boxList');
+    const scroll = list.scrollTop;
+    list.replaceChildren();
+    const counts = {pending:0, accepted:0, rejected:0};
+    for (const box of current.boxes) counts[box.review_status] = (counts[box.review_status] || 0) + 1;
+    $('boxSummary').textContent = `${counts.pending} 待检查 · ${counts.accepted} 已保留 · ${counts.rejected} 已删除`;
+    for (const box of sortedBoxes()) {
+      const button = element('button',`box-item ${box.review_status}${box.id === selectedId ? ' active' : ''}`);
+      button.type = 'button';
+      button.setAttribute('aria-pressed',String(box.id === selectedId));
+      button.append(element('span','box-number',`#${current.boxes.indexOf(box) + 1}`));
+      const text = element('span','box-text');
+      text.append(element('div','box-name',`${box.reference ? `${box.reference} · ` : ''}${box.category}${box.category_confirmed ? ' ✓' : ''}`));
+      text.append(element('div','box-sub',`${box.source === 'human' ? '人工补框' : `YOLO ${scoreText(box)}`} · ${STATUS[box.review_status] || box.review_status}`));
+      button.append(text,element('i','dot'));
+      button.lastElementChild.style.background = COLORS[box.review_status] || COLORS.pending;
+      button.addEventListener('click',() => selectBox(box.id,true));
+      list.append(button);
+    }
+    if (!current.boxes.length) list.append(element('p','small','本图没有框。请检查是否漏检；没有元件时仍需确认整图。'));
+    list.scrollTop = scroll;
+  }
+
+  function renderSaveState() {
+    if (!current) return;
+    const pending = current.boxes.filter(box => box.review_status === 'pending').length;
+    $('saveStatus').className = saveError ? 'error' : dirty ? 'dirty' : '';
+    $('saveStatus').textContent = saving ? '正在保存，请稍候…' : saveError || (dirty ? '● 有未保存更改' : lastSaved || (current.review.completed ? '✓ 本图已完成并保存' : '更改会在点击保存后写入服务器'));
+    const blocked = saving || !imageReady;
+    ['selectTool','drawTool','zoomOut','zoomIn','fitImage','focusBox','wholeImageChecked','category','reference','coordX1','coordY1','coordX2','coordY2','notes','previousImage','nextImage','nextPending'].forEach(id => { $(id).disabled = blocked; });
+    $('focusBox').disabled = blocked || !selectedBox();
+    $('nextPending').disabled = blocked || pending === 0;
+    $('acceptBox').disabled = blocked || !selectedBox() || selectedBox().review_status === 'accepted';
+    $('rejectBox').disabled = blocked || !selectedBox() || selectedBox().review_status === 'rejected';
+    $('categoryConfirmed').disabled = blocked || !selectedBox() || selectedBox().category === 'component' || selectedBox().review_status !== 'accepted';
+    $('saveButton').disabled = saving || !dirty;
+    $('completeButton').disabled = blocked || (current.review.completed && !dirty);
+    $('completeButton').textContent = current.review.completed && !dirty ? '✓ 已完成审核' : '完成审核并保存';
+    $('approveImageButton').disabled = blocked || exporting || (current.review.completed && !dirty);
+    $('completionHint').textContent = !imageReady ? '请先载入并检查图片。' : pending ? `还有 ${pending} 个待检查框，可逐框处理，或点击“本图直接通过”。` : !current.review.whole_image_checked ? '可检查整图后勾选确认，或使用“本图直接通过”。' : current.review.completed && !dirty ? '可以进入下一张。修改后需要重新完成审核。' : '逐框处理与整图检查均已确认，可完成审核。';
+    $('navigateSave').disabled = saving;
+    $('navigateDiscard').disabled = saving;
+    $('navigateCancel').disabled = saving;
+    $('reloadConflict').disabled = saving;
+    $('exportButton').disabled = saving || exporting;
+  }
+
+  function toast(message, duration = 5500) {
+    clearTimeout(toastTimer);
+    $('toast').textContent = message; $('toast').hidden = false;
+    toastTimer = setTimeout(() => { $('toast').hidden = true; },duration);
+  }
+
+  function selectBox(id, reveal = false) {
+    if (saving || drag) return;
+    selectedId = id;
+    const box = selectedBox();
+    if (box?.review_status === 'rejected' && reveal) $('showRejected').checked = true;
+    renderInspector(); renderBoxList(); renderSaveState();
+    if (reveal && box && validBBox(box.bbox)) {
+      const [x1,y1,x2,y2] = box.bbox;
+      const p1 = toScreen(x1,y1), p2 = toScreen(x2,y2);
+      if (p2.x < 25 || p2.y < 25 || p1.x > canvasWidth - 25 || p1.y > canvasHeight - 25) {
+        view.x = canvasWidth / 2 - (x1+x2) / 2 * view.scale;
+        view.y = canvasHeight / 2 - (y1+y2) / 2 * view.scale;
+      }
+    }
+    drawCanvas();
+  }
+
+  function changeStatus(status) {
+    const box = selectedBox();
+    if (!box || saving || drag || !imageReady || box.review_status === status) return;
+    box.review_status = status;
+    if (status !== 'accepted') box.category_confirmed = false;
+    markDirty(); renderInspector(); renderBoxList(); renderSaveState(); drawCanvas();
+  }
+  function goPending(direction = 1) {
+    const list = pendingBoxes();
+    if (!list.length) { toast('本图已没有待检查框。请继续检查整图，确认是否存在漏检。'); return; }
+    const index = list.findIndex(box => box.id === selectedId);
+    const target = index < 0 ? (direction > 0 ? 0 : list.length - 1) : (index + direction + list.length) % list.length;
+    selectBox(list[target].id,true);
+  }
+
+  function requestOpen(id) {
+    if (saving || drag || current?.id === id) return;
+    guardNavigation(() => openItem(id));
+  }
+  function navigateImage(direction) {
+    if (saving || drag) return;
+    const items = visibleItems();
+    const index = items.findIndex(item => item.id === current.id);
+    let target = index < 0 ? items[0] : items[index + direction];
+    if (!target && direction > 0 && current.review.completed) target = items.find(item => !item.review.completed && item.id !== current.id);
+    if (!target) { toast(direction > 0 ? '已经是当前筛选后的最后一张。可调整筛选查看其他图片。' : '已经是当前筛选后的第一张。'); return; }
+    requestOpen(target.id);
+  }
+  function guardNavigation(action) {
+    if (!dirty) { action(); return; }
+    navigationAction = action;
+    $('unsavedTitle').textContent = '本图有未保存的更改';
+    $('unsavedMessage').textContent = '保存进度会保留当前逐框处理结果；图片仍需通过“完成审核并保存”标记完成。';
+    $('navigateDiscard').textContent = '放弃更改并继续';
+    $('navigateSave').hidden = false;
+    $('unsavedError').hidden = true;
+    $('unsavedDialog').showModal();
+  }
+
+  function validBBox(bbox) {
+    return Array.isArray(bbox) && bbox.length === 4 && bbox.every(Number.isFinite) && bbox[2] > bbox[0] && bbox[3] > bbox[1];
+  }
+  function inBounds(bbox) {
+    return validBBox(bbox) && bbox[0] >= 0 && bbox[1] >= 0 && bbox[2] <= current.width && bbox[3] <= current.height;
+  }
+
+  async function approveCurrentImage() {
+    if (!current || saving || exporting || drag || !imageReady) return false;
+    const invalid = current.boxes.find(box => box.review_status !== 'rejected' && !inBounds(box.bbox));
+    if (invalid) { selectBox(invalid.id,true); toast('当前框坐标无效，请先调整后再通过。'); return false; }
+    for (const box of current.boxes) {
+      if (box.review_status !== 'rejected') box.review_status = 'accepted';
+    }
+    markDirty();
+    current.review.whole_image_checked = true;
+    render();
+    return await saveCurrent(true);
+  }
+
+  async function saveCurrent(complete = false) {
+    if (!current || saving || drag) return false;
+    if (complete) {
+      if (!imageReady) { toast('请先成功载入图片，再检查整图。'); return false; }
+      if (pendingBoxes().length) { goPending(); toast('还有待检查框。请逐个选择“保留”或“删除”。'); return false; }
+      if (!current.review.whole_image_checked) { $('wholeImageChecked').focus(); toast('请先检查整张图片，包括没有框的区域，再勾选整图检查。'); return false; }
+    }
+    const invalid = current.boxes.find(box => box.review_status !== 'rejected' && !inBounds(box.bbox));
+    if (invalid) { selectBox(invalid.id,true); toast('当前框坐标无效或超出图片边界，请先调整。'); return false; }
+    const payload = {revision:current.revision, boxes:clone(current.boxes), review:{...clone(current.review), completed:complete || current.review.completed, review_seconds:elapsedSeconds()}};
+    saving = true; saveError = ''; renderSaveState();
+    try {
+      const data = await request(`/api/items/${encodeURIComponent(current.id)}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      if (!data.item || data.item.id !== current.id) throw new Error('保存响应缺少当前图片，当前修改仍保留。');
+      const saved = normalizeItem(data.item);
+      model.items = model.items.map(item => item.id === saved.id ? saved : item);
+      current = normalizeItem(saved);
+      dirty = false; saving = false;
+      lastSaved = `${complete ? '✓ 已完成审核并保存' : '✓ 进度已保存'} · ${new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}`;
+      $('reloadConflict').hidden = true;
+      resetTimer(); render();
+      toast(complete ? '本图审核已完成并保存。可进入下一张。' : '进度已保存。');
+      return true;
+    } catch (error) {
+      saving = false;
+      saveError = error.status === 409 ? '版本冲突：服务器已有新修改，本地更改仍保留。' : `保存失败：${error.message}`;
+      if (error.status === 409) $('reloadConflict').hidden = false;
+      renderSaveState(); toast(saveError,9000);
+      if ($('unsavedDialog').open) { $('unsavedError').textContent = saveError; $('unsavedError').hidden = false; }
+      return false;
+    }
+  }
+
+  async function reloadLatest() {
+    saving = true; renderSaveState();
+    try {
+      const data = await request('/api/state');
+      if (!Array.isArray(data.items)) throw new Error('最新批次没有图片列表。');
+      const id = current.id;
+      const latest = data.items.map(normalizeItem);
+      if (!latest.some(item => item.id === id)) throw new Error('最新批次中已不存在本图，当前修改仍保留。');
+      model = {...data,items:latest};
+      openItem(id);
+      toast('已载入服务器上的最新版本。');
+    } catch (error) {
+      saving = false; saveError = `重新载入失败：${error.message}`;
+      renderSaveState(); toast(saveError,9000);
+    }
+  }
+
+  async function loadStats() {
+    $('statsContent').textContent = '正在载入…';
+    $('statsContent').hidden = false;
+    $('statsSummary').textContent = '';
+    $('statsTableWrap').hidden = true;
+    $('refreshStats').disabled = true;
+    try {
+      const stats = await request('/api/stats');
+      if (!Array.isArray(stats.categories)) { $('statsContent').textContent = JSON.stringify(stats,null,2); return; }
+      $('statsContent').hidden = true;
+      $('statsSummary').textContent = stats.totals ? `共 ${stats.totals.images ?? '—'} 张图、${stats.totals.boxes ?? '—'} 个框。按训练来源图片数从少到多排列。` : '按训练来源图片数从少到多排列。';
+      const table = element('table','stats-table');
+      const head = element('thead'), heading = element('tr');
+      for (const title of ['类别','总框数','训练框数','训练图数','验证框数','测试框数','稀有程度']) heading.append(element('th','',title));
+      head.append(heading); table.append(head);
+      const body = element('tbody');
+      const tiers = {common:'常见',rare:'较少',very_rare:'很少',holdout_only:'仅验证/测试'};
+      for (const category of [...stats.categories].sort((a,b) => (a.train_images || 0)-(b.train_images || 0))) {
+        const row = element('tr',category.train_images < 15 ? 'rare-row' : '');
+        for (const value of [category.category,category.total_boxes,category.train_boxes,category.train_images,category.val_boxes,category.test_boxes,tiers[category.rarity_tier] || category.rarity_tier || '—']) row.append(element('td','',String(value ?? '—')));
+        body.append(row);
+      }
+      table.append(body); $('statsTableWrap').replaceChildren(table); $('statsTableWrap').hidden = false;
+    }
+    catch (error) { $('statsContent').textContent = `无法载入统计：${error.message}`; }
+    finally { $('refreshStats').disabled = false; }
+  }
+
+  function showExport() {
+    $('exportResult').textContent = '';
+    $('exportDialog').showModal();
+  }
+  function requestExport() {
+    if (saving || exporting || drag) return;
+    if (!dirty) { showExport(); return; }
+    navigationAction = showExport;
+    $('unsavedTitle').textContent = '有未保存修改，如何导出？';
+    $('unsavedMessage').textContent = '导出仅使用服务器上的已保存结果。保存进度不会自动将本图标记为完成；只有已完成的图片才会采用新标签。';
+    $('navigateDiscard').textContent = '不保存，仅导出已有结果';
+    $('navigateSave').hidden = false;
+    $('unsavedError').hidden = true;
+    $('unsavedDialog').showModal();
+  }
+  async function exportData() {
+    if (exporting) return;
+    exporting = true;
+    $('runExport').disabled = true; $('closeExport').disabled = true;
+    $('exportResult').textContent = '正在本机生成导出数据，请稍候…';
+    renderSaveState();
+    try {
+      const result = await request('/api/export',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});
+      const summary = result.summary || {};
+      const lines = ['✓ 导出完成',`目录：${result.output || '服务器未返回目录'}`];
+      if (summary.reviewed_train_images !== undefined) lines.push(`采用新标签的训练图片：${summary.reviewed_train_images} 张`);
+      if (summary.classification_crops !== undefined) lines.push(`已确认分类的裁剪样本：${summary.classification_crops} 个`);
+      if (summary.holdouts_unchanged !== undefined) lines.push(`验证集和测试集保持不变：${summary.holdouts_unchanged ? '是' : '请检查服务器统计'}`);
+      if (dirty) lines.push('本图仍有未保存更改，请继续保存或完成审核。');
+      $('exportResult').textContent = lines.join('\n');
+    } catch (error) {
+      $('exportResult').textContent = `导出失败：${error.message}`;
+    } finally {
+      exporting = false;
+      $('runExport').disabled = false; $('closeExport').disabled = false;
+      renderSaveState();
+    }
+  }
+
+  // Pointer positions use CSS pixels. Only this transform maps to original image pixels;
+  // devicePixelRatio is applied to the canvas backing store, never to saved boxes.
+  function toImage(point) { return {x:(point.x - view.x) / view.scale, y:(point.y - view.y) / view.scale}; }
+  function toScreen(x,y) { return {x:x * view.scale + view.x, y:y * view.scale + view.y}; }
+  function eventPoint(event) { const rect = canvas.getBoundingClientRect(); return {x:event.clientX - rect.left, y:event.clientY - rect.top}; }
+  function boundedPoint(point) { return {x:clamp(point.x,0,current.width), y:clamp(point.y,0,current.height)}; }
+  function insideImage(point) { return point.x >= 0 && point.y >= 0 && point.x <= current.width && point.y <= current.height; }
+
+  function resizeCanvas() {
+    const rect = $('stage').getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    const oldWidth = canvasWidth, oldHeight = canvasHeight;
+    const oldFit = view.fit;
+    const wasFit = Math.abs(view.scale - oldFit) < oldFit * .01;
+    canvasWidth = rect.width; canvasHeight = rect.height;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(canvasWidth * dpr); canvas.height = Math.round(canvasHeight * dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    if (current && imageReady) {
+      view.fit = Math.min((canvasWidth - 32) / current.width,(canvasHeight - 32) / current.height);
+      if (wasFit) fitImage();
+      else { view.x += (canvasWidth - oldWidth) / 2; view.y += (canvasHeight - oldHeight) / 2; drawCanvas(); }
+    } else drawCanvas();
+  }
+  function fitImage() {
+    if (!current || !imageReady) return;
+    view.fit = Math.max(.0001,Math.min((canvasWidth - 32) / current.width,(canvasHeight - 32) / current.height));
+    view.scale = view.fit;
+    view.x = (canvasWidth - current.width * view.scale) / 2;
+    view.y = (canvasHeight - current.height * view.scale) / 2;
+    drawCanvas();
+  }
+  function zoomAt(point,factor) {
+    if (!imageReady || saving || drag) return;
+    const origin = toImage(point);
+    view.scale = clamp(view.scale * factor,view.fit * .12,Math.max(24,view.fit * 40));
+    view.x = point.x - origin.x * view.scale;
+    view.y = point.y - origin.y * view.scale;
+    drawCanvas();
+  }
+  function focusSelected() {
+    const box = selectedBox();
+    if (!box || !imageReady || !validBBox(box.bbox) || saving || drag) return;
+    if (box.review_status === 'rejected') $('showRejected').checked = true;
+    const [x1,y1,x2,y2] = box.bbox;
+    view.scale = clamp(Math.min(canvasWidth / ((x2-x1) * 1.8),canvasHeight / ((y2-y1) * 1.8)),view.fit,Math.max(24,view.fit * 20));
+    view.x = canvasWidth / 2 - (x1+x2) / 2 * view.scale;
+    view.y = canvasHeight / 2 - (y1+y2) / 2 * view.scale;
+    drawCanvas();
+  }
+  function displayBoxes() { return (current?.boxes || []).filter(box => (box.review_status !== 'rejected' || $('showRejected').checked) && validBBox(box.bbox)); }
+
+  function drawCanvas() {
+    ctx.clearRect(0,0,canvasWidth,canvasHeight);
+    if (!current || !image || !imageReady) return;
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(image,view.x,view.y,current.width * view.scale,current.height * view.scale);
+    if ($('showOriginal').checked) for (const box of current.original_boxes) drawBox(box,false,true);
+    const boxes = displayBoxes();
+    for (const box of boxes) if (box.id !== selectedId) drawBox(box,false,false);
+    const selected = boxes.find(box => box.id === selectedId);
+    if (selected) drawBox(selected,true,false);
+    if (drag?.kind === 'draw') {
+      const start = toScreen(drag.start.x,drag.start.y), end = toScreen(drag.end.x,drag.end.y);
+      ctx.save(); ctx.strokeStyle = COLORS.accepted; ctx.fillStyle = '#087f6218'; ctx.lineWidth = 2; ctx.setLineDash([6,4]);
+      ctx.fillRect(start.x,start.y,end.x-start.x,end.y-start.y); ctx.strokeRect(start.x,start.y,end.x-start.x,end.y-start.y); ctx.restore();
+    }
+    $('zoomLabel').textContent = `${Math.round(view.scale * 100)}%`;
+  }
+
+  function drawBox(box,selected,original) {
+    if (!validBBox(box.bbox)) return;
+    const [x1,y1,x2,y2] = box.bbox;
+    const top = toScreen(x1,y1), bottom = toScreen(x2,y2);
+    if (bottom.x < 0 || bottom.y < 0 || top.x > canvasWidth || top.y > canvasHeight) return;
+    const color = original ? '#8257c6' : COLORS[box.review_status] || COLORS.pending;
+    ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = selected ? 2.5 : 1.5;
+    if (original || box.review_status === 'rejected') ctx.setLineDash(original ? [5,5] : [7,4]);
+    ctx.strokeRect(top.x,top.y,bottom.x-top.x,bottom.y-top.y);
+    ctx.setLineDash([]);
+    if (!original && selected) {
+      ctx.fillStyle = '#ffffff';
+      for (const point of corners(box.bbox)) { const p = toScreen(point.x,point.y); ctx.fillRect(p.x-4,p.y-4,8,8); ctx.strokeRect(p.x-4,p.y-4,8,8); }
+    }
+    if (original || selected || (bottom.x-top.x > 25 && bottom.y-top.y > 14)) {
+      const index = original ? '' : `#${current.boxes.indexOf(box)+1}`;
+      let label = original ? '原标注 · 仅参考' : selected ? `${index} ${box.reference || box.category} · ${box.source === 'human' ? '人工' : scoreText(box)}` : index;
+      if (label.length > 44) label = `${label.slice(0,42)}…`;
+      ctx.font = '11px system-ui,"Microsoft YaHei",sans-serif';
+      const width = Math.min(canvasWidth-4,ctx.measureText(label).width + 10);
+      const labelX = clamp(top.x,2,Math.max(2,canvasWidth-width-2));
+      const labelY = clamp(top.y-20,2,Math.max(2,canvasHeight-20));
+      ctx.fillStyle = color; ctx.fillRect(labelX,labelY,width,18);
+      ctx.fillStyle = '#fff'; ctx.fillText(label,labelX+5,labelY+12.5,width-8);
+    }
+    ctx.restore();
+  }
+
+  function corners(bbox) { return [{x:bbox[0],y:bbox[1]},{x:bbox[2],y:bbox[1]},{x:bbox[2],y:bbox[3]},{x:bbox[0],y:bbox[3]}]; }
+  function hitCorner(screen) {
+    const box = selectedBox();
+    if (!box || !displayBoxes().some(candidate => candidate.id === box.id)) return -1;
+    return corners(box.bbox).findIndex(point => { const p = toScreen(point.x,point.y); return Math.abs(p.x-screen.x) <= 9 && Math.abs(p.y-screen.y) <= 9; });
+  }
+  function hitBox(point) {
+    const tolerance = 4 / view.scale;
+    return displayBoxes().filter(box => point.x >= box.bbox[0]-tolerance && point.y >= box.bbox[1]-tolerance && point.x <= box.bbox[2]+tolerance && point.y <= box.bbox[3]+tolerance).sort((a,b) => (a.bbox[2]-a.bbox[0])*(a.bbox[3]-a.bbox[1]) - (b.bbox[2]-b.bbox[0])*(b.bbox[3]-b.bbox[1]))[0];
+  }
+
+  function cancelDrag() {
+    if (!drag) return;
+    if (drag.original && current) {
+      const box = current.boxes.find(candidate => candidate.id === drag.id);
+      if (box) box.bbox = drag.original;
+    }
+    const pointerId = drag.pointerId;
+    drag = null;
+    if (canvas.hasPointerCapture(pointerId)) canvas.releasePointerCapture(pointerId);
+    canvas.classList.remove('dragging');
+    if (current) { renderCoordinates(); drawCanvas(); }
+  }
+
+  canvas.addEventListener('pointerdown',event => {
+    if (!imageReady || saving || drag || (event.button !== 0 && event.button !== 1)) return;
+    event.preventDefault(); canvas.focus();
+    const screen = eventPoint(event), point = toImage(screen);
+    if (event.button === 1 || spaceDown) {
+      drag = {kind:'pan',screen,x:view.x,y:view.y,pointerId:event.pointerId};
+      canvas.classList.add('dragging');
+    } else if (tool === 'draw') {
+      if (!insideImage(point)) return;
+      const start = boundedPoint(point);
+      drag = {kind:'draw',start,end:start,screen,pointerId:event.pointerId};
+    } else {
+      const corner = hitCorner(screen);
+      const box = corner >= 0 ? selectedBox() : hitBox(point);
+      if (!box) { selectedId = null; renderInspector(); renderBoxList(); renderSaveState(); drawCanvas(); return; }
+      selectBox(box.id);
+      drag = {kind:corner >= 0 ? 'resize' : 'move',corner,id:box.id,original:[...box.bbox],start:point,screen,pointerId:event.pointerId,changed:false};
+    }
+    canvas.setPointerCapture(event.pointerId);
+  });
+
+  canvas.addEventListener('pointermove',event => {
+    const screen = eventPoint(event);
+    if (!drag) {
+      if (spaceDown) canvas.style.cursor = 'grab';
+      else if (tool === 'draw') canvas.style.cursor = 'crosshair';
+      else {
+        const corner = hitCorner(screen);
+        canvas.style.cursor = corner >= 0 ? (corner % 2 === 0 ? 'nwse-resize' : 'nesw-resize') : imageReady && hitBox(toImage(screen)) ? 'move' : 'default';
+      }
+      return;
+    }
+    if (event.pointerId !== drag.pointerId) return;
+    const point = boundedPoint(toImage(screen));
+    if (drag.kind === 'pan') { view.x = drag.x + screen.x - drag.screen.x; view.y = drag.y + screen.y - drag.screen.y; }
+    else if (drag.kind === 'draw') drag.end = point;
+    else {
+      const box = current.boxes.find(candidate => candidate.id === drag.id);
+      if (!box) return;
+      if (!drag.changed && Math.hypot(screen.x-drag.screen.x,screen.y-drag.screen.y) < 3) return;
+      const [x1,y1,x2,y2] = drag.original;
+      if (drag.kind === 'move') {
+        const unbounded = toImage(screen);
+        const dx = clamp(unbounded.x-drag.start.x,-x1,current.width-x2);
+        const dy = clamp(unbounded.y-drag.start.y,-y1,current.height-y2);
+        box.bbox = [x1+dx,y1+dy,x2+dx,y2+dy].map(round);
+      } else {
+        const anchor = corners(drag.original)[(drag.corner+2)%4];
+        const dx = point.x-anchor.x, dy = point.y-anchor.y;
+        // Keep a positive one-pixel extent while allowing a corner to cross its anchor.
+        const x = Math.abs(dx) < 1 ? clamp(anchor.x + (dx >= 0 ? 1 : -1),0,current.width) : point.x;
+        const y = Math.abs(dy) < 1 ? clamp(anchor.y + (dy >= 0 ? 1 : -1),0,current.height) : point.y;
+        box.bbox = [Math.min(x,anchor.x),Math.min(y,anchor.y),Math.max(x,anchor.x),Math.max(y,anchor.y)].map(round);
+      }
+      drag.changed = box.bbox.some((value,index) => value !== drag.original[index]);
+      renderCoordinates();
+    }
+    drawCanvas();
+  });
+
+  function finishDrag(event) {
+    if (!drag || event.pointerId !== drag.pointerId) return;
+    const action = drag;
+    drag = null;
+    if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
+    canvas.classList.remove('dragging');
+    if (action.kind === 'draw') {
+      const end = boundedPoint(toImage(eventPoint(event)));
+      const bbox = [Math.min(action.start.x,end.x),Math.min(action.start.y,end.y),Math.max(action.start.x,end.x),Math.max(action.start.y,end.y)].map(round);
+      if (!validBBox(bbox) || bbox[2]-bbox[0] < 1 || bbox[3]-bbox[1] < 1 || Math.hypot((end.x-action.start.x)*view.scale,(end.y-action.start.y)*view.scale) < 4) { drawCanvas(); toast('框太小，请按住鼠标拖出元件的完整范围。'); return; }
+      const box = {id:`human_${crypto.randomUUID()}`,bbox,category:'component',category_confirmed:false,reference:null,score:null,source:'human',review_status:'accepted',review_reasons:[]};
+      current.boxes.push(box); selectedId = box.id;
+      tool = 'select';
+      markDirty(); render();
+      toast('已添加人工框并保留。请核对分类和位号。');
+    } else if (action.changed) {
+      const box = current.boxes.find(candidate => candidate.id === action.id);
+      if (!inBounds(box.bbox)) { box.bbox = action.original; toast('框必须有正面积并位于图片内，已恢复调整前的位置。'); }
+      else markDirty();
+      renderInspector(); renderBoxList(); renderSaveState(); drawCanvas();
+    } else drawCanvas();
+  }
+  canvas.addEventListener('pointerup',finishDrag);
+  canvas.addEventListener('pointercancel',cancelDrag);
+  canvas.addEventListener('lostpointercapture',() => { if (drag) cancelDrag(); });
+  canvas.addEventListener('wheel',event => { if (!imageReady) return; event.preventDefault(); zoomAt(eventPoint(event),Math.exp(-event.deltaY*.0015)); },{passive:false});
+  canvas.addEventListener('dblclick',event => { if (tool === 'select' && !saving && imageReady) { event.preventDefault(); fitImage(); } });
+  canvas.addEventListener('contextmenu',event => event.preventDefault());
+
+  $('selectTool').addEventListener('click',() => { if (saving) return; cancelDrag(); tool = 'select'; canvas.style.cursor = 'default'; render(); });
+  $('drawTool').addEventListener('click',() => { if (saving) return; cancelDrag(); tool = 'draw'; canvas.style.cursor = 'crosshair'; render(); });
+  $('zoomIn').addEventListener('click',() => zoomAt({x:canvasWidth/2,y:canvasHeight/2},1.3));
+  $('zoomOut').addEventListener('click',() => zoomAt({x:canvasWidth/2,y:canvasHeight/2},1/1.3));
+  $('fitImage').addEventListener('click',fitImage);
+  $('focusBox').addEventListener('click',focusSelected);
+  $('showOriginal').addEventListener('change',() => { $('originalWarning').hidden = !$('showOriginal').checked; drawCanvas(); });
+  $('showRejected').addEventListener('change',drawCanvas);
+  $('acceptBox').addEventListener('click',() => changeStatus('accepted'));
+  $('rejectBox').addEventListener('click',() => changeStatus('rejected'));
+  $('nextPending').addEventListener('click',() => goPending());
+  $('category').addEventListener('change',() => {
+    const box = selectedBox(); if (!box || saving || drag) return;
+    box.category = $('category').value; box.category_confirmed = false;
+    markDirty(); renderInspector(); renderBoxList(); renderSaveState(); drawCanvas();
+  });
+  $('categoryConfirmed').addEventListener('change',() => {
+    const box = selectedBox(); if (!box || saving || drag) return;
+    box.category_confirmed = box.review_status === 'accepted' && box.category !== 'component' && $('categoryConfirmed').checked;
+    markDirty(); renderBoxList();
+  });
+  $('reference').addEventListener('input',() => {
+    const box = selectedBox(); if (!box || saving || drag) return;
+    box.reference = $('reference').value.trim() || null;
+    markDirty(); renderBoxList(); drawCanvas();
+  });
+  ['coordX1','coordY1','coordX2','coordY2'].forEach(id => $(id).addEventListener('change',() => {
+    const box = selectedBox(); if (!box || saving || drag) return;
+    const bbox = ['coordX1','coordY1','coordX2','coordY2'].map(key => $(key).value.trim() ? Number($(key).value) : NaN);
+    if (!inBounds(bbox)) { toast('请输入图片范围内的有效坐标，且 x₂ > x₁、y₂ > y₁。'); renderCoordinates(); return; }
+    box.bbox = bbox.map(round); markDirty(); drawCanvas();
+  }));
+  $('wholeImageChecked').addEventListener('change',() => { if (saving || !imageReady) return; current.review.whole_image_checked = $('wholeImageChecked').checked; markDirty(); renderSaveState(); });
+  $('notes').addEventListener('input',() => { if (saving) return; current.review.notes = $('notes').value; markDirty(); });
+  $('saveButton').addEventListener('click',() => saveCurrent());
+  $('completeButton').addEventListener('click',() => saveCurrent(true));
+  $('approveImageButton').addEventListener('click',approveCurrentImage);
+  $('previousImage').addEventListener('click',() => navigateImage(-1));
+  $('nextImage').addEventListener('click',() => navigateImage(1));
+  ['imageFilter','imageSort'].forEach(id => $(id).addEventListener('change',renderImageList));
+  $('searchImages').addEventListener('input',renderImageList);
+  $('retryState').addEventListener('click',loadState);
+  $('retryImage').addEventListener('click',loadImage);
+  $('helpButton').addEventListener('click',() => $('helpDialog').showModal());
+  $('closeHelp').addEventListener('click',() => $('helpDialog').close());
+  $('statsButton').addEventListener('click',() => { $('statsDialog').showModal(); loadStats(); });
+  $('refreshStats').addEventListener('click',loadStats);
+  $('closeStats').addEventListener('click',() => $('statsDialog').close());
+  $('exportButton').addEventListener('click',requestExport);
+  $('runExport').addEventListener('click',exportData);
+  $('closeExport').addEventListener('click',() => $('exportDialog').close());
+  $('exportDialog').addEventListener('cancel',event => { if (exporting) event.preventDefault(); });
+  $('navigateCancel').addEventListener('click',() => { navigationAction = null; $('unsavedDialog').close(); });
+  $('navigateDiscard').addEventListener('click',() => { const action = navigationAction; navigationAction = null; $('unsavedDialog').close(); if (action) action(); });
+  $('navigateSave').addEventListener('click',async () => { if (await saveCurrent()) { const action = navigationAction; navigationAction = null; $('unsavedDialog').close(); if (action) action(); } });
+  $('unsavedDialog').addEventListener('cancel',event => { if (saving) event.preventDefault(); else navigationAction = null; });
+  $('reloadConflict').addEventListener('click',() => {
+    if (saving) return;
+    navigationAction = reloadLatest;
+    $('unsavedTitle').textContent = '载入服务器上的最新版本？';
+    $('unsavedMessage').textContent = '这会放弃本图未保存的修改，并载入服务器上的最新版本。取消后可继续查看当前修改。';
+    $('navigateDiscard').textContent = '放弃修改并载入最新';
+    $('navigateSave').hidden = true; $('unsavedError').hidden = true;
+    $('unsavedDialog').showModal();
+  });
+
+  document.addEventListener('keydown',event => {
+    const editable = event.target instanceof Element && event.target.closest('input,textarea,select,[contenteditable="true"]');
+    const modalOpen = [...document.querySelectorAll('dialog')].some(dialog => dialog.open);
+    if (modalOpen) return;
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') { event.preventDefault(); if (current) saveCurrent(); return; }
+    if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') { event.preventDefault(); if (current) saveCurrent(true); return; }
+    if (editable || event.ctrlKey || event.metaKey || event.altKey || !current || saving || !imageReady) return;
+    if (event.code === 'Space') { event.preventDefault(); spaceDown = true; canvas.style.cursor = 'grab'; return; }
+    if (event.repeat) return;
+    switch (event.key.toLowerCase()) {
+      case 'v': $('selectTool').click(); break;
+      case 'b': $('drawTool').click(); break;
+      case 'a': changeStatus('accepted'); break;
+      case 'delete': case 'backspace': event.preventDefault(); changeStatus('rejected'); break;
+      case 'j': goPending(1); break;
+      case 'k': goPending(-1); break;
+      case 'f': focusSelected(); break;
+      case 'n': navigateImage(1); break;
+      case 'p': navigateImage(-1); break;
+      case 'escape': if (drag) cancelDrag(); else $('selectTool').click(); break;
+      case '?': $('helpDialog').showModal(); break;
+      default: return;
+    }
+  });
+  document.addEventListener('keyup',event => { if (event.code === 'Space') { spaceDown = false; canvas.style.cursor = tool === 'draw' ? 'crosshair' : 'default'; } });
+  window.addEventListener('blur',() => { spaceDown = false; cancelDrag(); });
+  window.addEventListener('beforeunload',event => { if (dirty || saving || drag?.changed) { event.preventDefault(); event.returnValue = ''; } });
+  document.addEventListener('visibilitychange',() => {
+    if (document.visibilityState === 'hidden' && activeSince !== null) { activeMilliseconds += performance.now() - activeSince; activeSince = null; }
+    if (document.visibilityState === 'visible' && current && activeSince === null) activeSince = performance.now();
+  });
+  new ResizeObserver(resizeCanvas).observe($('stage'));
+  setInterval(() => { if (current) renderTimer(); },1000);
+  loadState();
+  </script>
+</body>
+</html>

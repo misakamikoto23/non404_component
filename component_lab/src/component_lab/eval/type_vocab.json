@@ -1,0 +1,27 @@
+{
+  "version": "type_vocab_v1_20261017",
+  "notes": {
+    "purpose": "Canonical component types for type_policy=mapped (a diagnostic). The headline score uses type_policy=strict (raw string equality).",
+    "ic": "Spec: boxic/box elements are output with type 'ic'; the official data writes 'box'.",
+    "resistor_capacitor_inductor": "Spec examples use resistor/capacitor/inductor; the official data writes r/c/l.",
+    "polarity": "GT10 re-annotates 10 train200 images: bare 'mosfet' became 'mosfet_npn' (6x) and bare 'bjt' became 'bjt_npn' (2x) or 'bjt_pnp' (1x). So bare forms are polarity-unspecified, and mapped mode collapses polarity.",
+    "identity": "Other observed types map to themselves, including the data's own spellings 'battary' and 'transfomer'.",
+    "unmapped": "Types absent from this table (e.g. the garbled 'm3螺丝') keep their raw string and are listed as unmapped in every report."
+  },
+  "canonical": {
+    "ic": "ic", "box": "ic", "boxic": "ic",
+    "resistor": "resistor", "r": "resistor",
+    "capacitor": "capacitor", "c": "capacitor",
+    "inductor": "inductor", "l": "inductor",
+    "mosfet": "mosfet", "mosfet_npn": "mosfet", "mosfet_pnp": "mosfet",
+    "bjt": "bjt", "bjt_npn": "bjt", "bjt_pnp": "bjt",
+    "amp": "amp", "amp_3pin": "amp_3pin", "amp_5pin": "amp_5pin",
+    "ant": "ant", "battary": "battary", "block": "block", "buzzer": "buzzer",
+    "circle_header": "circle_header", "connector": "connector",
+    "crystal": "crystal", "crystal_2pin": "crystal_2pin", "crystal_3pin": "crystal_3pin", "crystal_4pin": "crystal_4pin",
+    "d": "d", "dc": "dc", "esd": "esd", "fuse": "fuse", "gnd": "gnd", "jumper": "jumper", "led": "led", "motor": "motor",
+    "net_bidirection": "net_bidirection", "net_input": "net_input", "net_output": "net_output", "net_short": "net_short",
+    "opt": "opt", "other": "other", "pin": "pin", "seg": "seg", "switch": "switch", "testpoint": "testpoint",
+    "transfomer": "transfomer", "v": "v", "vbus_in": "vbus_in", "vcc": "vcc"
+  }
+}

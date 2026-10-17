@@ -1,0 +1,224 @@
+{
+ "name": "dev_diagnostic_contaminated",
+ "description": "SUPERSEDED by configs/contest6_group_split_v1.json. 30 official cases chosen before duplicate grouping; 14 were detector val (model selection) and 16 detector test. Keep only for comparing with earlier diagnostic runs; do not use for model selection or as a test.",
+ "detector_split_meaning": {
+  "train": "used for gradient training of the detector",
+  "val": "used for model selection (checkpoint, thresholds, pipeline settings)",
+  "test": "used for reported evaluations; documented as not tuned against, but results were seen",
+  "none": "not found in the detector datasets by exact decoded-pixel match"
+ },
+ "seed": 20261017,
+ "size": 30,
+ "stratified_by": "source tag (file-name suffix, lower-cased)",
+ "excluded": "train cases whose decoded pixels duplicate another train case",
+ "detector_audit": "outputs/contest_alignment_audit_20261017/audit.json",
+ "strata": {
+  "altium designer": {
+   "pool": 21,
+   "selected": 3,
+   "selected_seen_by_detector_train": 0
+  },
+  "datasheet": {
+   "pool": 62,
+   "selected": 9,
+   "selected_seen_by_detector_train": 0
+  },
+  "jlc": {
+   "pool": 95,
+   "selected": 15,
+   "selected_seen_by_detector_train": 0
+  },
+  "kicad": {
+   "pool": 6,
+   "selected": 1,
+   "selected_seen_by_detector_train": 0
+  },
+  "other": {
+   "pool": 12,
+   "selected": 2,
+   "selected_seen_by_detector_train": 0
+  }
+ },
+ "cases": [
+  {
+   "case": "0003",
+   "stem": "0003-Altium Designer",
+   "tag": "altium designer",
+   "detector_split": "test"
+  },
+  {
+   "case": "0004",
+   "stem": "0004-other",
+   "tag": "other",
+   "detector_split": "test"
+  },
+  {
+   "case": "0006",
+   "stem": "0006-jlc",
+   "tag": "jlc",
+   "detector_split": "val"
+  },
+  {
+   "case": "0011",
+   "stem": "0011-Altium Designer",
+   "tag": "altium designer",
+   "detector_split": "val"
+  },
+  {
+   "case": "0013",
+   "stem": "0013-KiCad",
+   "tag": "kicad",
+   "detector_split": "test"
+  },
+  {
+   "case": "0031",
+   "stem": "0031-Datasheet",
+   "tag": "datasheet",
+   "detector_split": "test"
+  },
+  {
+   "case": "0033",
+   "stem": "0033-Datasheet",
+   "tag": "datasheet",
+   "detector_split": "val"
+  },
+  {
+   "case": "0045",
+   "stem": "0045-Altium Designer",
+   "tag": "altium designer",
+   "detector_split": "test"
+  },
+  {
+   "case": "0046",
+   "stem": "0046-Datasheet",
+   "tag": "datasheet",
+   "detector_split": "val"
+  },
+  {
+   "case": "0061",
+   "stem": "0061-Datasheet",
+   "tag": "datasheet",
+   "detector_split": "val"
+  },
+  {
+   "case": "0065",
+   "stem": "0065-Datasheet",
+   "tag": "datasheet",
+   "detector_split": "val"
+  },
+  {
+   "case": "0070",
+   "stem": "0070-Datasheet",
+   "tag": "datasheet",
+   "detector_split": "test"
+  },
+  {
+   "case": "0080",
+   "stem": "0080-Datasheet",
+   "tag": "datasheet",
+   "detector_split": "test"
+  },
+  {
+   "case": "0081",
+   "stem": "0081-Datasheet",
+   "tag": "datasheet",
+   "detector_split": "val"
+  },
+  {
+   "case": "0085",
+   "stem": "0085-Datasheet",
+   "tag": "datasheet",
+   "detector_split": "val"
+  },
+  {
+   "case": "0111",
+   "stem": "0111-jlc",
+   "tag": "jlc",
+   "detector_split": "test"
+  },
+  {
+   "case": "0123",
+   "stem": "0123-other",
+   "tag": "other",
+   "detector_split": "val"
+  },
+  {
+   "case": "0127",
+   "stem": "0127-jlc",
+   "tag": "jlc",
+   "detector_split": "val"
+  },
+  {
+   "case": "0128",
+   "stem": "0128-jlc",
+   "tag": "jlc",
+   "detector_split": "test"
+  },
+  {
+   "case": "0129",
+   "stem": "0129-jlc",
+   "tag": "jlc",
+   "detector_split": "test"
+  },
+  {
+   "case": "0135",
+   "stem": "0135-jlc",
+   "tag": "jlc",
+   "detector_split": "test"
+  },
+  {
+   "case": "0158",
+   "stem": "0158-jlc",
+   "tag": "jlc",
+   "detector_split": "test"
+  },
+  {
+   "case": "0161",
+   "stem": "0161-jlc",
+   "tag": "jlc",
+   "detector_split": "test"
+  },
+  {
+   "case": "0162",
+   "stem": "0162-jlc",
+   "tag": "jlc",
+   "detector_split": "val"
+  },
+  {
+   "case": "0167",
+   "stem": "0167-jlc",
+   "tag": "jlc",
+   "detector_split": "test"
+  },
+  {
+   "case": "0171",
+   "stem": "0171-jlc",
+   "tag": "jlc",
+   "detector_split": "test"
+  },
+  {
+   "case": "0176",
+   "stem": "0176-jlc",
+   "tag": "jlc",
+   "detector_split": "val"
+  },
+  {
+   "case": "0186",
+   "stem": "0186-jlc",
+   "tag": "jlc",
+   "detector_split": "val"
+  },
+  {
+   "case": "0187",
+   "stem": "0187-jlc",
+   "tag": "jlc",
+   "detector_split": "test"
+  },
+  {
+   "case": "0195",
+   "stem": "0195-jlc",
+   "tag": "jlc",
+   "detector_split": "val"
+  }
+ ]
+}
