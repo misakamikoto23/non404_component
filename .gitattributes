@@ -1,0 +1,10 @@
+# 本仓库以"字节稳定"为先：源码 SHA256 被实验报告引用，禁止任何换行符转换。
+* -text
+
+# 文档仍是文本，可按文本合并
+*.md -text
+*.py -text
+*.json -text
+*.yaml -text
+*.yml -text
+*.ps1 -text
