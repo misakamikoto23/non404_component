@@ -96,6 +96,13 @@ def export_contest(association, height, *, ic_value_as_name=False, display_names
             # A box may be titled by a frequency or another token parsed as a
             # value. Reuse only its OWN assigned token, never invent a model.
             name, name_source = raw_field(row, "value"), "value_fallback"
+        # Official GT stores the designator in `Name` for every non-box type:
+        # across all 200 train cases, 8435/9171 components have Name == key,
+        # and `box` is the only type where that fails (232/960, 24.2%). Boxes
+        # keep their part number; everything else must repeat the key or the
+        # Name check fails for ~99% of passives.
+        if kind != "box" and not key.startswith("__unresolved"):
+            name, name_source = key, "designator"
         out["components"][key] = {"type": kind, "bbox": flip_bbox([x1, y1, x2, y2], height),
                                   "Name": name, "value": raw_field(row, "value")}
         trace.append({"key": key, "source_id": row["id"], "type": kind, "reference_raw": reference,
